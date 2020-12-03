@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+@import "src/app/scss/colors";
+
+body {
+  background: $bg-main-clr;
+  color: $text-clr;
+  font-family: sans-serif;
+  font-size: 16px;
+}
