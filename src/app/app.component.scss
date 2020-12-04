@@ -14,14 +14,42 @@ h1{
   margin-bottom: 2rem;
 }
 
+//Input autofill styles override
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px $bg-main-clr inset !important;
+}
+input:-webkit-autofill {
+  -webkit-text-fill-color: $text-clr !important;
+}
+
+//Input autofill styles override end
+
 .input-wrap{
  input {
    background: $bg-main-clr;
    border: none;
-   border-bottom: dotted 1px $border-clr;
+
    font-size: 26px;
    color: inherit;
  }
+  button{
+    font-size: inherit;
+    background: $icon-bg-clr;
+    border: none;
+    border-radius: 10px;
+    color: $icon-text-clr;
+    cursor: pointer;
+    outline: none;
+
+    &:hover, :active, :focus {
+      opacity: .4;
+    }
+  }
+  border-bottom: dotted 1px $border-clr;
 }
 
 ul{

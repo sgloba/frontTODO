@@ -11,8 +11,31 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'frontTODO';
+  title = 'Todo Angular 11';
   faCheck = faCheck;
   faPencilAlt = faPencilAlt;
   faTrash = faTrash;
+
+
+  todos: object[] = [
+    {
+      value: 'hardcoded',
+      active: true,
+      id: Math.floor(Math.random()*Number(Date.now()))
+    }
+  ]
+
+  addTodo(value):void {
+    if(value.todo === '') return
+
+    this.todos = [
+      {value: value.todo, active: true, id: Math.floor(Math.random()*Number(Date.now()))},
+      ...this.todos
+    ]
+    console.log(this.todos)
+  }
+  deleteTodo(index):void {
+    this.todos.splice(index,1)
+  }
+
 }

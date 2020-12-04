@@ -4,9 +4,14 @@
   </header>
   <main>
     <div class="content-wrap">
-      <div class="input-wrap">
-        <input type="text" placeholder="What needs to be done?">
-      </div>
+      <form  #todoInput="ngForm" (ngSubmit)="addTodo(todoInput.value)" class="input-wrap">
+        <input  name="todo"
+                ngModel
+                type="text"
+                placeholder="What needs to be done?">
+        <button
+          type="submit">add_task</button>
+      </form>
       <nav>
         <ul>
           <li>
@@ -28,33 +33,17 @@
       </nav>
       <div class="todos">
 
-        <div class="todo-item">
+        <div *ngFor="let todo of todos; let index = index" #index class="todo-item">
           <div class="text-wrap">
             <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
-            <span>Buy milk</span>
+            <span>{{todo.value}}</span>
           </div>
 
           <div class="btn-wrap">
             <button>
               <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
             </button>
-            <button>
-              <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
-            </button>
-          </div>
-        </div>
-
-        <div class="todo-item">
-          <div class="text-wrap">
-            <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
-            <span>Go home</span>
-          </div>
-
-          <div class="btn-wrap">
-            <button>
-              <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
-            </button>
-            <button>
+            <button (click)="deleteTodo(index)">
               <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
             </button>
           </div>
