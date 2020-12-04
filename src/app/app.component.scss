@@ -1,9 +1,8 @@
 @import "src/app/scss/colors";
 
 .page-wrap{
-  margin-top: 200px;
   max-width: 800px;
-
+  margin: 200px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,101 +13,4 @@ h1{
   margin-bottom: 2rem;
 }
 
-//Input autofill styles override
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active  {
-  -webkit-box-shadow: 0 0 0 30px $bg-main-clr inset !important;
-}
-input:-webkit-autofill {
-  -webkit-text-fill-color: $text-clr !important;
-}
-
-//Input autofill styles override end
-
-.input-wrap{
- input {
-   background: $bg-main-clr;
-   border: none;
-
-   font-size: 26px;
-   color: inherit;
- }
-  button{
-    font-size: inherit;
-    background: $icon-bg-clr;
-    border: none;
-    border-radius: 10px;
-    color: $icon-text-clr;
-    cursor: pointer;
-    outline: none;
-
-    &:hover, :active, :focus {
-      opacity: .4;
-    }
-  }
-  border-bottom: dotted 1px $border-clr;
-}
-
-ul{
-  padding: 0;
-  display: flex;
-  list-style: none;
-
-  li{
-    margin-right: 1rem;
-    :hover, :active, :focus{
-      opacity: .6;
-    }
-  }
-  a{
-    text-decoration: none;
-    color: $text-clr;
-    position: relative;
-  }
-  ::before{
-    content: '/';
-    width: 5px;
-    height: 15px;
-    color: inherit;
-    position: absolute;
-    top: 0;
-    right: -12px;
-  }
-}
-
-.todo-item{
-  display: flex;
-  justify-content: space-between;
-  border-bottom: dotted 1px $border-clr;
-  margin-bottom: 1rem;
-
-  button {
-    margin-right: .5rem;
-    margin-bottom: .1rem;
-    padding: .3rem;
-    background: $icon-bg-clr;
-    outline: none;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    :hover, :active, :focus {
-      opacity: .4;
-    }
-  }
-  .fa-icon{
-    color: $icon-text-clr;
-
-  }
-  .check{
-    margin-right: .5rem;
-    margin-bottom: .1rem;
-    padding: .2rem;
-    background: $icon-bg-clr;
-    outline: none;
-    border: none;
-    border-radius: 50%;
-  }
-}

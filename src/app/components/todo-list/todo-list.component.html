@@ -1,1 +1,54 @@
-<p>todo-list works!</p>
+<div class="content-wrap">
+  <form  class="input-wrap">
+    <input  [(ngModel)] = "inputValue"
+            #todoInput
+            name="todoInput"
+            type="text"
+            placeholder="What needs to be done?">
+    <button
+      type="submit" (click)="addTodo(inputValue)">Add</button>
+  </form>
+  <nav>
+    <ul>
+      <li>
+        <a href="#">
+          View All
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          Active
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          Completed
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="todos">
+
+    <div
+      *ngFor="let todo of (todos$ | async)"
+      [class.is-completed]="todo.isCompleted"
+      class="todo-item">
+      <div class="text-wrap">
+        <button (click)="toggleActive(todo.id)">
+          <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
+        </button>
+        <span>{{todo.value}}</span>
+      </div>
+
+      <div class="btn-wrap">
+        <button>
+          <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
+        </button>
+        <button (click)="removeTodo(todo.id)">
+          <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

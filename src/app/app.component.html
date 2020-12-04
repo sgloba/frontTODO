@@ -3,57 +3,12 @@
     <h1>Todo Angular_11 MongoDB</h1>
   </header>
   <main>
-    <div class="content-wrap">
-      <form  #todoInput="ngForm" (ngSubmit)="addTodo(todoInput.value)" class="input-wrap">
-        <input  name="todo"
-                ngModel
-                type="text"
-                placeholder="What needs to be done?">
-        <button
-          type="submit">add_task</button>
-      </form>
-      <nav>
-        <ul>
-          <li>
-            <a href="#">
-              View All
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Active
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Completed
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="todos">
 
-        <div *ngFor="let todo of todos; let index = index" #index class="todo-item">
-          <div class="text-wrap">
-            <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
-            <span>{{todo.value}}</span>
-          </div>
+    <app-todo-list></app-todo-list>
 
-          <div class="btn-wrap">
-            <button>
-              <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
-            </button>
-            <button (click)="deleteTodo(index)">
-              <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
   </main>
 </div>
 
-<!--<app-all-todos></app-all-todos>-->
+
 
 <!--<router-outlet></router-outlet>-->
