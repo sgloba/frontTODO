@@ -3,68 +3,12 @@
     <h1>Todo Angular_11 MongoDB</h1>
   </header>
   <main>
-    <div class="content-wrap">
-      <div class="input-wrap">
-        <input type="text" placeholder="What needs to be done?">
-      </div>
-      <nav>
-        <ul>
-          <li>
-            <a href="#">
-              View All
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Active
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Completed
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="todos">
 
-        <div class="todo-item">
-          <div class="text-wrap">
-            <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
-            <span>Buy milk</span>
-          </div>
+    <app-todo-list></app-todo-list>
 
-          <div class="btn-wrap">
-            <button>
-              <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
-            </button>
-            <button>
-              <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
-            </button>
-          </div>
-        </div>
-
-        <div class="todo-item">
-          <div class="text-wrap">
-            <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
-            <span>Go home</span>
-          </div>
-
-          <div class="btn-wrap">
-            <button>
-              <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
-            </button>
-            <button>
-              <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
   </main>
 </div>
 
-<!--<app-all-todos></app-all-todos>-->
+
 
 <!--<router-outlet></router-outlet>-->
