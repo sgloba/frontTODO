@@ -1,8 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import { TasksSandboxService } from '../../servises/tasks-sandbox.service';
-
-import { faCheck, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
-
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-todo-list',
@@ -15,12 +13,9 @@ export class TodoListComponent {
   todoInput: ElementRef;
 
   constructor(
-    private taskSandbox: TasksSandboxService
+    private taskSandbox: TasksSandboxService,
+    private activatedRoute: ActivatedRoute
   ) { }
-
-  faCheck = faCheck;
-  faPencilAlt = faPencilAlt;
-  faTrash = faTrash;
 
   inputValue: string;
 
@@ -31,14 +26,6 @@ export class TodoListComponent {
     this.taskSandbox.add(value)
     this.inputValue = ''
     this.todoInput.nativeElement.focus()
-  }
-
-  removeTodo(id: number): void {
-    this.taskSandbox.remove(id)
-  }
-
-  toggleActive(id: number): void {
-    this.taskSandbox.toggleActive(id)
   }
 
 }

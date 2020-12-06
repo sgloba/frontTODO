@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
 import { TodoI } from "../models/app.todo.model";
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,12 @@ export class TasksSandboxService {
   constructor() { }
 
   todos$ : BehaviorSubject<TodoI[]> = new BehaviorSubject([])
+
+  activeTodos$ = this.todos$.pipe(map((item) => item.filter((todo) => todo.isCompleted === false)
+  ))
+  completedTodos$ = this.todos$.pipe(map((item) => item.filter((todo) => todo.isCompleted === true)
+  ))
+
 
   add(value: string):void {
     const todos = this.todos$.getValue()

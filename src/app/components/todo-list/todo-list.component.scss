@@ -45,11 +45,6 @@ button {
   }
 }
 
-.fa-icon {
-  text-align: center;
-  vertical-align: baseline;
-}
-
 .input-wrap{
   input {
     margin-right: .5rem;
@@ -70,12 +65,16 @@ ul{
   display: flex;
   list-style: none;
 
+  .active{
+    color: $text-clr;
+  }
   li{
     margin-right: 1rem;
+    color: $border-clr;
   }
   a{
     text-decoration: none;
-    color: $text-clr;
+    color: inherit;
     position: relative;
   }
   ::before{
@@ -89,13 +88,3 @@ ul{
   }
 }
 
-.todo-item{
-  display: flex;
-  justify-content: space-between;
-  border-bottom: dotted 1px $border-clr;
-  margin-bottom: 1rem;
-
-  button {
-    border-radius: 50%;
-  }
-}
