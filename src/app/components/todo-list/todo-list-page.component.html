@@ -10,18 +10,18 @@
   </form>
   <nav>
     <ul>
-      <li routerLinkActive="active">
-        <a routerLink="/all">
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a routerLink="/todos">
           View All
         </a>
       </li>
       <li routerLinkActive="active">
-        <a routerLink="/active">
+        <a routerLink="/todos" [queryParams]="{todos: 'active'}">
           Active
         </a>
       </li>
       <li routerLinkActive="active">
-        <a routerLink="/completed">
+        <a routerLink="/todos" [queryParams]="{todos: 'completed'}">
           Completed
         </a>
       </li>

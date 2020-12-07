@@ -1,25 +1,23 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import { TasksSandboxService } from '../../servises/tasks-sandbox.service';
-import { ActivatedRoute } from '@angular/router'
+import { TasksSandboxService } from '../../services/tasks-sandbox.service';
 
 @Component({
-  selector: 'app-todo-list',
-  templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss']
+  selector: 'app-todo-list-page',
+  templateUrl: './todo-list-page.component.html',
+  styleUrls: ['./todo-list-page.component.scss']
 })
-export class TodoListComponent {
+export class TodoListPageComponent {
 
   @ViewChild('todoInput')
   todoInput: ElementRef;
 
   constructor(
     private taskSandbox: TasksSandboxService,
-    private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+  }
 
   inputValue: string;
 
-  todos$ = this.taskSandbox.todos$;
 
   addTodo(value: string): void {
     if (!value) return;

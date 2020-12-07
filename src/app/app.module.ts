@@ -1,25 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
-import {TodoListComponent} from "./components/todo-list/todo-list.component";
-import { TodoItemComponent } from './components/todo-item/todo-item.component';
+import {TodoListPageComponent} from "./components/todo-list/todo-list-page.component";
+import { TodoItemsComponent } from './components/todo-item/todo-items.component';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoListComponent,
-    TodoItemComponent,
+    TodoListPageComponent,
+    TodoItemsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
+
 import { BehaviorSubject } from "rxjs";
 import { TodoI } from "../models/app.todo.model";
 import { map } from 'rxjs/operators';
+import { HttpService } from 'src/app/services/http.service';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TasksSandboxService {
 
-  constructor() { }
+  constructor(
+    private http: HttpService
+  ) { }
 
   todos$ : BehaviorSubject<TodoI[]> = new BehaviorSubject([])
 
@@ -17,6 +23,12 @@ export class TasksSandboxService {
   completedTodos$ = this.todos$.pipe(map((item) => item.filter((todo) => todo.isCompleted === true)
   ))
 
+  request() {
+    this.http.getTodos().subscribe((response) => {
+      this.todos$.next(response)
+    })
+  }
+
 
   add(value: string):void {
     const todos = this.todos$.getValue()
@@ -24,7 +36,7 @@ export class TasksSandboxService {
     this.todos$.next([
       {
         value,
-        id: Math.floor(Math.random()*Number(Date.now())),
+        _id: Math.floor(Math.random()*Number(Date.now())),
         timestamp: Date.now(),
         isCompleted: false
       },
@@ -33,14 +45,16 @@ export class TasksSandboxService {
 
   remove(id: number):void {
     const todos = this.todos$.getValue()
-    this.todos$.next(todos.filter((item) => item.id !== id))
+    this.todos$.next(todos.filter((item) => item._id !== id))
+
+    // this.http.
   }
 
   toggleActive(id: number) {
     const todos = this.todos$.getValue()
 
     this.todos$.next(todos.map((item) => {
-      return item.id !== id ? item : { ...item, isCompleted: !item.isCompleted };
+      return item._id !== id ? item : { ...item, isCompleted: !item.isCompleted };
     }))
   }
 }

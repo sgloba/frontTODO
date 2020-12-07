@@ -3,7 +3,7 @@
 [class.is-completed]="todo.isCompleted"
 class="todo-item">
 <div class="text-wrap">
-  <button (click)="toggleActive(todo.id)">
+  <button (click)="toggleActive(todo._id)">
     <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
   </button>
   <span>{{todo.value}}</span>
@@ -13,7 +13,7 @@ class="todo-item">
   <button>
     <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
   </button>
-  <button (click)="removeTodo(todo.id)">
+  <button (click)="removeTodo(todo._id)">
     <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
   </button>
 </div>
