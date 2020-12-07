@@ -12,11 +12,24 @@ export class HttpService {
     private http: HttpClient,
   ) { }
 
+  url = 'http://localhost:4444/api/todos'
+
   getTodos(): Observable<TodoI[]> {
-    return this.http.get<TodoI[]>('http://localhost:4444/api/todos');
+    return this.http.get<TodoI[]>(this.url);
   }
 
-  removeTodo(_id) {
-    return this.http.delete('')
+  removeTodo(_id: number): Observable<any> {
+    return  this.http.delete(`${this.url}/${_id}`)
+  }
+  addTodo(value: string): Observable<any> {
+   return this.http.post(this.url, {value: value})
+  }
+
+  toggleActive(_id: number): Observable<any> {
+    return this.http.put(`${this.url}/${_id}/toggle`, {} )
+  }
+
+  editValue(_id, value: string):Observable<any> {
+    return this.http.put(`${this.url}/${_id}`, {value: value})
   }
 }

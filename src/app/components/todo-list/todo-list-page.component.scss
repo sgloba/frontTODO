@@ -76,15 +76,15 @@ ul{
     text-decoration: none;
     color: inherit;
     position: relative;
-  }
-  ::before{
-    content: '/';
-    width: 5px;
-    height: 15px;
-    color: inherit;
-    position: absolute;
-    top: 0;
-    right: -12px;
+    &::before{
+      content: '/';
+      width: 5px;
+      height: 15px;
+      color: inherit;
+      position: absolute;
+      top: 0;
+      right: -12px;
+    }
   }
 }
 

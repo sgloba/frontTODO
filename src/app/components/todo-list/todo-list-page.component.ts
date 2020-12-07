@@ -21,7 +21,9 @@ export class TodoListPageComponent {
 
   addTodo(value: string): void {
     if (!value) return;
-    this.taskSandbox.add(value)
+    this.taskSandbox.add(value).subscribe(() => {
+      this.taskSandbox.request()
+    })
     this.inputValue = ''
     this.todoInput.nativeElement.focus()
   }

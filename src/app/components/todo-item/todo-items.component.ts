@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {TodoI} from "src/app/models/app.todo.model";
 
 import { TasksSandboxService } from 'src/app/services/tasks-sandbox.service';
 import { faCheck, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -38,15 +40,25 @@ export class TodoItemsComponent implements OnInit {
   faPencilAlt = faPencilAlt;
   faTrash = faTrash;
 
-  todos$;
+  todos$: Observable<TodoI[]>;
 
   removeTodo(id: number): void {
-    this.taskSandbox.remove(id)
+    this.taskSandbox.remove(id).subscribe(() => {
+      this.taskSandbox.request()
+    })
   }
 
 
   toggleActive(id: number): void {
-    this.taskSandbox.toggleActive(id)
+    this.taskSandbox.toggleActive(id).subscribe(() => {
+      this.taskSandbox.request()
+    })
+  }
+
+  editValue(_id: number, value: string) {
+    this.taskSandbox.editValue(_id, value).subscribe(() => {
+      this.taskSandbox.request()
+    })
   }
 
 }

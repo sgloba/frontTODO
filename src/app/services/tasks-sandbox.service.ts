@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import { TodoI } from "../models/app.todo.model";
 import { map } from 'rxjs/operators';
 import { HttpService } from 'src/app/services/http.service';
@@ -30,31 +30,19 @@ export class TasksSandboxService {
   }
 
 
-  add(value: string):void {
-    const todos = this.todos$.getValue()
-
-    this.todos$.next([
-      {
-        value,
-        _id: Math.floor(Math.random()*Number(Date.now())),
-        timestamp: Date.now(),
-        isCompleted: false
-      },
-       ...todos])
+  add(value: string) {
+    return this.http.addTodo(value)
   }
 
-  remove(id: number):void {
-    const todos = this.todos$.getValue()
-    this.todos$.next(todos.filter((item) => item._id !== id))
-
-    // this.http.
+  remove(id: number): Observable<any> {
+    return this.http.removeTodo(id)
   }
 
-  toggleActive(id: number) {
-    const todos = this.todos$.getValue()
+  toggleActive(_id: number) {
+    return this.http.toggleActive(_id)
+  }
 
-    this.todos$.next(todos.map((item) => {
-      return item._id !== id ? item : { ...item, isCompleted: !item.isCompleted };
-    }))
+  editValue(_id: number, value: string) {
+    return this.http.editValue(_id, value)
   }
 }
