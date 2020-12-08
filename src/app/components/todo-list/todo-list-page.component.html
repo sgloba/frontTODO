@@ -11,25 +11,24 @@
   <nav>
     <ul>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a routerLink="/todos">
+        <a [routerLink]="null">
           View All
         </a>
       </li>
       <li routerLinkActive="active">
-        <a routerLink="/todos" [queryParams]="{todos: 'active'}">
+        <a [routerLink]="null" [queryParams]="{todos: 'active'}">
           Active
         </a>
       </li>
       <li routerLinkActive="active">
-        <a routerLink="/todos" [queryParams]="{todos: 'completed'}">
+        <a [routerLink]="null" [queryParams]="{todos: 'completed'}">
           Completed
         </a>
       </li>
     </ul>
   </nav>
-  <div class="todos">
-
-    <router-outlet></router-outlet>
-
-  </div>
+  <app-todo-item
+    *ngFor="let todo of (todos$ | async)"
+    [todo]="todo"
+  ></app-todo-item>
 </div>

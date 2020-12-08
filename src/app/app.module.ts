@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
 import {TodoListPageComponent} from "./components/todo-list/todo-list-page.component";
-import { TodoItemsComponent } from './components/todo-item/todo-items.component';
+import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import {HttpClientModule} from "@angular/common/http";
 
 
@@ -14,7 +14,7 @@ import {HttpClientModule} from "@angular/common/http";
   declarations: [
     AppComponent,
     TodoListPageComponent,
-    TodoItemsComponent,
+    TodoItemComponent,
   ],
   imports: [
     BrowserModule,
