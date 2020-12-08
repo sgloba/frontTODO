@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {TodoListPageComponent} from "./components/todo-list/todo-list-page.component";
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import {HttpClientModule} from "@angular/common/http";
+import {HttpService} from "./services/http.service";
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import {HttpClientModule} from "@angular/common/http";
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

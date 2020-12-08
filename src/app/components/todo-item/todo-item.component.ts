@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {TodoI} from "src/app/models/app.todo.model";
 
 import { TasksSandboxService } from 'src/app/services/tasks-sandbox.service';
@@ -36,14 +36,11 @@ export class TodoItemComponent implements OnInit {
     })
   }
 
-
-
   toggleActive(id: number): void {
     this.taskSandbox.toggleActive(id).subscribe(() => {
       this.taskSandbox.request()
     })
   }
-
 
   onSpanBlur(_id) {
       this.taskSandbox.editValue(_id, this.editableSpan.nativeElement.innerText).subscribe(() => {

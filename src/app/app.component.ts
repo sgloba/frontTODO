@@ -9,8 +9,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Todo Angular 11';
-
-
+  title = 'frontTODO';
 
 }

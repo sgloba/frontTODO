@@ -19,7 +19,7 @@ export class HttpService {
   }
 
   removeTodo(_id: number): Observable<any> {
-    return  this.http.delete(`${this.url}/${_id}`)
+    return this.http.delete(`${this.url}/${_id}`)
   }
   addTodo(value: string): Observable<any> {
    return this.http.post(this.url, {value: value})
