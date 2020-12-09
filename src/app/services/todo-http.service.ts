@@ -6,7 +6,7 @@ import {TodoI} from "../models/app.todo.model";
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService {
+export class TodoHttpService {
 
   constructor(
     private http: HttpClient,

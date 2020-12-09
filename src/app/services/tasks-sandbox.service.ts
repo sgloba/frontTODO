@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import { TodoI } from "../models/app.todo.model";
 import { map } from 'rxjs/operators';
-import { HttpService } from 'src/app/services/http.service';
+import { TodoHttpService } from 'src/app/services/todo-http.service';
 
 
 
@@ -13,7 +13,7 @@ import { HttpService } from 'src/app/services/http.service';
 export class TasksSandboxService {
 
   constructor(
-    private http: HttpService
+    private http: TodoHttpService
   ) { }
 
   todos$ : BehaviorSubject<TodoI[]> = new BehaviorSubject([])

@@ -22,7 +22,7 @@ export class TodoItemComponent implements OnInit {
   @ViewChild('editableSpan')
   editableSpan: ElementRef;
 
-  @Input() todo: TodoI;
+  @Input() todo: TodoI = {} as TodoI;
 
   allowEdit = false
 

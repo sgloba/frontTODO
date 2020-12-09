@@ -4,7 +4,14 @@ import {TodoItemComponent} from './todo-item.component';
 import {HttpClientModule} from "@angular/common/http";
 import {By} from "@angular/platform-browser";
 import {DebugElement} from "@angular/core";
+import {TodoI} from "../../models/app.todo.model";
 
+const TEST_TODO: TodoI = {
+  _id: 5465465465465,
+  value: 'test_todo',
+  timestamp: 124,
+  isCompleted: false
+};
 
 describe(`Component: todo-item`, () => {
   let fixture: ComponentFixture<TodoItemComponent>;
@@ -24,9 +31,14 @@ describe(`Component: todo-item`, () => {
     component = fixture.componentInstance;
     toggleSpanEditableBtn = fixture.debugElement.query(By.css('.btn-wrap :first-child'));
     removeTodoBtn = fixture.debugElement.query(By.css('.btn-wrap button:last-of-type'));
-    toggleActiveBtn = fixture.debugElement.query(By.css('.text-wrap :first-child'));
+    toggleActiveBtn = fixture.debugElement.query(By.css('.toggle-active'));
     fixture.detectChanges();
   }));
+
+  beforeEach(() => {
+    component.todo = TEST_TODO;
+    fixture.detectChanges();
+  })
 
 
   it('expect allowEdit to be false', () => {
@@ -51,7 +63,6 @@ describe(`Component: todo-item`, () => {
   it('should call removeTodo on remove button click',  () => {
     spyOn(component, 'removeTodo').and.callThrough();
     removeTodoBtn.nativeElement.click();
-    console.log(removeTodoBtn.nativeElement)
     expect(component.removeTodo).toHaveBeenCalled()
   });
 
@@ -59,8 +70,7 @@ describe(`Component: todo-item`, () => {
   it('should call toggleActive on toggleActive button click', () => {
     spyOn(component, 'toggleActive').and.callThrough();
     toggleActiveBtn.nativeElement.click();
-    console.log(toggleActiveBtn.nativeElement)
-    expect(component.toggleActive).toHaveBeenCalledWith(541654);
+    expect(component.toggleActive).toHaveBeenCalledWith(TEST_TODO._id);
   });
 
 });

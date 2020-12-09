@@ -3,12 +3,12 @@ import { TestBed } from '@angular/core/testing';
 import { TasksSandboxService } from './tasks-sandbox.service';
 import {HttpClientModule} from "@angular/common/http";
 import {of} from "rxjs";
-import {HttpService} from "./http.service";
+import {TodoHttpService} from "./todo-http.service";
 import {TodoI} from "../models/app.todo.model";
 
 describe('TasksSandboxService', () => {
   let service: TasksSandboxService;
-  let http: HttpService
+  let http: TodoHttpService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
