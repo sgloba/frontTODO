@@ -1,30 +1,65 @@
-import {createReducer, on} from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 
 import {
   addTodoSuccess,
   editValueSuccess,
   fetchTodosSuccess,
   removeTodoSuccess,
+  setInitialTodoEditingValue, setNewTodoEditingValue,
   toggleActiveSuccess
 } from '../actions/todo.actions';
-import { TodoI } from "../../models/app.todo.model";
+import {TodoState} from "../states/todo.state";
 
-export const initialState: ReadonlyArray<TodoI> = [];
+export const initialState: TodoState = {
+  items: [],
+  editing: {
+    initialValue: null,
+    newValue: null
+  }
+};
 
 export const todoReducer = createReducer(
   initialState,
 
-  on(addTodoSuccess, (state, { todo }) => ([...state, todo])),
 
-  on(removeTodoSuccess, (state, { _id }) => state.filter((todo) => todo._id !== _id)),
+  on(addTodoSuccess, (state, { todo }) => ({...state,
+    items: [...state.items, todo]})),
 
-  on(toggleActiveSuccess, (state, {_id}) => state.map(
-    (item) => item._id === _id ? {...item, isCompleted: !item.isCompleted} : item )),
+  on(removeTodoSuccess, (state, { _id }) => ({...state,
+    items: state.items.filter((todo) => todo._id !== _id)})),
 
-  on(editValueSuccess, (state, {_id, value}) => state.map(
-    (item) => item._id === _id ? {...item, value: value} : item )),
+  on(toggleActiveSuccess, (state, {_id}) => ({
+    ...state,
+    items: state.items.map(
+      (item) => item._id === _id ? {...item, isCompleted: !item.isCompleted} : item )
+  })),
 
-  on(fetchTodosSuccess, (state, {todos: todos}) =>  todos )
+  on(editValueSuccess, (state, {_id, value}) => ({
+    ...state,
+    items: state.items.map((item) => item._id === _id ? {...item, value: value} : item)
+  })),
+
+  on(fetchTodosSuccess, (state, {todos}) => ({...state, items: todos})),
+
+  on(setInitialTodoEditingValue, (state, {value}) => {
+    return ({
+      ...state,
+      editing: {
+        initialValue: value,
+        newValue: value
+      }
+    })
+  }),
+
+  on(setNewTodoEditingValue, (state, {value}) => {
+    return ({
+      ...state,
+      editing: {
+        ...state.editing,
+        newValue: value
+      }
+    })
+  })
 );
 
 

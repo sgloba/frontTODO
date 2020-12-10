@@ -77,7 +77,7 @@ export class TodoEffects {
     ofType(editValue.type),
     concatMap(({_id, value}) => this.todoHttpService.editValue(_id, value)
       .pipe(
-        map((_id, value ) => editValueSuccess({_id: _id, value: value})),
+        map(({ _id, value }) => editValueSuccess({ _id, value })),
         catchError((err) => {
           alert(err.message)
           return EMPTY

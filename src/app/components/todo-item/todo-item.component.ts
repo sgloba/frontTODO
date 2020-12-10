@@ -40,10 +40,17 @@ export class TodoItemComponent implements OnInit {
 
   onSpanBlur(id) {
       this.taskSandbox.editValue(id, this.editableSpan.nativeElement.innerText)
+      this.taskSandbox.setInitialEditingValue(null)
+  }
+
+  onSpanInput() {
+    this.taskSandbox.setNewEditingValue(this.editableSpan.nativeElement.innerText)
   }
 
   toggleSpanEditable() {
    this.allowEdit = !this.allowEdit
+
+    this.taskSandbox.setInitialEditingValue(this.editableSpan.nativeElement.innerText)
 
     if (this.allowEdit) {
       setTimeout(() => {

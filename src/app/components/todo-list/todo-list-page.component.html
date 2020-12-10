@@ -1,4 +1,9 @@
 <div class="content-wrap">
+
+  <app-editing-todo
+    *ngIf="isEditing$ | async"
+  ></app-editing-todo>
+
   <form  class="input-wrap">
     <input  [(ngModel)] = "inputValue"
             #todoInput

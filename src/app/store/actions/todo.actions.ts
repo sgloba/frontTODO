@@ -48,3 +48,16 @@ export const fetchTodosSuccess = createAction(
   '[Todos] Fetch Todos Success',
   props<{todos: Array<TodoI>}>()
 )
+
+
+export const setInitialTodoEditingValue = createAction(
+  '[Todos] Set Initial Todo Editing Value',
+  props<{value: string}>()
+)
+export const setNewTodoEditingValue = createAction(
+  '[Todo] Set New Todo Editing Value',
+  props<{value: string}>()
+)
+export const resetTodoEditingState = createAction(
+  '[Todo] Reset Todo Editing State'
+)

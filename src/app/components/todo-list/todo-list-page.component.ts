@@ -20,11 +20,13 @@ export class TodoListPageComponent implements OnInit{
     private taskSandbox: TasksSandboxService,
     private activatedRoute: ActivatedRoute,
   ) {}
+
   ngOnInit() {
-    this.taskSandbox.requestTodos()
+    this.taskSandbox.requestTodos();
 
     this.activatedRoute.queryParams.subscribe((p) => {
       if(p.todos === 'active') {
+        console.log(this.taskSandbox.allTodos$)
         this.todos$ = this.taskSandbox.activeTodos$
       } else if(p.todos === 'completed') {
         this.todos$ = this.taskSandbox.completedTodos$
@@ -37,11 +39,10 @@ export class TodoListPageComponent implements OnInit{
   inputValue: string;
   todos$: Observable<TodoI[]>;
 
-
+  isEditing$: Observable<boolean> = this.taskSandbox.isEditing$;
 
   addTodo(value: string): void {
     if (!value) return;
-
     this.taskSandbox.add(value)
 
     this.inputValue = ''
