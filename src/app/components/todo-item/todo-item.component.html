@@ -10,6 +10,7 @@
       [attr.contenteditable]="allowEdit"
       (blur)="onSpanBlur(todo?._id)"
       (keydown.enter)="onSpanBlur(todo?._id); $event.preventDefault()"
+      (input)="onSpanInput()"
     >
       {{todo?.value}}
     </span>

@@ -1,9 +1,24 @@
 import { Injectable } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import {
+  activeTodos,
+  allTodos,
+  completedTodos,
+  initialEditingValue,
+  isTodoEditing, newEditingValue
+} from "../store/selectors/todos.selectors";
 
-import {BehaviorSubject, Observable} from "rxjs";
+
 import { TodoI } from "../models/app.todo.model";
-import { map } from 'rxjs/operators';
 import { TodoHttpService } from 'src/app/services/todo-http.service';
+import {
+  addTodo,
+  editValue,
+  fetchTodos,
+  removeTodo,
+  setInitialTodoEditingValue, setNewTodoEditingValue,
+  toggleActive
+} from "../store/actions/todo.actions";
 
 
 
@@ -13,36 +28,46 @@ import { TodoHttpService } from 'src/app/services/todo-http.service';
 export class TasksSandboxService {
 
   constructor(
-    private http: TodoHttpService
+    private http: TodoHttpService,
+    private store: Store
   ) { }
 
-  todos$ : BehaviorSubject<TodoI[]> = new BehaviorSubject([])
 
-  activeTodos$ = this.todos$.pipe(map((item) => item.filter((todo) => todo.isCompleted === false)
-  ))
-  completedTodos$ = this.todos$.pipe(map((item) => item.filter((todo) => todo.isCompleted === true)
-  ))
+  activeTodos$ = this.store.pipe(select(activeTodos));
+  completedTodos$ = this.store.pipe(select(completedTodos));
+  allTodos$ = this.store.pipe(select(allTodos));
 
-  request() {
-    this.http.getTodos().subscribe((response) => {
-      this.todos$.next(response)
-    })
+  isEditing$ = this.store.pipe(select(isTodoEditing))
+  initialEditingValue = this.store.pipe(select(initialEditingValue))
+  newEditingValue = this.store.pipe(select(newEditingValue))
+
+
+  requestTodos() {
+    this.store.dispatch(fetchTodos())
   }
 
 
   add(value: string) {
-    return this.http.addTodo(value)
+    this.store.dispatch(addTodo({ value }))
   }
 
-  remove(id: number): Observable<any> {
-    return this.http.removeTodo(id)
+  remove(id: number) {
+    this.store.dispatch(removeTodo({_id: id}))
   }
 
-  toggleActive(_id: number) {
-    return this.http.toggleActive(_id)
+  toggleActive(id: number) {
+    this.store.dispatch(toggleActive({_id: id}))
   }
 
   editValue(_id: number, value: string) {
-    return this.http.editValue(_id, value)
+    this.store.dispatch(editValue({_id: _id, value: value}))
+  }
+
+
+  setInitialEditingValue(value){
+    this.store.dispatch(setInitialTodoEditingValue({value}))
+  }
+  setNewEditingValue(value: string){
+    this.store.dispatch(setNewTodoEditingValue({value}))
   }
 }
