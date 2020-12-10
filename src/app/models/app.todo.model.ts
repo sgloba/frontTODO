@@ -1,6 +1,6 @@
 export interface TodoI  {
   _id: number,
-  value: string,
+  value: string | number,
   timestamp: number,
   isCompleted: boolean
 }

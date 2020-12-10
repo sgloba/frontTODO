@@ -31,21 +31,15 @@ export class TodoItemComponent implements OnInit {
   faTrash = faTrash;
 
   removeTodo(id: number): void {
-    this.taskSandbox.remove(id).subscribe(() => {
-      this.taskSandbox.request()
-    })
+    this.taskSandbox.remove(id)
   }
 
   toggleActive(id: number): void {
-    this.taskSandbox.toggleActive(id).subscribe(() => {
-      this.taskSandbox.request()
-    })
+    this.taskSandbox.toggleActive(id)
   }
 
-  onSpanBlur(_id) {
-      this.taskSandbox.editValue(_id, this.editableSpan.nativeElement.innerText).subscribe(() => {
-        this.taskSandbox.request()
-      })
+  onSpanBlur(id) {
+      this.taskSandbox.editValue(id, this.editableSpan.nativeElement.innerText)
   }
 
   toggleSpanEditable() {

@@ -29,7 +29,7 @@ export class TodoHttpService {
     return this.http.put(`${this.url}/${_id}/toggle`, {} )
   }
 
-  editValue(_id, value: string):Observable<any> {
+  editValue(_id: number, value: string):Observable<any> {
     return this.http.put(`${this.url}/${_id}`, {value: value})
   }
 }
