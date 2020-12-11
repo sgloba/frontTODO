@@ -5,6 +5,6 @@ export interface TodoState {
   editing: {
     initialValue: string,
     newValue: string
-  }
+  };
 }
 

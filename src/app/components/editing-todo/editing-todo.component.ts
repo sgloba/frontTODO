@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TasksSandboxService} from "../../services/tasks-sandbox.service";
+import {TasksSandboxService} from '../../services/tasks-sandbox.service';
 
 @Component({
   selector: 'app-editing-todo',
@@ -12,10 +12,10 @@ export class EditingTodoComponent implements OnInit {
     private taskSandbox: TasksSandboxService,
   ) { }
 
-  ngOnInit(): void {
-  }
-
   initialValue = this.taskSandbox.initialEditingValue;
   newValue = this.taskSandbox.newEditingValue;
+
+  ngOnInit(): void {
+  }
 
 }

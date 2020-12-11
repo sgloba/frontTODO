@@ -1,8 +1,8 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { TasksSandboxService } from '../../services/tasks-sandbox.service';
-import { Observable } from "rxjs";
-import { TodoI } from "../../models/app.todo.model";
-import { ActivatedRoute } from "@angular/router";
+import { Observable } from 'rxjs';
+import { TodoI } from '../../models/app.todo.model';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -13,40 +13,39 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class TodoListPageComponent implements OnInit{
 
-  @ViewChild('todoInput')
-  todoInput: ElementRef;
-
   constructor(
     private taskSandbox: TasksSandboxService,
     private activatedRoute: ActivatedRoute,
   ) {}
 
-  ngOnInit() {
-    this.taskSandbox.requestTodos();
-
-    this.activatedRoute.queryParams.subscribe((p) => {
-      if(p.todos === 'active') {
-        console.log(this.taskSandbox.allTodos$)
-        this.todos$ = this.taskSandbox.activeTodos$
-      } else if(p.todos === 'completed') {
-        this.todos$ = this.taskSandbox.completedTodos$
-      } else {
-        this.todos$ = this.taskSandbox.allTodos$
-      }
-    })
-  }
+  @ViewChild('todoInput')
+  todoInput: ElementRef;
 
   inputValue: string;
   todos$: Observable<TodoI[]>;
 
   isEditing$: Observable<boolean> = this.taskSandbox.isEditing$;
 
-  addTodo(value: string): void {
-    if (!value) return;
-    this.taskSandbox.add(value)
+  ngOnInit(): void {
+    this.taskSandbox.requestTodos();
 
-    this.inputValue = ''
-    this.todoInput.nativeElement.focus()
+    this.activatedRoute.queryParams.subscribe((p) => {
+      if (p.todos === 'active') {
+        this.todos$ = this.taskSandbox.activeTodos$;
+      } else if (p.todos === 'completed') {
+        this.todos$ = this.taskSandbox.completedTodos$;
+      } else {
+        this.todos$ = this.taskSandbox.allTodos$;
+      }
+    });
+  }
+
+  addTodo(value: string): void {
+    if (!value) { return; }
+    this.taskSandbox.add(value);
+
+    this.inputValue = '';
+    this.todoInput.nativeElement.focus();
   }
 
 }

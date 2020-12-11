@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from "rxjs";
-import {TodoI} from "../models/app.todo.model";
+import {Observable} from 'rxjs';
+import {TodoI} from '../models/app.todo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +12,24 @@ export class TodoHttpService {
     private http: HttpClient,
   ) { }
 
-  url = 'http://localhost:4444/api/todos'
+  url = 'http://localhost:4444/api/todos';
 
   getTodos(): Observable<TodoI[]> {
     return this.http.get<TodoI[]>(this.url);
   }
 
-  removeTodo(_id: number): Observable<any> {
-    return this.http.delete(`${this.url}/${_id}`)
+  removeTodo(id: number): Observable<any> {
+    return this.http.delete(`${this.url}/${id}`);
   }
   addTodo(value: string): Observable<any> {
-   return this.http.post(this.url, {value: value})
+   return this.http.post(this.url, {value});
   }
 
-  toggleActive(_id: number): Observable<any> {
-    return this.http.put(`${this.url}/${_id}/toggle`, {} )
+  toggleActive(id: number): Observable<any> {
+    return this.http.put(`${this.url}/${id}/toggle`, {} );
   }
 
-  editValue(_id: number, value: string): Observable<TodoI> {
-    return this.http.put<TodoI>(`${this.url}/${_id}`, {value: value})
+  editValue(id: number, value: string): Observable<TodoI> {
+    return this.http.put<TodoI>(`${this.url}/${id}`, {value});
   }
 }

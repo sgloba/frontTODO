@@ -1,5 +1,5 @@
-import {TodoState} from "./todo.state";
+import {TodoState} from './todo.state';
 
 export interface GlobalStateI {
-  todos: TodoState
+  todos: TodoState;
 }

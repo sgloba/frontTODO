@@ -1,11 +1,11 @@
-import { createSelector } from "@ngrx/store";
-import { TodoI } from "../../models/app.todo.model";
-import { GlobalStateI } from "../states/global.state";
+import { createSelector } from '@ngrx/store';
+import { TodoI } from '../../models/app.todo.model';
+import { GlobalStateI } from '../states/global.state';
 
 
 export const allTodos = createSelector(
   (state: GlobalStateI) => {
-    return state.todos.items
+    return state.todos.items;
   },
   (todos: Array<TodoI>) => todos,
 );
@@ -25,12 +25,12 @@ export const completedTodos = createSelector(
 export const isTodoEditing = createSelector(
   (state: GlobalStateI) => state.todos.editing,
   ({ initialValue, newValue }) => initialValue !== null && newValue !== null
-)
+);
 export const initialEditingValue = createSelector(
   (state: GlobalStateI) => state.todos.editing.initialValue,
-  (initialEditingValue: string) => initialEditingValue
-)
+  (initialValue: string) => initialValue
+);
 export const newEditingValue = createSelector(
   (state: GlobalStateI) => state.todos.editing.newValue,
-  (newEditingValue: string) => newEditingValue
-)
+  (newValue: string) => newValue
+);
