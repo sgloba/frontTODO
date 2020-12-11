@@ -8,7 +8,7 @@ import {
   setInitialTodoEditingValue, setNewTodoEditingValue,
   toggleActiveSuccess
 } from '../actions/todo.actions';
-import {TodoState} from "../states/todo.state";
+import {TodoState} from '../states/todo.state';
 
 export const initialState: TodoState = {
   items: [],
@@ -36,7 +36,7 @@ export const todoReducer = createReducer(
 
   on(editValueSuccess, (state, {_id, value}) => ({
     ...state,
-    items: state.items.map((item) => item._id === _id ? {...item, value: value} : item)
+    items: state.items.map((item) => item._id === _id ? {...item, value} : item)
   })),
 
   on(fetchTodosSuccess, (state, {todos}) => ({...state, items: todos})),
@@ -48,7 +48,7 @@ export const todoReducer = createReducer(
         initialValue: value,
         newValue: value
       }
-    })
+    });
   }),
 
   on(setNewTodoEditingValue, (state, {value}) => {
@@ -58,7 +58,7 @@ export const todoReducer = createReducer(
         ...state.editing,
         newValue: value
       }
-    })
+    });
   })
 );
 

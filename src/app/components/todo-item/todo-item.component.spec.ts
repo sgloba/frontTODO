@@ -1,10 +1,10 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {TodoItemComponent} from './todo-item.component';
-import {HttpClientModule} from "@angular/common/http";
-import {By} from "@angular/platform-browser";
-import {DebugElement} from "@angular/core";
-import {TodoI} from "../../models/app.todo.model";
+import {HttpClientModule} from '@angular/common/http';
+import {By} from '@angular/platform-browser';
+import {DebugElement} from '@angular/core';
+import {TodoI} from '../../models/app.todo.model';
 
 const TEST_TODO: TodoI = {
   _id: 5465465465465,
@@ -20,7 +20,7 @@ describe(`Component: todo-item`, () => {
   let removeTodoBtn: DebugElement;
   let toggleActiveBtn: DebugElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [TodoItemComponent],
       imports: [
@@ -38,7 +38,7 @@ describe(`Component: todo-item`, () => {
   beforeEach(() => {
     component.todo = TEST_TODO;
     fixture.detectChanges();
-  })
+  });
 
 
   it('expect allowEdit to be false', () => {
@@ -46,7 +46,7 @@ describe(`Component: todo-item`, () => {
   });
 
 
-  //toggleSpanEditable button
+  // toggleSpanEditable button
   it('should call toggleSpanEditable on edit button click', () => {
     spyOn(component, 'toggleSpanEditable').and.callThrough();
     toggleSpanEditableBtn.nativeElement.click();
@@ -59,14 +59,14 @@ describe(`Component: todo-item`, () => {
     expect(component.allowEdit).toBeTrue();
   });
 
-  //removeTodo button
+  // removeTodo button
   it('should call removeTodo on remove button click',  () => {
     spyOn(component, 'removeTodo').and.callThrough();
     removeTodoBtn.nativeElement.click();
-    expect(component.removeTodo).toHaveBeenCalled()
+    expect(component.removeTodo).toHaveBeenCalled();
   });
 
-  //toggleActive button
+  // toggleActive button
   it('should call toggleActive on toggleActive button click', () => {
     spyOn(component, 'toggleActive').and.callThrough();
     toggleActiveBtn.nativeElement.click();
