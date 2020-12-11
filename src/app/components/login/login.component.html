@@ -1,0 +1,18 @@
+<div  class="content-wrap">
+  <div class="btn-wrap">
+    <button (click)="login = true">Log in</button>
+    <button (click)="login = false">Register</button>
+  </div>
+  <form *ngIf="login" class="input-wrap">
+    <input placeholder="User name..." type="text">
+    <input placeholder="Password..." type="password">
+    <button type="submit">Submit</button>
+  </form>
+
+  <form *ngIf="!login" class="input-wrap">
+    <input placeholder="Email..." type="text">
+    <input placeholder="User name..." type="text">
+    <input placeholder="Password..." type="password">
+    <button type="submit">Submit</button>
+  </form>
+</div>
