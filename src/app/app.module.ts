@@ -21,6 +21,7 @@ import { EditingTodoComponent } from './components/editing-todo/editing-todo.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ApiInterceptorService} from './services/api-interceptor.service';
 import { LoginComponent } from './components/login/login.component';
+import {UserHttpService} from "./services/user-http.service";
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import { LoginComponent } from './components/login/login.component';
     EffectsModule.forRoot([TodoEffects]),
     ToastrModule.forRoot()
   ],
-  providers: [TodoHttpService, ApiInterceptorService,
+  providers: [UserHttpService, TodoHttpService, ApiInterceptorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptorService,

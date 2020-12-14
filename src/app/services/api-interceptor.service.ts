@@ -26,8 +26,16 @@ export class ApiInterceptorService {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    let modifiedReq
+    if(currentUser) {
+      modifiedReq = req.clone({
+        headers: req.headers.set('secret_token', currentUser.token)} )
+    } else {
+        modifiedReq = req
+      }
 
-    return next.handle(req).pipe(
+    return next.handle(modifiedReq).pipe(
       retry(2),
       catchError(err => {
         this.toastr.error(err.message, err.title);

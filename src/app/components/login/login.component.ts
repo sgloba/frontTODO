@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UserHttpService} from "../../services/user-http.service";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private userHttpService: UserHttpService,
+    private route:Router
+  ) { }
 
   ngOnInit(): void {
   }
@@ -15,4 +20,18 @@ export class LoginComponent implements OnInit {
   login: boolean = true
   register: boolean = false
 
+  usernameInput: string
+  passwordInput: string
+
+
+  onRegister(username, password) {
+    this.userHttpService.Register(username, password).subscribe()
+  }
+
+  onLogin(username, password) {
+    this.userHttpService.Login(username, password).subscribe((res) => {
+
+      this.route.navigate(['/todos'])
+    })
+  }
 }

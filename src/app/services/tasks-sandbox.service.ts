@@ -9,7 +9,6 @@ import {
 } from '../store/selectors/todos.selectors';
 
 
-import { TodoI } from '../models/app.todo.model';
 import { TodoHttpService } from 'src/app/services/todo-http.service';
 import {
   addTodo,

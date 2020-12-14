@@ -4,15 +4,34 @@
     <button (click)="login = false">Register</button>
   </div>
   <form *ngIf="login" class="input-wrap">
-    <input placeholder="User name..." type="text">
-    <input placeholder="Password..." type="password">
-    <button type="submit">Submit</button>
+<!--    login-->
+    <p>log In</p>
+    <input
+      [(ngModel)]="usernameInput"
+      name="loginUsernameInput"
+      placeholder="User name..."
+      type="text">
+    <input
+      [(ngModel)]="passwordInput"
+      name="loginPasswordInput"
+      placeholder="Password..."
+      type="password">
+    <button type="submit" (click)="onLogin(usernameInput, passwordInput)">Submit</button>
   </form>
 
   <form *ngIf="!login" class="input-wrap">
-    <input placeholder="Email..." type="text">
-    <input placeholder="User name..." type="text">
-    <input placeholder="Password..." type="password">
-    <button type="submit">Submit</button>
+<!--    register-->
+    <p>Register</p>
+    <input
+      [(ngModel)]="usernameInput"
+      name="registerUsernameInput"
+      placeholder="User name..."
+      type="text">
+    <input
+      [(ngModel)]="passwordInput"
+      name="registerPasswordInput"
+      placeholder="Password..."
+      type="password">
+    <button type="submit" (click)="onRegister(usernameInput, passwordInput)">Submit</button>
   </form>
 </div>
