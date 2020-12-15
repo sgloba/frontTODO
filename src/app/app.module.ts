@@ -23,6 +23,16 @@ import {ApiInterceptorService} from './services/api-interceptor.service';
 import { LoginComponent } from './components/login/login.component';
 import {UserHttpService} from "./services/user-http.service";
 import {LoginGuard} from "./guards/login.guard";
+import { HeaderComponent } from './components/header/header.component';
+import { UserComponent } from './components/header/user/user.component';
+import { CategoryComponent } from './components/category/category.component';
+import { FloatingActionBtnsComponent } from './components/floating-action-btns/floating-action-btns.component';
+import { AsideComponent } from './components/aside/aside.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
+import {MaterialModule} from "./modules/material.module";
+
+
+
 
 
 @NgModule({
@@ -32,6 +42,12 @@ import {LoginGuard} from "./guards/login.guard";
     TodoItemComponent,
     EditingTodoComponent,
     LoginComponent,
+    HeaderComponent,
+    UserComponent,
+    CategoryComponent,
+    FloatingActionBtnsComponent,
+    AsideComponent,
+    MainPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +58,8 @@ import {LoginGuard} from "./guards/login.guard";
     BrowserAnimationsModule,
     StoreModule.forRoot({todos: todoReducer}),
     EffectsModule.forRoot([TodoEffects]),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MaterialModule
   ],
   providers: [LoginGuard, UserHttpService, TodoHttpService, ApiInterceptorService,
     {

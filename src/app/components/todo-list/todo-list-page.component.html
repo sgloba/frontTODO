@@ -11,12 +11,15 @@
             type="text"
             placeholder="What needs to be done?">
     <button
-      type="submit" (click)="addTodo(inputValue)">Add</button>
+      type="submit"  mat-flat-button (click)="addTodo(inputValue)">Add</button>
   </form>
   <div class="user-wrap">
     <p>Logged in as: {{user?.user.username}}</p>
-    <button (click)="logout()" >Logout</button>
+    <button (click)="logout()" mat-flat-button>Logout</button>
   </div>
+
+  <app-category></app-category>
+
   <nav>
     <ul>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

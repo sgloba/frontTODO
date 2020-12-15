@@ -1,77 +1,98 @@
 @import "src/app/scss/colors";
 @import '~ngx-toastr/toastr';
+@import "~@angular/material/prebuilt-themes/purple-green.css";
+@import "~@angular/material/theming";
+@include mat-core();
 
-body {
-  background: $bg-main-clr;
-  color: $text-clr;
-  font-family: sans-serif;
-  font-size: 16px;
-}
-button:active{
-  transform: scale(.9);
-}
-a:active{
-  font-size: 15px;
-}
 
-button {
-  font-size: inherit;
-  background: $icon-bg-clr;
-  color: $icon-text-clr;
-  margin-right: .5rem;
-  margin-bottom: .1rem;
-  width: 25px;
-  height: 25px;
-  padding: .3rem;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  &:hover, :active, :focus {
-    opacity: .6;
-  }
-}
-.is-completed{
-  opacity: .4;
-  position: relative;
-  &::before {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    height: 1px;
-    background: $border-clr;
-    content: "";
-    width: 100%;
-    display: block;
-  }
+.app-theme1-theme {
+  $my-app-primary: mat-palette($mat-grey, 100);
+  $my-app-accent: mat-palette($mat-grey, 500);
+  $my-app-warn: mat-palette($mat-grey, 900);
+  // Create the theme object (a Sass map containing all of the palettes).
+  $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+  // Include theme styles for core and each component used in your app.
+  // Alternatively, you can import and @include the theme mixins for each component
+  // that you are using.
+  @include angular-material-theme($my-app-theme);
 }
 
 
-//Input autofill styles override
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active  {
-  -webkit-box-shadow: 0 0 0 30px $bg-main-clr inset !important;
-}
-input:-webkit-autofill {
-  -webkit-text-fill-color: $text-clr !important;
-}
-
-//Input autofill styles override end
-
-.input-wrap{
-  input {
-    margin-right: .5rem;
-    background: $bg-main-clr;
-    border: none;
-    font-size: 16px;
-    color: inherit;
-    border-bottom: dotted 1px $border-clr;
-  }
-  button{
-    border-radius: 10px;
-    width: auto;
-  }
-  border-bottom: dotted 1px $border-clr;
-}
+//
+//body {
+//  background: $bg-main-clr;
+//  color: $text-clr;
+//  font-family: sans-serif;
+//  font-size: 16px;
+//}
+//button:active{
+//  transform: scale(.9);
+//}
+//a:active{
+//  font-size: 15px;
+//}
+//
+//button {
+//  font-size: inherit;
+//  background: $icon-bg-clr;
+//  color: $icon-text-clr;
+//  margin-right: .5rem;
+//  margin-bottom: .1rem;
+//  width: 25px;
+//  height: 25px;
+//  padding: .3rem;
+//  border: none;
+//  cursor: pointer;
+//  outline: none;
+//  &:hover, :active, :focus {
+//    opacity: .6;
+//  }
+//}
+//.is-completed{
+//  opacity: .4;
+//  position: relative;
+//  &::before {
+//    position: absolute;
+//    left: 0;
+//    top: 50%;
+//    height: 1px;
+//    background: $border-clr;
+//    content: "";
+//    width: 100%;
+//    display: block;
+//  }
+//}
+//
+//
+////Input autofill styles override
+//
+//input:-webkit-autofill,
+//input:-webkit-autofill:hover,
+//input:-webkit-autofill:focus,
+//input:-webkit-autofill:active  {
+//  -webkit-box-shadow: 0 0 0 30px $bg-main-clr inset !important;
+//}
+//input:-webkit-autofill {
+//  -webkit-text-fill-color: $text-clr !important;
+//}
+//
+////Input autofill styles override end
+//
+//.input-wrap{
+//  input {
+//    margin-right: .5rem;
+//    background: $bg-main-clr;
+//    border: none;
+//    font-size: 16px;
+//    color: inherit;
+//    border-bottom: dotted 1px $border-clr;
+//  }
+//  button{
+//    border-radius: 10px;
+//    width: auto;
+//  }
+//  border-bottom: dotted 1px $border-clr;
+//}
+//
+//html, body { height: 100%; }
+//body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

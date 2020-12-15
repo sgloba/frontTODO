@@ -1,10 +1,23 @@
 <div  class="content-wrap">
   <div class="btn-wrap">
-    <button (click)="login = true">Log in</button>
-    <button (click)="login = false">Register</button>
+    <button mat-raised-button (click)="login = true">Log in</button>
+    <button mat-raised-button (click)="login = false">Register</button>
   </div>
   <form *ngIf="login" class="input-wrap">
 <!--    login-->
+
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Favorite food</mat-label>
+        <input matInput placeholder="Ex. Pizza" value="Sushi">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Leave a comment</mat-label>
+        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+      </mat-form-field>
+    </form>
+
     <p>log In</p>
     <input
       [(ngModel)]="usernameInput"
@@ -16,7 +29,7 @@
       name="loginPasswordInput"
       placeholder="Password..."
       type="password">
-    <button type="submit" (click)="onLogin()">Submit</button>
+    <button mat-raised-button type="submit" (click)="onLogin()">Submit</button>
   </form>
 
   <form *ngIf="!login" class="input-wrap">
@@ -28,10 +41,11 @@
       placeholder="User name..."
       type="text">
     <input
+
       [(ngModel)]="passwordInput"
       name="registerPasswordInput"
       placeholder="Password..."
       type="password">
-    <button type="submit" (click)="onRegister()">Submit</button>
+    <button mat-raised-button type="submit" (click)="onRegister()">Submit</button>
   </form>
 </div>

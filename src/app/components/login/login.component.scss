@@ -1,18 +1,27 @@
-.input-wrap {
-  display: flex;
-  flex-direction: column;
-  border-bottom: none;
-  input{
-    margin: 1rem 0;
-  }
-  button{
-    margin: 1rem 0;
-  }
-}
-.btn-wrap{
-  button {
-    margin-bottom: .5rem;
-    width: 100%;
-    border-radius: 10px;
-  }
+//.input-wrap {
+//  display: flex;
+//  flex-direction: column;
+//  border-bottom: none;
+//  input{
+//    margin: 1rem 0;
+//  }
+//  button{
+//    margin: 1rem 0;
+//  }
+//}
+//.btn-wrap{
+//  button {
+//    margin-bottom: .5rem;
+//    width: 100%;
+//    border-radius: 10px;
+//  }
+//}
+
+
+@import "../../scss/colors";
+
+
+button{
+  //color: $app-primary;
+  margin-right: 1rem;
 }
