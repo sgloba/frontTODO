@@ -22,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ApiInterceptorService} from './services/api-interceptor.service';
 import { LoginComponent } from './components/login/login.component';
 import {UserHttpService} from "./services/user-http.service";
+import {LoginGuard} from "./guards/login.guard";
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import {UserHttpService} from "./services/user-http.service";
     EffectsModule.forRoot([TodoEffects]),
     ToastrModule.forRoot()
   ],
-  providers: [UserHttpService, TodoHttpService, ApiInterceptorService,
+  providers: [LoginGuard, UserHttpService, TodoHttpService, ApiInterceptorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptorService,

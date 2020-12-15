@@ -2,7 +2,10 @@ import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { TasksSandboxService } from '../../services/tasks-sandbox.service';
 import { Observable } from 'rxjs';
 import { TodoI } from '../../models/app.todo.model';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserHttpService} from "../../services/user-http.service";
+import {UserI} from "../../models/app.user.model";
+
 
 
 
@@ -16,6 +19,8 @@ export class TodoListPageComponent implements OnInit{
   constructor(
     private taskSandbox: TasksSandboxService,
     private activatedRoute: ActivatedRoute,
+    private userHttpService: UserHttpService,
+    private route:Router
   ) {}
 
   @ViewChild('todoInput')
@@ -25,6 +30,8 @@ export class TodoListPageComponent implements OnInit{
   todos$: Observable<TodoI[]>;
 
   isEditing$: Observable<boolean> = this.taskSandbox.isEditing$;
+
+  user: UserI = this.userHttpService.getCurrentUser()
 
   ngOnInit(): void {
     this.taskSandbox.requestTodos();
@@ -46,6 +53,11 @@ export class TodoListPageComponent implements OnInit{
 
     this.inputValue = '';
     this.todoInput.nativeElement.focus();
+  }
+
+  logout(): void {
+    localStorage.removeItem('currentUser')
+    this.route.navigate(['/'])
   }
 
 }

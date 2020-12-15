@@ -12,8 +12,8 @@ export class EditingTodoComponent implements OnInit {
     private taskSandbox: TasksSandboxService,
   ) { }
 
-  initialValue = this.taskSandbox.initialEditingValue;
-  newValue = this.taskSandbox.newEditingValue;
+  initialValue$ = this.taskSandbox.initialEditingValue$;
+  newValue$ = this.taskSandbox.newEditingValue$;
 
   ngOnInit(): void {
   }

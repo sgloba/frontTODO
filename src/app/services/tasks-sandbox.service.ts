@@ -37,8 +37,8 @@ export class TasksSandboxService {
   allTodos$ = this.store.pipe(select(allTodos));
 
   isEditing$ = this.store.pipe(select(isTodoEditing));
-  initialEditingValue = this.store.pipe(select(initialEditingValue));
-  newEditingValue = this.store.pipe(select(newEditingValue));
+  initialEditingValue$ = this.store.pipe(select(initialEditingValue));
+  newEditingValue$ = this.store.pipe(select(newEditingValue));
 
 
   requestTodos(): void {

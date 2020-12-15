@@ -1,37 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {UserHttpService} from "../../services/user-http.service";
 import {Router} from '@angular/router';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   constructor(
     private userHttpService: UserHttpService,
-    private route:Router
+    private route:Router,
+    private toastr: ToastrService,
   ) { }
 
-  ngOnInit(): void {
-  }
+
 
   login: boolean = true
-  register: boolean = false
 
   usernameInput: string
   passwordInput: string
 
-
-  onRegister(username, password) {
-    this.userHttpService.Register(username, password).subscribe()
+  onRegister() {
+    this.userHttpService.register(this.usernameInput, this.passwordInput).subscribe((res: any) => {
+      console.log(res)
+      this.toastr.success(`${res.message}`)
+    })
   }
 
-  onLogin(username, password) {
-    this.userHttpService.Login(username, password).subscribe((res) => {
-
+  onLogin() {
+    this.userHttpService.login(this.usernameInput, this.passwordInput).subscribe(() => {
       this.route.navigate(['/todos'])
+      this.userHttpService.getCurrentUser()
     })
   }
 }

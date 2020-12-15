@@ -1,16 +1,17 @@
 @import "src/app/scss/colors";
 
 
-
+button{
+  border-radius: 10px;
+  width: auto;
+}
 
 .input-wrap{
   input {
     font-size: 26px;
+    border-bottom: none;
       }
-  button{
-    border-radius: 10px;
-    width: auto;
-  }
+
 }
 
 ul{
@@ -41,3 +42,11 @@ ul{
   }
 }
 
+.user-wrap{
+  display: flex;
+  justify-content: space-between;
+
+  button{
+    margin: 1rem 0;
+  }
+}

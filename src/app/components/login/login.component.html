@@ -16,7 +16,7 @@
       name="loginPasswordInput"
       placeholder="Password..."
       type="password">
-    <button type="submit" (click)="onLogin(usernameInput, passwordInput)">Submit</button>
+    <button type="submit" (click)="onLogin()">Submit</button>
   </form>
 
   <form *ngIf="!login" class="input-wrap">
@@ -32,6 +32,6 @@
       name="registerPasswordInput"
       placeholder="Password..."
       type="password">
-    <button type="submit" (click)="onRegister(usernameInput, passwordInput)">Submit</button>
+    <button type="submit" (click)="onRegister()">Submit</button>
   </form>
 </div>

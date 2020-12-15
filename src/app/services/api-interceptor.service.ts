@@ -8,6 +8,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, retry, tap} from 'rxjs/operators';
 
 import { ToastrService } from 'ngx-toastr';
+import {Router} from "@angular/router";
 
 
 
@@ -18,7 +19,9 @@ import { ToastrService } from 'ngx-toastr';
 export class ApiInterceptorService {
 
   constructor(
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route:Router
+
   ) { }
 
 
@@ -38,6 +41,9 @@ export class ApiInterceptorService {
     return next.handle(modifiedReq).pipe(
       retry(2),
       catchError(err => {
+        if(err.status === 401) {
+          this.route.navigate(['/'])
+        }
         this.toastr.error(err.message, err.title);
         return throwError(err);
       })
