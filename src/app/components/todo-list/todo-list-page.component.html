@@ -13,6 +13,10 @@
     <button
       type="submit" (click)="addTodo(inputValue)">Add</button>
   </form>
+  <div class="user-wrap">
+    <p>Logged in as: {{user?.user.username}}</p>
+    <button (click)="logout()" >Logout</button>
+  </div>
   <nav>
     <ul>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

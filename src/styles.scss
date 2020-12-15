@@ -44,3 +44,34 @@ button {
     display: block;
   }
 }
+
+
+//Input autofill styles override
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px $bg-main-clr inset !important;
+}
+input:-webkit-autofill {
+  -webkit-text-fill-color: $text-clr !important;
+}
+
+//Input autofill styles override end
+
+.input-wrap{
+  input {
+    margin-right: .5rem;
+    background: $bg-main-clr;
+    border: none;
+    font-size: 16px;
+    color: inherit;
+    border-bottom: dotted 1px $border-clr;
+  }
+  button{
+    border-radius: 10px;
+    width: auto;
+  }
+  border-bottom: dotted 1px $border-clr;
+}

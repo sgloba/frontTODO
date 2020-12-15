@@ -70,7 +70,7 @@ describe(`Component: todo-item`, () => {
   it('should call toggleActive on toggleActive button click', () => {
     spyOn(component, 'toggleActive').and.callThrough();
     toggleActiveBtn.nativeElement.click();
-    expect(component.toggleActive).toHaveBeenCalledWith(TEST_TODO._id);
+    expect(component.toggleActive).toHaveBeenCalledWith();
   });
 
 });

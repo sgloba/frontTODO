@@ -1,0 +1,37 @@
+<div  class="content-wrap">
+  <div class="btn-wrap">
+    <button (click)="login = true">Log in</button>
+    <button (click)="login = false">Register</button>
+  </div>
+  <form *ngIf="login" class="input-wrap">
+<!--    login-->
+    <p>log In</p>
+    <input
+      [(ngModel)]="usernameInput"
+      name="loginUsernameInput"
+      placeholder="User name..."
+      type="text">
+    <input
+      [(ngModel)]="passwordInput"
+      name="loginPasswordInput"
+      placeholder="Password..."
+      type="password">
+    <button type="submit" (click)="onLogin()">Submit</button>
+  </form>
+
+  <form *ngIf="!login" class="input-wrap">
+<!--    register-->
+    <p>Register</p>
+    <input
+      [(ngModel)]="usernameInput"
+      name="registerUsernameInput"
+      placeholder="User name..."
+      type="text">
+    <input
+      [(ngModel)]="passwordInput"
+      name="registerPasswordInput"
+      placeholder="Password..."
+      type="password">
+    <button type="submit" (click)="onRegister()">Submit</button>
+  </form>
+</div>

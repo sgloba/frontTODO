@@ -2,14 +2,14 @@
   [class.is-completed]="todo?.isCompleted"
   class="todo-item">
   <div class="text-wrap">
-    <button class="toggle-active" (click)="toggleActive(todo?._id)" >
+    <button class="toggle-active" (click)="toggleActive()" >
       <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
     </button>
     <span
       #editableSpan
       [attr.contenteditable]="allowEdit"
-      (blur)="onSpanBlur(todo?._id)"
-      (keydown.enter)="onSpanBlur(todo?._id); $event.preventDefault()"
+      (blur)="onSpanBlur()"
+      (keydown.enter)="onSpanBlur(); $event.preventDefault()"
       (input)="onSpanInput()"
     >
       {{todo?.value}}
@@ -21,7 +21,7 @@
       <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
     </button>
 
-    <button class="remove-btn" (click)="removeTodo(todo?._id)">
+    <button class="remove-btn" (click)="removeTodo()">
       <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
     </button>
   </div>

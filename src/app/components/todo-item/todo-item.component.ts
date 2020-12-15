@@ -28,17 +28,16 @@ export class TodoItemComponent {
   faPencilAlt = faPencilAlt;
   faTrash = faTrash;
 
-
-  removeTodo(id: number): void {
-    this.taskSandbox.remove(id);
+  removeTodo(): void {
+    this.taskSandbox.remove(this.todo._id);
   }
 
-  toggleActive(id: number): void {
-    this.taskSandbox.toggleActive(id);
+  toggleActive(): void {
+    this.taskSandbox.toggleActive(this.todo._id);
   }
 
-  onSpanBlur(id): void {
-      this.taskSandbox.editValue(id, this.editableSpan.nativeElement.innerText);
+  onSpanBlur(): void {
+      this.taskSandbox.editValue(this.todo._id, this.editableSpan.nativeElement.innerText);
       this.taskSandbox.setInitialEditingValue(null);
   }
 

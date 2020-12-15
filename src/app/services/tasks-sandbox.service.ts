@@ -9,7 +9,6 @@ import {
 } from '../store/selectors/todos.selectors';
 
 
-import { TodoI } from '../models/app.todo.model';
 import { TodoHttpService } from 'src/app/services/todo-http.service';
 import {
   addTodo,
@@ -38,8 +37,8 @@ export class TasksSandboxService {
   allTodos$ = this.store.pipe(select(allTodos));
 
   isEditing$ = this.store.pipe(select(isTodoEditing));
-  initialEditingValue = this.store.pipe(select(initialEditingValue));
-  newEditingValue = this.store.pipe(select(newEditingValue));
+  initialEditingValue$ = this.store.pipe(select(initialEditingValue));
+  newEditingValue$ = this.store.pipe(select(newEditingValue));
 
 
   requestTodos(): void {

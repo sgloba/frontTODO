@@ -18,15 +18,16 @@ export class TodoHttpService {
     return this.http.get<TodoI[]>(this.url);
   }
 
-  removeTodo(id: number): Observable<any> {
-    return this.http.delete(`${this.url}/${id}`);
-  }
-  addTodo(value: string): Observable<any> {
-   return this.http.post(this.url, {value});
+  removeTodo(id: number): Observable<TodoI> {
+    return this.http.delete<TodoI>(`${this.url}/${id}`);
   }
 
-  toggleActive(id: number): Observable<any> {
-    return this.http.put(`${this.url}/${id}/toggle`, {} );
+  addTodo(value: string): Observable<TodoI> {
+   return this.http.post<TodoI>(this.url, {value});
+  }
+
+  toggleActive(id: number): Observable<TodoI> {
+    return this.http.put<TodoI>(`${this.url}/${id}/toggle`, {} );
   }
 
   editValue(id: number, value: string): Observable<TodoI> {
