@@ -18,7 +18,6 @@ import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {TodoHttpService} from './services/todo-http.service';
 import { EditingTodoComponent } from './components/editing-todo/editing-todo.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ApiInterceptorService} from './services/api-interceptor.service';
 import { LoginComponent } from './components/login/login.component';
 import {UserHttpService} from "./services/user-http.service";
@@ -30,7 +29,6 @@ import { FloatingActionBtnsComponent } from './components/floating-action-btns/f
 import { AsideComponent } from './components/aside/aside.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import {MaterialModule} from "./modules/material.module";
-
 
 
 
@@ -55,7 +53,6 @@ import {MaterialModule} from "./modules/material.module";
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
     StoreModule.forRoot({todos: todoReducer}),
     EffectsModule.forRoot([TodoEffects]),
     ToastrModule.forRoot(),

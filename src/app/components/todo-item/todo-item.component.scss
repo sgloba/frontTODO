@@ -1,17 +1,33 @@
-//@import '../../scss/colors.scss';
-//
-//.fa-icon {
-//  text-align: center;
-//  vertical-align: baseline;
-//}
-//
-//.todo-item{
-//  display: flex;
-//  justify-content: space-between;
-//  border-bottom: dotted 1px $border-clr;
-//  margin-bottom: 1rem;
-//
-//  button {
-//    border-radius: 50%;
-//  }
-//}
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px currentColor;
+  margin-bottom: 1rem;
+  font-size: 18px;
+}
+.mat-stroked-button{
+  border-radius: 50%;
+  border: solid 2px currentColor;
+  padding: 0;
+  margin: .2rem;
+  min-width: 37px;
+}
+.mat-mini-fab{
+  margin: .2rem;
+}
+
+.is-completed{
+  opacity: .2;
+  position: relative;
+  border-bottom: none;
+  &:before {
+    content: '';
+    width: 100%;
+    border-bottom: solid 2px #fff;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    z-index: 1;
+    pointer-events: none;
+  }
+}

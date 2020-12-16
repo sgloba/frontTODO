@@ -1,12 +1,7 @@
 
-//$bg-main-clr: map-get($mat-light-theme-background, 'dividers');
-//$text-clr: #000;
-//$border-clr: #6d6d6d;
-//$icon-bg-clr: #313131;
-//$icon-text-clr: #a5a5a5;
+$bg-main-clr: #150218;
+$text-clr: #fff;
+$border-clr: #fff;
+$primary-clr: #7b1fa2;
+$secondary-clr: #69f0ae;
 
-@import '~@angular/material/theming';
-@import "~@angular/material/prebuilt-themes/purple-green.css";
-@include mat-core();
-
-$app-primary: mat-palette($mat-grey);

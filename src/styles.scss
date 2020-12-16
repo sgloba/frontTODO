@@ -3,6 +3,7 @@
 @import "~@angular/material/prebuilt-themes/purple-green.css";
 @import "~@angular/material/theming";
 @include mat-core();
+@import "./src/app/scss/colors";
 
 
 .app-theme1-theme {
@@ -64,19 +65,19 @@
 //}
 //
 //
-////Input autofill styles override
-//
-//input:-webkit-autofill,
-//input:-webkit-autofill:hover,
-//input:-webkit-autofill:focus,
-//input:-webkit-autofill:active  {
-//  -webkit-box-shadow: 0 0 0 30px $bg-main-clr inset !important;
-//}
-//input:-webkit-autofill {
-//  -webkit-text-fill-color: $text-clr !important;
-//}
-//
-////Input autofill styles override end
+//Input autofill styles override
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px rgb(21, 2, 24) inset !important;
+}
+input:-webkit-autofill {
+  -webkit-text-fill-color: #fff !important;
+}
+
+//Input autofill styles override end
 //
 //.input-wrap{
 //  input {
@@ -94,5 +95,11 @@
 //  border-bottom: dotted 1px $border-clr;
 //}
 //
-//html, body { height: 100%; }
-//body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { height: 100%;  }
+body {
+  color: $text-clr;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: $bg-main-clr;
+  font-size: 18px;
+}

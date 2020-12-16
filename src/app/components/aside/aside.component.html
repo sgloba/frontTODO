@@ -1,1 +1,21 @@
-<p>aside works!</p>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="side" opened>
+    <h2>Task <br/>info</h2>
+    <h3>Plan</h3>
+
+    <span class="example-list-section">
+    <ul>
+      <li *ngFor="let subtask of task.subtasks">
+        <mat-checkbox [(ngModel)]="subtask.completed"
+                      [color]="subtask.color"
+        >
+          {{subtask.name}}
+        </mat-checkbox>
+        <button mat-stroked-button>
+          <mat-icon class="material-icons">delete_forever</mat-icon>
+        </button>
+      </li>
+    </ul>
+  </span>
+  </mat-sidenav>
+</mat-sidenav-container>

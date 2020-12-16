@@ -1,0 +1,61 @@
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: auto;
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: lightgray;
+}
+
+.navigation-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.icon {
+  display: inline-block;
+  height: 30px;
+  margin: 0 auto;
+  padding-right: 5px;
+  text-align: center;
+  vertical-align: middle;
+  width: 15%;
+}
+
+.label {
+  display: inline-block;
+  line-height: 30px;
+  margin: 0;
+  width: 85%;
+}
+
+.btn-wrap{
+  li{
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    a{
+      display: flex;
+      align-items: center;
+    }
+  }
+  img{
+    margin-right: .2rem;
+    display: inline;
+    border-radius: 50%;
+  }
+}
