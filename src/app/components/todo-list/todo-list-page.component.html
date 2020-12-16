@@ -1,41 +1,43 @@
-<div class="content-wrap">
+<div class="todo-list-wrap">
 
   <app-editing-todo
     *ngIf="isEditing$ | async"
   ></app-editing-todo>
 
-  <form  class="input-wrap">
-    <input  [(ngModel)] = "inputValue"
-            #todoInput
-            name="todoInput"
-            type="text"
-            placeholder="What needs to be done?">
+
+  <form class="input-wrap">
+    <mat-form-field class="example-full-width">
+      <input [(ngModel)]="inputValue"
+             matInput
+             #todoInput
+             name="todoInput"
+             type="text"
+             placeholder="What needs to be done?">
+    </mat-form-field>
     <button
-      type="submit" (click)="addTodo(inputValue)">Add</button>
+      type="submit" mat-stroked-button (click)="addTodo(inputValue)">Add
+    </button>
   </form>
+
   <div class="user-wrap">
-    <p>Logged in as: {{user?.user.username}}</p>
-    <button (click)="logout()" >Logout</button>
+    <p></p>
   </div>
-  <nav>
-    <ul>
-      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a [routerLink]="null">
-          View All
-        </a>
-      </li>
-      <li routerLinkActive="active">
-        <a [routerLink]="null" [queryParams]="{todos: 'active'}">
-          Active
-        </a>
-      </li>
-      <li routerLinkActive="active">
-        <a [routerLink]="null" [queryParams]="{todos: 'completed'}">
-          Completed
-        </a>
-      </li>
-    </ul>
-  </nav>
+
+  <app-category></app-category>
+
+  <mat-nav-list>
+    <a [routerLink]="null" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      All
+    </a>
+
+    <a [routerLink]="null" [queryParams]="{todos: 'active'}" routerLinkActive="active">
+      Active
+    </a>
+    <a [routerLink]="null" [queryParams]="{todos: 'completed'}" routerLinkActive="active">
+      Completed
+    </a>
+  </mat-nav-list>
+
   <app-todo-item
     *ngFor="let todo of (todos$ | async)"
     [todo]="todo"

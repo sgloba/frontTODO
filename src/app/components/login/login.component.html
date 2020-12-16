@@ -1,37 +1,49 @@
 <div  class="content-wrap">
-  <div class="btn-wrap">
-    <button (click)="login = true">Log in</button>
-    <button (click)="login = false">Register</button>
-  </div>
+  <mat-button-toggle-group value="Log in"  class="btn-wrap">
+    <mat-button-toggle  value="Log in" (click)="login = true">Log in</mat-button-toggle>
+    <mat-button-toggle  value="Register" (click)="login = false">Register</mat-button-toggle>
+  </mat-button-toggle-group>
   <form *ngIf="login" class="input-wrap">
-<!--    login-->
-    <p>log In</p>
-    <input
-      [(ngModel)]="usernameInput"
-      name="loginUsernameInput"
-      placeholder="User name..."
-      type="text">
-    <input
-      [(ngModel)]="passwordInput"
-      name="loginPasswordInput"
-      placeholder="Password..."
-      type="password">
-    <button type="submit" (click)="onLogin()">Submit</button>
+    <!--    login-->
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        [(ngModel)]="usernameInput"
+        name="loginUsernameInput"
+        placeholder="User name..."
+        type="text">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        [(ngModel)]="passwordInput"
+        name="loginPasswordInput"
+        placeholder="Password..."
+        type="password">
+    </mat-form-field>
+    <button mat-raised-button type="submit" color="primary" (click)="onLogin()">Submit</button>
   </form>
 
   <form *ngIf="!login" class="input-wrap">
 <!--    register-->
-    <p>Register</p>
-    <input
-      [(ngModel)]="usernameInput"
-      name="registerUsernameInput"
-      placeholder="User name..."
-      type="text">
-    <input
-      [(ngModel)]="passwordInput"
-      name="registerPasswordInput"
-      placeholder="Password..."
-      type="password">
-    <button type="submit" (click)="onRegister()">Submit</button>
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        [(ngModel)]="usernameInput"
+        name="loginUsernameInput"
+        placeholder="User name..."
+        type="text">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input
+        matInput
+        [(ngModel)]="passwordInput"
+        name="loginPasswordInput"
+        placeholder="Password..."
+        type="password">
+    </mat-form-field>
+    <button mat-raised-button type="submit" color="primary" (click)="onRegister()">Submit</button>
   </form>
 </div>

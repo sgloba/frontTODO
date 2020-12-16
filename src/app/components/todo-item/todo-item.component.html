@@ -2,7 +2,7 @@
   [class.is-completed]="todo?.isCompleted"
   class="todo-item">
   <div class="text-wrap">
-    <button class="toggle-active" (click)="toggleActive()" >
+    <button mat-stroked-button color="accent" (click)="toggleActive()" >
       <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
     </button>
     <span
@@ -17,11 +17,11 @@
   </div>
 
   <div class="btn-wrap">
-    <button (click)="toggleSpanEditable()">
+    <button mat-mini-fab color="primary" (click)="toggleSpanEditable()">
       <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
     </button>
 
-    <button class="remove-btn" (click)="removeTodo()">
+    <button mat-stroked-button class="remove-btn" color="accent" (click)="removeTodo()">
       <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
     </button>
   </div>

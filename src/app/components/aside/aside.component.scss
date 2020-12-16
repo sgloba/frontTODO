@@ -1,0 +1,17 @@
+@import "./src/app/scss/colors";
+.example-container {
+  position: absolute;
+  top: 0;
+  width: 400px;
+  height: 600px;
+  margin-top: 64px;
+}
+.mat-sidenav {
+  width: 100%;
+}
+.mat-stroked-button {
+  padding: 0;
+  width: 30px;
+  min-height: unset;
+  min-width: unset;
+}

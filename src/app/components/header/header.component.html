@@ -1,0 +1,42 @@
+<mat-sidenav-container class="mat-elevation-z6">
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <div fxHide.gt-xs>
+        <button mat-icon-button>
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+
+      <div>
+        <a>
+          Todos |
+        </a>
+        <a>
+          Stats
+        </a>
+      </div>
+
+      <div class="btn-wrap" fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+        <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+          <li>
+          </li>
+          <li>
+            <a>
+              <img src="https://source.unsplash.com/random/40x40" alt="user_avatar">
+              <span class="label">Logged in as: {{user?.user.username}}</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <button (click)="logout()" mat-flat-button>
+                <mat-icon class="icon">input</mat-icon>
+                <span class="label">LogOut</span>
+              </button>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>

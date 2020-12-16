@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {TodoListPageComponent} from './components/todo-list/todo-list-page.component';
 import {LoginComponent} from "./components/login/login.component";
 import {LoginGuard} from "./guards/login.guard";
+import {MainPageComponent} from "./components/main-page/main-page.component";
 
 const routes: Routes = [
-  {path: 'todos', component: TodoListPageComponent },
+  {path: 'main', component: MainPageComponent },
   {path: '', component: LoginComponent, canActivate: [LoginGuard]},
 ];
 

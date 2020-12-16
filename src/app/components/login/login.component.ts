@@ -32,7 +32,7 @@ export class LoginComponent {
 
   onLogin() {
     this.userHttpService.login(this.usernameInput, this.passwordInput).subscribe(() => {
-      this.route.navigate(['/todos'])
+      this.route.navigate(['/main'])
       this.userHttpService.getCurrentUser()
     })
   }
