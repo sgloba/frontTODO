@@ -1,8 +1,9 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import {Component, ElementRef, ViewChild, OnInit, Input} from '@angular/core';
 import { TasksSandboxService } from '../../services/tasks-sandbox.service';
 import { Observable } from 'rxjs';
 import { TodoI } from '../../models/app.todo.model';
 import {ActivatedRoute} from '@angular/router';
+import {SidenavService} from "../../services/sidenav.service";
 
 
 
@@ -17,7 +18,9 @@ export class TodoListPageComponent implements OnInit{
   constructor(
     private taskSandbox: TasksSandboxService,
     private activatedRoute: ActivatedRoute,
+    private sidenavService: SidenavService
   ) {}
+  @Input('sidenavOpened') sidenavOpened: boolean;
 
   @ViewChild('todoInput')
   todoInput: ElementRef;
@@ -43,13 +46,12 @@ export class TodoListPageComponent implements OnInit{
   }
 
   addTodo(value: string): void {
+
     if (!value) { return; }
     this.taskSandbox.add(value);
 
     this.inputValue = '';
     this.todoInput.nativeElement.focus();
   }
-
-
 
 }

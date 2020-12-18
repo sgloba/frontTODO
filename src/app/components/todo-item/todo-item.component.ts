@@ -16,13 +16,23 @@ export class TodoItemComponent {
 
   constructor(
     private taskSandbox: TasksSandboxService,
-  ) {}
+  ) {
+    this.taskSandbox.selectedTodoId$.subscribe((id) => {
+      if(id === this.todo._id) {
+        this.highlight = true
+      } else {
+        this.highlight = false
+      }
+    })
+  }
+
   @ViewChild('editableSpan')
   editableSpan: ElementRef;
 
   @Input() todo: TodoI = {} as TodoI;
 
-  allowEdit = false;
+  allowEdit: boolean = false;
+  highlight: boolean = false;
 
   faCheck = faCheck;
   faPencilAlt = faPencilAlt;
@@ -55,6 +65,10 @@ export class TodoItemComponent {
         this.editableSpan.nativeElement.focus();
       }, 0);
     }
+  }
+
+  onSelectTodo() {
+    this.taskSandbox.selectTodo(this.todo._id)
   }
 
 }

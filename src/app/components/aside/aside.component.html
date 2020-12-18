@@ -1,21 +1,51 @@
-<mat-sidenav-container class="example-container">
-  <mat-sidenav mode="side" opened>
-    <h2>Task <br/>info</h2>
-    <h3>Plan</h3>
+<mat-sidenav
+  #sidenav
+  mode="side"
+  (keydown.escape)="sidenavClose()">
+  <div class="example-container">
+    <div class="header-wrap">
+      <h2>Task info</h2>
+    </div>
+    <button class="sidebar-close-btn" mat-stroked-button (click)="sidenavClose()">
+      <mat-icon>close</mat-icon>
+    </button>
 
-    <span class="example-list-section">
-    <ul>
-      <li *ngFor="let subtask of task.subtasks">
-        <mat-checkbox [(ngModel)]="subtask.completed"
-                      [color]="subtask.color"
-        >
-          {{subtask.name}}
-        </mat-checkbox>
-        <button mat-stroked-button>
-          <mat-icon class="material-icons">delete_forever</mat-icon>
-        </button>
-      </li>
-    </ul>
-  </span>
-  </mat-sidenav>
-</mat-sidenav-container>
+    <div class="example-list-section">
+      <h3>Plan for: {{taskId}}</h3>
+
+      <ul>
+        <li *ngFor="let subtask of task.subtasks">
+          <mat-checkbox [(ngModel)]="subtask.completed"
+                        [color]="subtask.color"
+          >
+            {{subtask.name}}
+          </mat-checkbox>
+          <button mat-stroked-button>
+            <mat-icon class="material-icons">delete_forever</mat-icon>
+          </button>
+        </li>
+        <li>
+          <form class="add-plan-item">
+            <mat-form-field class="example-full-width">
+              <input [(ngModel)]="inputValue"
+                     matInput
+                     #planInput
+                     name="planInput"
+                     type="text"
+                     placeholder="Add plan item...">
+            </mat-form-field>
+            <button
+              type="submit"
+              mat-stroked-button
+              (click)="addPlan(inputValue)">
+              <mat-icon>post_add</mat-icon>
+            </button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</mat-sidenav>
+
+
+

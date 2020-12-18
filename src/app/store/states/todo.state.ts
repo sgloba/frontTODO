@@ -6,5 +6,6 @@ export interface TodoState {
     initialValue: string,
     newValue: string
   };
+  selectedTodoId: number
 }
 

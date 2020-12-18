@@ -1,10 +1,18 @@
+@import "./src/app/scss/colors";
 .todo-item {
   display: flex;
   justify-content: space-between;
   border-bottom: solid 1px currentColor;
   margin-bottom: 1rem;
   font-size: 18px;
+  cursor: pointer;
 }
+.highlight{
+  background: $bg-main-clr-light;
+  border: 1px solid $text-clr;
+  border-radius: 5px;
+}
+
 .mat-stroked-button{
   border-radius: 50%;
   border: solid 2px currentColor;

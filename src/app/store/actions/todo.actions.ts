@@ -61,3 +61,8 @@ export const setNewTodoEditingValue = createAction(
 export const resetTodoEditingState = createAction(
   '[Todo] Reset Todo Editing State'
 );
+
+export const selectTodo =createAction(
+  '[Todos] Select Todo',
+  props<{_id: number}>()
+)

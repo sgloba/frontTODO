@@ -5,7 +5,7 @@ import {
   allTodos,
   completedTodos,
   initialEditingValue,
-  isTodoEditing, newEditingValue
+  isTodoEditing, newEditingValue, selectedTodoId
 } from '../store/selectors/todos.selectors';
 
 
@@ -16,7 +16,8 @@ import {
   fetchTodos,
   removeTodo,
   setInitialTodoEditingValue, setNewTodoEditingValue,
-  toggleActive
+  toggleActive,
+  selectTodo
 } from '../store/actions/todo.actions';
 
 
@@ -40,6 +41,7 @@ export class TasksSandboxService {
   initialEditingValue$ = this.store.pipe(select(initialEditingValue));
   newEditingValue$ = this.store.pipe(select(newEditingValue));
 
+  selectedTodoId$ = this.store.pipe(select(selectedTodoId));
 
   requestTodos(): void {
     this.store.dispatch(fetchTodos());
@@ -68,5 +70,9 @@ export class TasksSandboxService {
   }
   setNewEditingValue(value: string): void {
     this.store.dispatch(setNewTodoEditingValue({value}));
+  }
+
+  selectTodo(id: number) {
+    this.store.dispatch(selectTodo({_id: id}))
   }
 }
