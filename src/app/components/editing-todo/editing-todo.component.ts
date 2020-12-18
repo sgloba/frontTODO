@@ -14,6 +14,7 @@ export class EditingTodoComponent implements OnInit {
 
   initialValue$ = this.taskSandbox.initialEditingValue$;
   newValue$ = this.taskSandbox.newEditingValue$;
+  selectedTodoId$ = this.taskSandbox.selectedTodoId$
 
   ngOnInit(): void {
   }

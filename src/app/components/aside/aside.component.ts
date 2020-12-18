@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ThemePalette} from '@angular/material/core';
+import {SidenavService} from "../../services/sidenav.service";
+import {MatSidenav} from "@angular/material/sidenav";
+import {TasksSandboxService} from "../../services/tasks-sandbox.service";
 
 export interface Task {
   name: string;
@@ -15,7 +18,20 @@ export interface Task {
 })
 export class AsideComponent {
 
-  constructor() { }
+  constructor(
+    private tasksSandboxService: TasksSandboxService
+  ) {
+    this.tasksSandboxService.selectedTodoId$.subscribe((id) => {
+      if(id) {
+        this.sidenav.open()
+      }
+    })
+  }
+
+  @ViewChild(MatSidenav)
+  sidenav: MatSidenav;
+
+  taskId: number
 
   task: Task = {
     name: 'Indeterminate',
@@ -29,6 +45,8 @@ export class AsideComponent {
   };
 
   allComplete: boolean = false;
+  inputValue: any;
+
 
   updateAllComplete() {
     this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
@@ -48,5 +66,15 @@ export class AsideComponent {
     }
     this.task.subtasks.forEach(t => t.completed = completed);
   }
+
+
+  sidenavClose(){
+    this.sidenav.close()
+    this.tasksSandboxService.selectTodo(null)
+  }
+
+  addPlan(plan: any) {
+  }
+
 
 }

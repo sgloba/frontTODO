@@ -29,6 +29,7 @@ import { FloatingActionBtnsComponent } from './components/floating-action-btns/f
 import { AsideComponent } from './components/aside/aside.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import {MaterialModule} from "./modules/material.module";
+import {StopClickPropagationDirective} from "./directives/stop-click-propagation.directive";
 
 
 
@@ -46,6 +47,7 @@ import {MaterialModule} from "./modules/material.module";
     FloatingActionBtnsComponent,
     AsideComponent,
     MainPageComponent,
+    StopClickPropagationDirective
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,10 @@
 <div
   [class.is-completed]="todo?.isCompleted"
-  class="todo-item">
+  class="todo-item"
+  [class.highlight]="highlight"
+  (click)="onSelectTodo()">
   <div class="text-wrap">
-    <button mat-stroked-button color="accent" (click)="toggleActive()" >
+    <button mat-stroked-button color="accent" (click)="toggleActive()" stop-click-propagation>
       <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
     </button>
     <span
@@ -17,11 +19,11 @@
   </div>
 
   <div class="btn-wrap">
-    <button mat-mini-fab color="primary" (click)="toggleSpanEditable()">
+    <button mat-mini-fab color="primary" (click)="toggleSpanEditable()" stop-click-propagation>
       <fa-icon class="fa-icon" [icon]="faPencilAlt"></fa-icon>
     </button>
 
-    <button mat-stroked-button class="remove-btn" color="accent" (click)="removeTodo()">
+    <button mat-stroked-button class="remove-btn" color="accent" (click)="removeTodo()" stop-click-propagation>
       <fa-icon class="fa-icon" [icon]="faTrash"></fa-icon>
     </button>
   </div>

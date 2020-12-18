@@ -1,10 +1,10 @@
-import { createReducer, on } from '@ngrx/store';
+import {createReducer, on} from '@ngrx/store';
 
 import {
   addTodoSuccess,
   editValueSuccess,
   fetchTodosSuccess,
-  removeTodoSuccess,
+  removeTodoSuccess, selectTodo,
   setInitialTodoEditingValue, setNewTodoEditingValue,
   toggleActiveSuccess
 } from '../actions/todo.actions';
@@ -15,23 +15,28 @@ export const initialState: TodoState = {
   editing: {
     initialValue: null,
     newValue: null
-  }
+  },
+  selectedTodoId: null
 };
 
 export const todoReducer = createReducer(
   initialState,
 
 
-  on(addTodoSuccess, (state, { todo }) => ({...state,
-    items: [...state.items, todo]})),
+  on(addTodoSuccess, (state, {todo}) => ({
+    ...state,
+    items: [...state.items, todo]
+  })),
 
-  on(removeTodoSuccess, (state, { _id }) => ({...state,
-    items: state.items.filter((todo) => todo._id !== _id)})),
+  on(removeTodoSuccess, (state, {_id}) => ({
+    ...state,
+    items: state.items.filter((todo) => todo._id !== _id)
+  })),
 
   on(toggleActiveSuccess, (state, {_id}) => ({
     ...state,
     items: state.items.map(
-      (item) => item._id === _id ? {...item, isCompleted: !item.isCompleted} : item )
+      (item) => item._id === _id ? {...item, isCompleted: !item.isCompleted} : item)
   })),
 
   on(editValueSuccess, (state, {_id, value}) => ({
@@ -58,6 +63,13 @@ export const todoReducer = createReducer(
         ...state.editing,
         newValue: value
       }
+    });
+  }),
+
+  on(selectTodo, (state, {_id}) => {
+    return ({
+      ...state,
+      selectedTodoId: _id
     });
   })
 );
