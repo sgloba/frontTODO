@@ -10,5 +10,6 @@ export class StopClickPropagationDirective
   public onClick(event: any): void
   {
     event.stopPropagation();
+    event.preventDefault();
   }
 }

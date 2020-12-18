@@ -30,6 +30,7 @@ import { AsideComponent } from './components/aside/aside.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import {MaterialModule} from "./modules/material.module";
 import {StopClickPropagationDirective} from "./directives/stop-click-propagation.directive";
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
 
@@ -58,7 +59,7 @@ import {StopClickPropagationDirective} from "./directives/stop-click-propagation
     StoreModule.forRoot({todos: todoReducer}),
     EffectsModule.forRoot([TodoEffects]),
     ToastrModule.forRoot(),
-    MaterialModule
+    MaterialModule,
   ],
   providers: [LoginGuard, UserHttpService, TodoHttpService, ApiInterceptorService,
     {

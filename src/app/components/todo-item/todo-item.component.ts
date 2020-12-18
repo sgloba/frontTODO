@@ -39,26 +39,26 @@ export class TodoItemComponent {
   faTrash = faTrash;
 
   removeTodo(): void {
-    this.taskSandbox.remove(this.todo._id);
+    // this.taskSandbox.remove(this.todo._id);
   }
 
   toggleActive(): void {
-    this.taskSandbox.toggleActive(this.todo._id);
+    // this.taskSandbox.toggleActive(this.todo._id);
   }
 
   onSpanBlur(): void {
-      this.taskSandbox.editValue(this.todo._id, this.editableSpan.nativeElement.innerText);
-      this.taskSandbox.setInitialEditingValue(null);
+      // this.taskSandbox.editValue(this.todo._id, this.editableSpan.nativeElement.innerText);
+      // this.taskSandbox.setInitialEditingValue(null);
   }
 
   onSpanInput(): void {
-    this.taskSandbox.setNewEditingValue(this.editableSpan.nativeElement.innerText);
+    // this.taskSandbox.setNewEditingValue(this.editableSpan.nativeElement.innerText);
   }
 
   toggleSpanEditable(): void {
    this.allowEdit = !this.allowEdit;
 
-   this.taskSandbox.setInitialEditingValue(this.editableSpan.nativeElement.innerText);
+   // this.taskSandbox.setInitialEditingValue(this.editableSpan.nativeElement.innerText);
 
    if (this.allowEdit) {
       setTimeout(() => {

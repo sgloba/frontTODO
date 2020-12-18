@@ -69,8 +69,8 @@ export class AsideComponent {
 
 
   sidenavClose(){
-    this.sidenav.close()
-    this.tasksSandboxService.selectTodo(null)
+    // this.sidenav.close()
+    // this.tasksSandboxService.selectTodo(null)
   }
 
   addPlan(plan: any) {

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { TodoI } from '../../models/app.todo.model';
 import {ActivatedRoute} from '@angular/router';
 import {SidenavService} from "../../services/sidenav.service";
+import {Dictionary} from "@ngrx/entity";
 
 
 
@@ -26,7 +27,8 @@ export class TodoListPageComponent implements OnInit{
   todoInput: ElementRef;
 
   inputValue: string;
-  todos$: Observable<TodoI[]>;
+
+  todos$: any = [];
 
   isEditing$: Observable<boolean> = this.taskSandbox.isEditing$;
 
@@ -42,6 +44,7 @@ export class TodoListPageComponent implements OnInit{
       } else {
         this.todos$ = this.taskSandbox.allTodos$;
       }
+      this.todos$.subscribe(a => console.log('!!!', a));
     });
   }
 
