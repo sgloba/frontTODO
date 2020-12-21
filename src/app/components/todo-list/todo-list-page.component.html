@@ -1,10 +1,5 @@
 <div class="todo-list-wrap">
 
-  <app-editing-todo
-    *ngIf="isEditing$ | async"
-  ></app-editing-todo>
-
-
   <form class="input-wrap">
     <mat-form-field class="example-full-width">
       <input [(ngModel)]="inputValue"

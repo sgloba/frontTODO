@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
-import {map, catchError, concatMap} from 'rxjs/operators';
+import {map, catchError, concatMap, tap} from 'rxjs/operators';
 import { TodoHttpService } from '../../services/todo-http.service';
 import {
   fetchTodosStart,
@@ -31,7 +31,7 @@ export class TodoEffects {
     concatMap(() => this.todoHttpService.getTodos()
       .pipe(
         map(todos => fetchTodosSuccess({ todos })),
-        catchError((err) => {
+        catchError(() => {
           return EMPTY;
         })
       ))
@@ -43,7 +43,7 @@ export class TodoEffects {
     concatMap(({ value }) => this.todoHttpService.addTodo(value)
       .pipe(
         map((todo) => addTodoSuccess({todo})),
-        catchError((err) => {
+        catchError(() => {
           return EMPTY;
         })
       )
@@ -52,10 +52,10 @@ export class TodoEffects {
 
   removeTodo$ = createEffect( () => this.actions$.pipe(
     ofType(removeTodoStart.type),
-    concatMap(({_id}) => this.todoHttpService.removeTodo(_id)
+    concatMap(({id}) => this.todoHttpService.removeTodo(id)
       .pipe(
-        map(() => removeTodoSuccess(_id)),
-        catchError((err) => {
+        map(() => removeTodoSuccess({id})),
+        catchError(() => {
           return EMPTY;
         })
       )
@@ -64,9 +64,9 @@ export class TodoEffects {
 
   toggleActive$ = createEffect(() => this.actions$.pipe(
     ofType(toggleActiveTodoStart.type),
-    concatMap(({_id}) => this.todoHttpService.toggleActive(_id)
+    concatMap(({id}) => this.todoHttpService.toggleActive(id)
       .pipe(
-        map((id) => toggleActiveTodoSuccess(id)),
+        map(() => toggleActiveTodoSuccess({id})),
         catchError((err) => {
           return EMPTY;
         })
@@ -76,10 +76,10 @@ export class TodoEffects {
 
   updateTodo$ = createEffect(() => this.actions$.pipe(
     ofType(updateTodoStart.type),
-    concatMap(({_id, value}) => this.todoHttpService.editValue(_id, value)
+    concatMap(({id, value}) => this.todoHttpService.editValue(id, value)
       .pipe(
-        map(() => updateTodoSuccess({_id, value})),
-        catchError((err) => {
+        map(() => updateTodoSuccess({id, value})),
+        catchError(() => {
           return EMPTY;
         })
       )

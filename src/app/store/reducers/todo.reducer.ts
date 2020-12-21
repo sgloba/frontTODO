@@ -2,15 +2,16 @@ import {TodoState} from '../states/todo.state';
 import {TodoI} from "../../models/app.todo.model";
 
 
-import { Action, createReducer, on } from '@ngrx/store';
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import {Action, createReducer, on} from '@ngrx/store';
+import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
 import * as TodoActions from '../actions/todo.actions';
-import {toggleActiveTodoSuccess} from "../actions/todo.actions";
 
 export const todosFeatureKey = 'todos';
 
+// TODO: remove comments, rename to TodoState, change { id: id } to { id }
+
 export interface State extends EntityState<TodoI> {
-  // additional entities state properties
+  selectedTodoId: number,
 }
 
 export const adapter: EntityAdapter<TodoI> = createEntityAdapter<TodoI>({
@@ -19,6 +20,7 @@ export const adapter: EntityAdapter<TodoI> = createEntityAdapter<TodoI>({
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
+  selectedTodoId: null
 });
 
 
@@ -28,17 +30,27 @@ export const todoReducer = createReducer(
     (state, {todos}) => adapter.setAll(todos, state)
   ),
   on(TodoActions.addTodoSuccess,
-    (state, { todo }) => adapter.addOne(todo, state)
+    (state, {todo}) => adapter.addOne(todo, state)
   ),
-  // on(TodoActions.updateTodoSuccess,
-  //   (state, {todo}) => adapter.updateOne(todo, state)
-  // ),
-  //   on(toggleActiveTodoSuccess,
-  //     (id) => adapter.updateOne(todo, state)
-  //     ),
-  // on(TodoActions.removeTodoSuccess,
-  //   (state, {_id}) => adapter.removeOne(_id, state)
-  // ),
+  on(TodoActions.updateTodoSuccess,
+    (state, {id, value}) => {
+      return adapter.updateOne({ id, changes: { value }}, state);
+    }
+  ),
+  on(TodoActions.toggleActiveTodoSuccess,
+    (state, {id}) => {
+      let todo = state.entities[id]
+      return adapter.updateOne({id: id, changes: {isCompleted: !todo.isCompleted}}, state);
+    }
+  ),
+  on(TodoActions.removeTodoSuccess,
+    (state, {id}) => adapter.removeOne(id, state)
+  ),
+
+  on(TodoActions.selectTodo, (state, {id}) => ({
+    ...state,
+    selectedTodoId: id
+  }))
   // on(TodoActions.clearTodos,
   //   state => adapter.removeAll(state)
   // ),
@@ -51,9 +63,6 @@ export const {
   selectAll,
   selectTotal,
 } = adapter.getSelectors();
-
-
-
 
 
 // export const todoReducer = createReducer(

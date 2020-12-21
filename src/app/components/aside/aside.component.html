@@ -11,7 +11,7 @@
     </button>
 
     <div class="example-list-section">
-      <h3>Plan for: {{taskId}}</h3>
+      <h3>Plan for: {{(currentTodo$ | async)?.value}}</h3>
 
       <ul>
         <li *ngFor="let subtask of task.subtasks">

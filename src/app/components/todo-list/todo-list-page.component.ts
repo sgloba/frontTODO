@@ -1,10 +1,8 @@
 import {Component, ElementRef, ViewChild, OnInit, Input} from '@angular/core';
 import { TasksSandboxService } from '../../services/tasks-sandbox.service';
 import { Observable } from 'rxjs';
-import { TodoI } from '../../models/app.todo.model';
 import {ActivatedRoute} from '@angular/router';
-import {SidenavService} from "../../services/sidenav.service";
-import {Dictionary} from "@ngrx/entity";
+import {TodoI} from "../../models/app.todo.model";
 
 
 
@@ -19,18 +17,14 @@ export class TodoListPageComponent implements OnInit{
   constructor(
     private taskSandbox: TasksSandboxService,
     private activatedRoute: ActivatedRoute,
-    private sidenavService: SidenavService
   ) {}
-  @Input('sidenavOpened') sidenavOpened: boolean;
 
   @ViewChild('todoInput')
   todoInput: ElementRef;
 
   inputValue: string;
 
-  todos$: any = [];
-
-  isEditing$: Observable<boolean> = this.taskSandbox.isEditing$;
+  todos$:  Observable<TodoI[]>;
 
 
   ngOnInit(): void {
@@ -44,7 +38,6 @@ export class TodoListPageComponent implements OnInit{
       } else {
         this.todos$ = this.taskSandbox.allTodos$;
       }
-      this.todos$.subscribe(a => console.log('!!!', a));
     });
   }
 

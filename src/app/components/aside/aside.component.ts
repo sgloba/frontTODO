@@ -21,17 +21,19 @@ export class AsideComponent {
   constructor(
     private tasksSandboxService: TasksSandboxService
   ) {
-    this.tasksSandboxService.selectedTodoId$.subscribe((id) => {
-      if(id) {
+    this.tasksSandboxService.isTodoSelected$.subscribe((res) => {
+      if(res) {
         this.sidenav.open()
+      }  else if(!res && this.sidenav) {
+        this.sidenavClose()
       }
     })
   }
 
   @ViewChild(MatSidenav)
   sidenav: MatSidenav;
+  currentTodo$ = this.tasksSandboxService.currentTodo$
 
-  taskId: number
 
   task: Task = {
     name: 'Indeterminate',
@@ -69,8 +71,8 @@ export class AsideComponent {
 
 
   sidenavClose(){
-    // this.sidenav.close()
-    // this.tasksSandboxService.selectTodo(null)
+    this.sidenav.close()
+    this.tasksSandboxService.selectTodo(null)
   }
 
   addPlan(plan: any) {

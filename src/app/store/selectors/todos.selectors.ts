@@ -1,12 +1,8 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import { TodoI } from '../../models/app.todo.model';
-import { GlobalStateI } from '../states/global.state';
 import {TodoState} from "../states/todo.state";
 import {
-  selectIds,
   selectEntities,
   selectAll,
-  selectTotal
 } from '../reducers/todo.reducer'
 
 const todosState = createFeatureSelector<TodoState>('todos')
@@ -27,30 +23,25 @@ export const completedTodos = createSelector(
 );
 
 export const selectTodoById = createSelector(
-  selectEntities,
-  (entities, props) => {
-    console.log(entities, props.id)
-    return entities[props.id]
+  todosState,
+  (state, props) => {
+    return selectEntities(state)[props.id]
   }
 );
 
+export const currentTodoId = createSelector(
+  todosState,
+  (todos) => todos.selectedTodoId
+)
 
-// export const selectedTodoId = createSelector(
-//   todosState,
-//   ({selectedTodoId}) => selectedTodoId
-// )
-//
-// export const isTodoEditing = createSelector(
-//   (state: GlobalStateI) => state.todos.editing,
-//   ({ initialValue, newValue }) => initialValue !== null && newValue !== null
-// );
-// export const initialEditingValue = createSelector(
-//   (state: GlobalStateI) => state.todos.editing.initialValue,
-//   (initialValue: string) => initialValue
-// );
-// export const newEditingValue = createSelector(
-//   (todosState: TodoState) => todosState.editing.newValue,
-//   (newValue: string) => newValue
-// );
+export const isTodoSelected =createSelector(
+  currentTodoId,
+  (id) => !!id
+)
 
+export const currentTodo = createSelector(
+  todosState,
+  currentTodoId,
+  (state, currentTodoId) => state.entities[currentTodoId]
+)
 

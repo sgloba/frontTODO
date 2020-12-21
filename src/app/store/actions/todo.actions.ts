@@ -4,7 +4,7 @@ import {TodoI} from '../../models/app.todo.model';
 
 
 export const fetchTodosStart = createAction(
-  '[Todo/API] Load Todos',
+  '[Todos] Load Todos',
 );
 export const fetchTodosSuccess = createAction(
   '[Todos] Fetch Todos Success',
@@ -12,7 +12,7 @@ export const fetchTodosSuccess = createAction(
 );
 
 export const addTodoStart = createAction(
-  '[Todo/API] Add Todo',
+  '[Todos] Add Todo',
   props<{ value: string }>()
 );
 export const addTodoSuccess = createAction(
@@ -21,43 +21,41 @@ export const addTodoSuccess = createAction(
 );
 
 export const updateTodoStart = createAction(
-  '[Todo/API] Update Todo',
-  props<{_id: number, value: string }>()
+  '[Todos] Update Todo',
+  props<{id: number, value: string }>()
 );
 export const updateTodoSuccess = createAction(
-  '[Todos] Toggle Active Todo Success',
-  props<{_id: number, value: string }>()
+  '[Todos] Update Active Todo Success',
+  props<{id: number, value: string }>()
 );
 
 export const toggleActiveTodoStart = createAction(
-  '[Todo/API] Toggle Active Todo',
+  '[Todos] Toggle Active Todo',
   props<{ id: number }>()
 );
 export const toggleActiveTodoSuccess = createAction(
   '[Todos] Toggle Active Todo Success',
-  props<{_id: number}>()
+  props<{id: number}>()
 );
 
 export const removeTodoStart = createAction(
-  '[Todo/API] Delete Todo',
-  props<{ id: string }>()
+  '[Todos] Delete Todo',
+  props<{ id: number }>()
 );
 export const removeTodoSuccess = createAction(
   '[Todos] Remove Todo Success',
-  props<{_id: number}>()
+  props<{id: number}>()
 );
-
-export const removeTodos = createAction(
-  '[Todo/API] Delete Todos',
-  props<{ ids: string[] }>()
-);
-
 
 export const clearTodos = createAction(
-  '[Todo/API] Clear Todos'
+  '[Todos] Clear Todos'
 );
 
 
+export const selectTodo = createAction(
+  '[Todos] Select Todo',
+  props<{id: number}>()
+)
 
 
 //
