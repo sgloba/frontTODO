@@ -45,3 +45,9 @@ export const currentTodo = createSelector(
   (state, currentTodoId) => state.entities[currentTodoId]
 )
 
+export const currentSubtask = createSelector(
+  todosState,
+  currentTodoId,
+  (state, currentTodoId) => state.entities[currentTodoId]?.subTasks
+)
+

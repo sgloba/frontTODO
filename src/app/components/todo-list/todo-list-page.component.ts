@@ -1,8 +1,9 @@
-import {Component, ElementRef, ViewChild, OnInit, Input} from '@angular/core';
+import {Component, ElementRef, ViewChild, OnInit, Input, OnDestroy} from '@angular/core';
 import { TasksSandboxService } from '../../services/tasks-sandbox.service';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {TodoI} from "../../models/app.todo.model";
+import {takeUntil} from "rxjs/operators";
 
 
 
@@ -12,7 +13,8 @@ import {TodoI} from "../../models/app.todo.model";
   templateUrl: './todo-list-page.component.html',
   styleUrls: ['./todo-list-page.component.scss']
 })
-export class TodoListPageComponent implements OnInit{
+export class TodoListPageComponent implements OnInit, OnDestroy {
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     private taskSandbox: TasksSandboxService,
@@ -30,24 +32,31 @@ export class TodoListPageComponent implements OnInit{
   ngOnInit(): void {
     this.taskSandbox.requestTodos();
 
-    this.activatedRoute.queryParams.subscribe((p) => {
-      if (p.todos === 'active') {
-        this.todos$ = this.taskSandbox.activeTodos$;
-      } else if (p.todos === 'completed') {
-        this.todos$ = this.taskSandbox.completedTodos$;
-      } else {
-        this.todos$ = this.taskSandbox.allTodos$;
-      }
-    });
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((p) => {
+        if (p.todos === 'active') {
+          this.todos$ = this.taskSandbox.activeTodos$;
+        } else if (p.todos === 'completed') {
+          this.todos$ = this.taskSandbox.completedTodos$;
+        } else {
+          this.todos$ = this.taskSandbox.allTodos$;
+        }
+      });
   }
 
   addTodo(value: string): void {
 
-    if (!value) { return; }
+    if (!value) { return }
     this.taskSandbox.add(value);
 
     this.inputValue = '';
     this.todoInput.nativeElement.focus();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }

@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import {TodoI} from '../../models/app.todo.model';
+import {SubtaskI} from "../../models/app.subtask.model";
 
 
 export const fetchTodosStart = createAction(
@@ -47,6 +48,8 @@ export const removeTodoSuccess = createAction(
   props<{id: number}>()
 );
 
+
+
 export const clearTodos = createAction(
   '[Todos] Clear Todos'
 );
@@ -57,70 +60,34 @@ export const selectTodo = createAction(
   props<{id: number}>()
 )
 
+//Subtask
 
-//
-// export const addTodo = createAction(
-//   '[Todos] Add Todo',
-//   props<{value: string}>()
-// );
-// export const addTodoSuccess = createAction(
-//   '[Todos] Add Todo Success',
-//   props<{todo: TodoI}>()
-// );
-//
-//
-// export const removeTodo = createAction(
-//   '[Todos] Remove Todo',
-//   props<{_id: number}>()
-// );
-// export const removeTodoSuccess = createAction(
-//   '[Todos] Remove Todo Success',
-//   props<{_id: number}>()
-// );
-//
-//
-// export const toggleActive = createAction(
-//   '[Todos] Toggle Active Todo',
-//   props<{_id: number}>()
-// );
-// export const toggleActiveSuccess = createAction(
-//   '[Todos] Toggle Active Todo Success',
-//   props<{_id: number}>()
-// );
-//
-//
-// export const editValue = createAction(
-//   '[Todos] Edit Value',
-//   props<{_id: number, value: string }>()
-// );
-// export const editValueSuccess = createAction(
-//   '[Todos] Edit Value Success',
-//   props<{_id: number, value: string }>()
-// );
-//
-//
-// export const fetchTodos = createAction(
-//   '[Todos] Fetch Todos'
-// );
-// export const fetchTodosSuccess = createAction(
-//   '[Todos] Fetch Todos Success',
-//   props<{todos: Array<TodoI>}>()
-// );
-//
-//
-// export const setInitialTodoEditingValue = createAction(
-//   '[Todos] Set Initial Todo Editing Value',
-//   props<{value: string}>()
-// );
-// export const setNewTodoEditingValue = createAction(
-//   '[Todo] Set New Todo Editing Value',
-//   props<{value: string}>()
-// );
-// export const resetTodoEditingState = createAction(
-//   '[Todo] Reset Todo Editing State'
-// );
-//
-// export const selectTodo =createAction(
-//   '[Todos] Select Todo',
-//   props<{_id: number}>()
-// )
+
+export const removeSubtaskStart = createAction(
+  '[Todos] Delete Subtask',
+  props<{id: number, subId: number}>()
+)
+export const removeSubtaskSuccess = createAction(
+  '[Todos] Delete Subtask Success',
+  props<{id: number, subTasks: any}>()
+)
+
+
+export const addSubtaskStart = createAction(
+  '[Todos] Add Subtask',
+  props<{value: string, id: number}>()
+)
+export const addSubtaskSuccess = createAction(
+  '[Todos] Add Subtask Success',
+  props<{id: number, subTasks: any}>()
+)
+
+
+export const toggleActiveSubtaskStart = createAction(
+  '[Todos] Toggle Active Subtask Start',
+  props<{id: number, subId: number}>()
+)
+export const toggleActiveSubtaskSuccess = createAction(
+  '[Todos] Toggle Active Subtask Success',
+  props<{id: number, subTasks: any}>()
+)

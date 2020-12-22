@@ -7,12 +7,13 @@ import {
   fetchTodosStart,
   removeTodoStart, selectTodo,
   toggleActiveTodoStart,
-  updateTodoStart
+  updateTodoStart,
+  addSubtaskStart, removeSubtaskStart, toggleActiveSubtaskStart
 } from "../store/actions/todo.actions";
 import {
   activeTodos,
   allTodos,
-  completedTodos,
+  completedTodos, currentSubtask,
   currentTodo,
   currentTodoId, isTodoSelected,
 } from "../store/selectors/todos.selectors";
@@ -37,13 +38,13 @@ export class TasksSandboxService {
 
   selectedTodoId$ = this.store.pipe(select(currentTodoId));
   currentTodo$ = this.store.pipe(select(currentTodo));
-  isTodoSelected$ = this.store.pipe(select(isTodoSelected))
+  currentSubtask$ = this.store.pipe(select(currentSubtask));
+  isTodoSelected$ = this.store.pipe(select(isTodoSelected));
 
 
   requestTodos(): void {
     this.store.dispatch(fetchTodosStart());
   }
-
 
   add(value: string): void {
     this.store.dispatch(addTodoStart({ value }));
@@ -63,6 +64,20 @@ export class TasksSandboxService {
 
   selectTodo(id: number) {
     this.store.dispatch(selectTodo({id}))
+  }
+
+  //Subtask
+
+  addSubtask(value: string, id: number): void {
+    this.store.dispatch(addSubtaskStart({value, id}))
+  }
+
+  removeSubtask(id: number, subId: number) {
+    this.store.dispatch(removeSubtaskStart({id, subId}))
+  }
+
+  toggleActiveSubtask(id: number, subId: number) {
+    this.store.dispatch(toggleActiveSubtaskStart({id, subId}))
   }
 
 }
