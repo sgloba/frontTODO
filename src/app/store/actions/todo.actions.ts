@@ -69,7 +69,7 @@ export const removeSubtaskStart = createAction(
 )
 export const removeSubtaskSuccess = createAction(
   '[Todos] Delete Subtask Success',
-  props<{id: number, subTasks: any}>()
+  props<{id: number, subTasks: SubtaskI[]}>()
 )
 
 
@@ -79,7 +79,7 @@ export const addSubtaskStart = createAction(
 )
 export const addSubtaskSuccess = createAction(
   '[Todos] Add Subtask Success',
-  props<{id: number, subTasks: any}>()
+  props<{id: number, subTasks: SubtaskI[]}>()
 )
 
 
@@ -89,5 +89,5 @@ export const toggleActiveSubtaskStart = createAction(
 )
 export const toggleActiveSubtaskSuccess = createAction(
   '[Todos] Toggle Active Subtask Success',
-  props<{id: number, subTasks: any}>()
+  props<{id: number, subTasks: SubtaskI[]}>()
 )

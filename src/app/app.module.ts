@@ -12,7 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TodoListPageComponent } from './components/todo-list/todo-list-page.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -29,6 +29,7 @@ import { AsideComponent } from './components/aside/aside.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import {MaterialModule} from "./modules/material.module";
 import {StopClickPropagationDirective} from "./directives/stop-click-propagation.directive";
+import { ToggleBtnComponent } from './components/toggle-btn/toggle-btn.component';
 
 
 
@@ -45,19 +46,21 @@ import {StopClickPropagationDirective} from "./directives/stop-click-propagation
     FloatingActionBtnsComponent,
     AsideComponent,
     MainPageComponent,
-    StopClickPropagationDirective
+    StopClickPropagationDirective,
+    ToggleBtnComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    FormsModule,
-    HttpClientModule,
-    StoreModule.forRoot({todos: todoReducer}),
-    EffectsModule.forRoot([TodoEffects]),
-    ToastrModule.forRoot(),
-    MaterialModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FontAwesomeModule,
+        FormsModule,
+        HttpClientModule,
+        StoreModule.forRoot({todos: todoReducer}),
+        EffectsModule.forRoot([TodoEffects]),
+        ToastrModule.forRoot(),
+        MaterialModule,
+        ReactiveFormsModule,
+    ],
   providers: [LoginGuard, UserHttpService, TodoHttpService, ApiInterceptorService,
     {
       provide: HTTP_INTERCEPTORS,

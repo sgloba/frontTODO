@@ -1,17 +1,14 @@
-import {TodoState} from '../states/todo.state';
 import {TodoI} from "../../models/app.todo.model";
 
 
-import {Action, createReducer, on} from '@ngrx/store';
+import {createReducer, on} from '@ngrx/store';
 import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
 import * as TodoActions from '../actions/todo.actions';
-import {toggleActiveSubtaskSuccess} from "../actions/todo.actions";
 
 export const todosFeatureKey = 'todos';
 
-// TODO: remove comments, rename to TodoState, change { id: id } to { id }
 
-export interface State extends EntityState<TodoI> {
+export interface TodoState extends EntityState<TodoI> {
   selectedTodoId: number,
 }
 
@@ -19,8 +16,7 @@ export const adapter: EntityAdapter<TodoI> = createEntityAdapter<TodoI>({
   selectId: model => model._id
 });
 
-export const initialState: State = adapter.getInitialState({
-  // additional entity state properties
+export const initialState: TodoState = adapter.getInitialState({
   selectedTodoId: null
 });
 

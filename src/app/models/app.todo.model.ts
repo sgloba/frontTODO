@@ -1,12 +1,10 @@
+import {SubtaskI} from "./app.subtask.model";
+
 export interface TodoI  {
   _id: number,
   value: string,
-  subTasks: [
-    {
-      value: string,
-      isCompleted: boolean
-    }
-  ],
+  category: string[],
+  subTasks: SubtaskI[],
   timestamp: number,
-  isCompleted: boolean,
+  isCompleted: boolean
 }
