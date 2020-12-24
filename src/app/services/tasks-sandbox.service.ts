@@ -1,25 +1,21 @@
-import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import {Injectable} from '@angular/core';
+import {Store, select} from '@ngrx/store';
+
+import {TodoHttpService} from 'src/app/services/todo-http.service';
 import {
-  activeTodos,
-  allTodos,
-  completedTodos,
-  initialEditingValue,
-  isTodoEditing, newEditingValue, selectedTodoId
-} from '../store/selectors/todos.selectors';
-
-
-import { TodoHttpService } from 'src/app/services/todo-http.service';
+  addTodoStart,
+  fetchTodosStart,
+  removeTodoStart, selectTodo,
+  toggleActiveTodoStart,
+  updateTodoStart,
+  addSubtaskStart, removeSubtaskStart, toggleActiveSubtaskStart, selectCategories
+} from "../store/actions/todo.actions";
 import {
-  addTodo,
-  editValue,
-  fetchTodos,
-  removeTodo,
-  setInitialTodoEditingValue, setNewTodoEditingValue,
-  toggleActive,
-  selectTodo
-} from '../store/actions/todo.actions';
-
+  currentSubtask,
+  currentTodo,
+  currentTodoId, isTodoSelected,
+  getFilteredTodos
+} from "../store/selectors/todos.selectors";
 
 
 @Injectable({
@@ -30,49 +26,62 @@ export class TasksSandboxService {
   constructor(
     private http: TodoHttpService,
     private store: Store
-  ) { }
-
-
-  activeTodos$ = this.store.pipe(select(activeTodos));
-  completedTodos$ = this.store.pipe(select(completedTodos));
-  allTodos$ = this.store.pipe(select(allTodos));
-
-  isEditing$ = this.store.pipe(select(isTodoEditing));
-  initialEditingValue$ = this.store.pipe(select(initialEditingValue));
-  newEditingValue$ = this.store.pipe(select(newEditingValue));
-
-  selectedTodoId$ = this.store.pipe(select(selectedTodoId));
-
-  requestTodos(): void {
-    this.store.dispatch(fetchTodos());
+  ) {
   }
 
 
+  getFilteredTodos(status: 'active' | 'completed' | 'all' = 'all', categories: string[] = []) {
+    return this.store.pipe(select(getFilteredTodos(status, categories)))
+  }
+
+
+  selectedTodoId$ = this.store.pipe(select(currentTodoId));
+  currentTodo$ = this.store.pipe(select(currentTodo));
+  currentSubtask$ = this.store.pipe(select(currentSubtask));
+  isTodoSelected$ = this.store.pipe(select(isTodoSelected));
+
+
+  requestTodos(): void {
+    this.store.dispatch(fetchTodosStart());
+  }
+
   add(value: string): void {
-    this.store.dispatch(addTodo({ value }));
+    this.store.dispatch(addTodoStart({value}));
   }
 
   remove(id: number): void {
-    this.store.dispatch(removeTodo({_id: id}));
+    this.store.dispatch(removeTodoStart({id}))
   }
 
   toggleActive(id: number): void {
-    this.store.dispatch(toggleActive({_id: id}));
+    this.store.dispatch(toggleActiveTodoStart({id}))
   }
 
   editValue(id: number, value: string): void {
-    this.store.dispatch(editValue({_id: id, value}));
-  }
-
-
-  setInitialEditingValue(value): void {
-    this.store.dispatch(setInitialTodoEditingValue({value}));
-  }
-  setNewEditingValue(value: string): void {
-    this.store.dispatch(setNewTodoEditingValue({value}));
+    this.store.dispatch(updateTodoStart({id, value}))
   }
 
   selectTodo(id: number) {
-    this.store.dispatch(selectTodo({_id: id}))
+    this.store.dispatch(selectTodo({id}))
   }
+
+  //Subtask
+
+  addSubtask(value: string, id: number): void {
+    this.store.dispatch(addSubtaskStart({value, id}))
+  }
+
+  removeSubtask(id: number, subId: number) {
+    this.store.dispatch(removeSubtaskStart({id, subId}))
+  }
+
+  toggleActiveSubtask(id: number, subId: number) {
+    this.store.dispatch(toggleActiveSubtaskStart({id, subId}))
+  }
+
+  //Category
+  selectCategories(categories: string[]) {
+    this.store.dispatch(selectCategories({categories}))
+  }
+
 }

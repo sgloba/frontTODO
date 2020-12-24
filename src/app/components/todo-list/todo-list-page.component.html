@@ -1,9 +1,5 @@
 <div class="todo-list-wrap">
 
-  <app-editing-todo
-    *ngIf="isEditing$ | async"
-  ></app-editing-todo>
-
 
   <form class="input-wrap">
     <mat-form-field class="example-full-width">
@@ -19,7 +15,13 @@
     </button>
   </form>
 
-  <app-category></app-category>
+
+  <app-toggle-btn
+    [options]="options"
+    [(ngModel)]="options"
+    (ngModelChange)="categoriesSelected$.next($event)"
+  ></app-toggle-btn>
+
 
   <mat-nav-list>
     <a [routerLink]="null" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -35,7 +37,7 @@
   </mat-nav-list>
 
   <app-todo-item
-    *ngFor="let todo of (todos$ | async)"
+    *ngFor="let todo of (filteredTodos$ | async)"
     [todo]="todo"
   ></app-todo-item>
 </div>

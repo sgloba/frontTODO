@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditingTodoComponent } from './editing-todo.component';
+import { ToggleBtnComponent } from './toggle-btn.component';
 
-describe('EditingTodoComponent', () => {
-  let component: EditingTodoComponent;
-  let fixture: ComponentFixture<EditingTodoComponent>;
+describe('ToggleBtnComponent', () => {
+  let component: ToggleBtnComponent;
+  let fixture: ComponentFixture<ToggleBtnComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditingTodoComponent ]
+      declarations: [ ToggleBtnComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditingTodoComponent);
+    fixture = TestBed.createComponent(ToggleBtnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

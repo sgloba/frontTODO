@@ -1,10 +1,9 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostBinding, Input, ViewChild} from '@angular/core';
 import {TodoI} from 'src/app/models/app.todo.model';
 
 import { TasksSandboxService } from 'src/app/services/tasks-sandbox.service';
 import { faCheck, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
-
-
+import {map} from "rxjs/operators";
 
 
 @Component({
@@ -17,14 +16,12 @@ export class TodoItemComponent {
   constructor(
     private taskSandbox: TasksSandboxService,
   ) {
+
     this.taskSandbox.selectedTodoId$.subscribe((id) => {
-      if(id === this.todo._id) {
-        this.highlight = true
-      } else {
-        this.highlight = false
-      }
+      this.highlight = id === this.todo._id
     })
   }
+
 
   @ViewChild('editableSpan')
   editableSpan: ElementRef;
@@ -48,17 +45,13 @@ export class TodoItemComponent {
 
   onSpanBlur(): void {
       this.taskSandbox.editValue(this.todo._id, this.editableSpan.nativeElement.innerText);
-      this.taskSandbox.setInitialEditingValue(null);
   }
 
   onSpanInput(): void {
-    this.taskSandbox.setNewEditingValue(this.editableSpan.nativeElement.innerText);
   }
 
   toggleSpanEditable(): void {
    this.allowEdit = !this.allowEdit;
-
-   this.taskSandbox.setInitialEditingValue(this.editableSpan.nativeElement.innerText);
 
    if (this.allowEdit) {
       setTimeout(() => {

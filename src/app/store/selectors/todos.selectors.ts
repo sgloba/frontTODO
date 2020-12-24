@@ -1,41 +1,76 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store';
-import { TodoI } from '../../models/app.todo.model';
-import { GlobalStateI } from '../states/global.state';
+import {createFeatureSelector, createSelector, select} from '@ngrx/store';
 import {TodoState} from "../states/todo.state";
+import {
+  selectEntities,
+  selectAll,
+} from '../reducers/todo.reducer'
+import {map, take} from "rxjs/operators";
 
 const todosState = createFeatureSelector<TodoState>('todos')
 
 export const allTodos = createSelector(
   todosState,
-  (state) => state.items
+  selectAll
 );
 
 export const activeTodos = createSelector(
   allTodos,
-  (todos: Array<TodoI>) => todos.filter((todo) => !todo.isCompleted)
+  (todos) => todos.filter((todo) => !todo.isCompleted)
 );
 
 export const completedTodos = createSelector(
   allTodos,
-  (todos: Array<TodoI>) => todos.filter((todo) => todo.isCompleted)
+  (todos) => todos.filter((todo) => todo.isCompleted)
 );
 
-export const selectedTodoId = createSelector(
+export const selectTodoById = createSelector(
   todosState,
-  ({selectedTodoId}) => selectedTodoId
+  (state, props) => {
+    return selectEntities(state)[props.id]
+  }
+);
+
+export const currentTodoId = createSelector(
+  todosState,
+  (todos) => todos.selectedTodoId
 )
 
-export const isTodoEditing = createSelector(
-  (state: GlobalStateI) => state.todos.editing,
-  ({ initialValue, newValue }) => initialValue !== null && newValue !== null
-);
-export const initialEditingValue = createSelector(
-  (state: GlobalStateI) => state.todos.editing.initialValue,
-  (initialValue: string) => initialValue
-);
-export const newEditingValue = createSelector(
-  (todosState: TodoState) => todosState.editing.newValue,
-  (newValue: string) => newValue
-);
+export const isTodoSelected = createSelector(
+  currentTodoId,
+  (id) => !!id
+)
 
+export const currentTodo = createSelector(
+  todosState,
+  currentTodoId,
+  (state, currentTodoId) => state.entities[currentTodoId]
+)
+
+export const currentSubtask = createSelector(
+  todosState,
+  currentTodoId,
+  (state, currentTodoId) => state.entities[currentTodoId]?.subTasks
+)
+
+export const selectedCategories = createSelector(
+  todosState,
+  state => state.selectedCategories
+)
+
+
+export const getFilteredTodos = (selectedStatus: string, selectedCategories: string[]) => createSelector(
+  allTodos,
+  (todos) => {
+    const filterByActivity = (status) => (todo) => {
+      if (status === 'all') return true;
+      return todo.isCompleted === (status === 'completed')
+    }
+    const filterByCategories = (categories) => (todo) => {
+      return todo.category.some((category) => categories.includes(category))
+    }
+    return todos
+      .filter(filterByActivity(selectedStatus))
+      .filter(filterByCategories(selectedCategories));
+  }
+)
 

@@ -1,19 +1,25 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY } from 'rxjs';
-import {map, catchError, concatMap} from 'rxjs/operators';
-import { TodoHttpService } from '../../services/todo-http.service';
+import {Injectable} from '@angular/core';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {EMPTY} from 'rxjs';
+import {map, catchError, concatMap, tap} from 'rxjs/operators';
+import {TodoHttpService} from '../../services/todo-http.service';
 import {
-  addTodo,
-  addTodoSuccess,
-  editValue,
-  editValueSuccess,
-  fetchTodos,
+  fetchTodosStart,
   fetchTodosSuccess,
-  removeTodo,
+  addTodoStart,
+  addTodoSuccess,
+  updateTodoStart,
+  updateTodoSuccess,
+  removeTodoStart,
   removeTodoSuccess,
-  toggleActive,
-  toggleActiveSuccess
+  toggleActiveTodoStart,
+  toggleActiveTodoSuccess,
+  addSubtaskStart,
+  addSubtaskSuccess,
+  removeSubtaskStart,
+  removeSubtaskSuccess,
+  toggleActiveSubtaskStart, toggleActiveSubtaskSuccess,
+
 } from '../actions/todo.actions';
 
 
@@ -23,15 +29,16 @@ export class TodoEffects {
   constructor(
     private actions$: Actions,
     private todoHttpService: TodoHttpService,
-  ) {}
+  ) {
+  }
 
 
   loadTodos$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchTodos.type),
+    ofType(fetchTodosStart.type),
     concatMap(() => this.todoHttpService.getTodos()
       .pipe(
-        map(todos => fetchTodosSuccess({ todos })),
-        catchError((err) => {
+        map(todos => fetchTodosSuccess({todos})),
+        catchError(() => {
           return EMPTY;
         })
       ))
@@ -39,34 +46,32 @@ export class TodoEffects {
   );
 
   addTodo$ = createEffect(() => this.actions$.pipe(
-    ofType(addTodo.type),
-    concatMap(({ value }) => this.todoHttpService.addTodo(value)
+    ofType(addTodoStart.type),
+    concatMap(({value}) => this.todoHttpService.addTodo(value)
       .pipe(
         map((todo) => addTodoSuccess({todo})),
-        catchError((err) => {
+        catchError(() => {
           return EMPTY;
         })
       )
     ))
   );
 
-  removeTodo$ = createEffect( () => this.actions$.pipe(
-    ofType(removeTodo.type),
-    concatMap(({_id}) => this.todoHttpService.removeTodo(_id)
+  removeTodo$ = createEffect(() => this.actions$.pipe(
+    ofType(removeTodoStart.type),
+    concatMap(({id}) => this.todoHttpService.removeTodo(id)
       .pipe(
-        map((id) => removeTodoSuccess(id)),
-        catchError((err) => {
-          return EMPTY;
-        })
+        map(() => removeTodoSuccess({id})),
+        catchError(() => EMPTY)
       )
     ))
   );
 
   toggleActive$ = createEffect(() => this.actions$.pipe(
-    ofType(toggleActive.type),
-    concatMap(({_id}) => this.todoHttpService.toggleActive(_id)
+    ofType(toggleActiveTodoStart.type),
+    concatMap(({id}) => this.todoHttpService.toggleActive(id)
       .pipe(
-        map((id) => toggleActiveSuccess(id)),
+        map(() => toggleActiveTodoSuccess({id})),
         catchError((err) => {
           return EMPTY;
         })
@@ -74,15 +79,59 @@ export class TodoEffects {
     ))
   );
 
-  editValue$ = createEffect(() => this.actions$.pipe(
-    ofType(editValue.type),
-    concatMap(({_id, value}) => this.todoHttpService.editValue(_id, value)
+  updateTodo$ = createEffect(() => this.actions$.pipe(
+    ofType(updateTodoStart.type),
+    concatMap(({id, value}) => this.todoHttpService.editValue(id, value)
       .pipe(
-        map((todo) => editValueSuccess({ _id: todo._id, value: todo.value })),
-        catchError((err) => {
+        map(() => updateTodoSuccess({id, value})),
+        catchError(() => {
           return EMPTY;
         })
       )
     ))
   );
+
+  //Subtask
+
+  addSubtask$ = createEffect(() => this.actions$.pipe(
+    ofType(addSubtaskStart.type),
+    concatMap(({value, id}) => this.todoHttpService.addSubtask(value, id)
+      .pipe(
+        map((todo) => {
+          const subTasks = todo.subTasks;
+          return addSubtaskSuccess({id, subTasks})
+        }),
+        catchError(() => {
+          return EMPTY
+        })
+      )
+    ))
+  );
+
+  removeSubtask$ = createEffect(() => this.actions$.pipe(
+    ofType(removeSubtaskStart.type),
+    concatMap(({id, subId}) => this.todoHttpService.removeSubtask(id, subId)
+      .pipe(
+        map((todo) => {
+          const subTasks = todo.subTasks;
+          return removeSubtaskSuccess({id, subTasks})
+        }),
+        catchError(() => EMPTY)
+      )
+    ))
+  );
+
+  toggleActiveSubtask$ = createEffect(() => this.actions$.pipe(
+    ofType(toggleActiveSubtaskStart.type),
+    concatMap(({id, subId}) => this.todoHttpService.toggleActiveSubtask(id, subId)
+      .pipe(
+        map((todo) => {
+          const subTasks = todo.subTasks;
+          return toggleActiveSubtaskSuccess({id, subTasks})
+        }),
+        catchError(() => EMPTY)
+      )
+    ))
+  );
+
 }

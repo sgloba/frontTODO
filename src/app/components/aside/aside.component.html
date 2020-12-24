@@ -11,38 +11,37 @@
     </button>
 
     <div class="example-list-section">
-      <h3>Plan for: {{taskId}}</h3>
+      <h3>Plan for: {{(currentTodo$ | async)?.value}}</h3>
 
-      <ul>
-        <li *ngFor="let subtask of task.subtasks">
-          <mat-checkbox [(ngModel)]="subtask.completed"
-                        [color]="subtask.color"
+      <ul *ngFor="let subtask of (currentSubtask$ | async)">
+        <li *ngIf="subtask.value">
+          <mat-checkbox
+            [checked]="subtask.isCompleted"
+            (change)="toggleActiveSubtask(subtask._id)"
           >
-            {{subtask.name}}
+            {{subtask.value}}
           </mat-checkbox>
-          <button mat-stroked-button>
+          <button (click)="removeSubtask(subtask._id)" mat-stroked-button>
             <mat-icon class="material-icons">delete_forever</mat-icon>
           </button>
         </li>
-        <li>
-          <form class="add-plan-item">
-            <mat-form-field class="example-full-width">
-              <input [(ngModel)]="inputValue"
-                     matInput
-                     #planInput
-                     name="planInput"
-                     type="text"
-                     placeholder="Add plan item...">
-            </mat-form-field>
-            <button
-              type="submit"
-              mat-stroked-button
-              (click)="addPlan(inputValue)">
-              <mat-icon>post_add</mat-icon>
-            </button>
-          </form>
-        </li>
       </ul>
+      <form class="add-plan-item">
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="inputValue"
+                 matInput
+                 #subtaskInput
+                 name="planInput"
+                 type="text"
+                 placeholder="Add plan item...">
+        </mat-form-field>
+        <button
+          type="submit"
+          mat-stroked-button
+          (click)="addSubtask()">
+          <mat-icon>post_add</mat-icon>
+        </button>
+      </form>
     </div>
   </div>
 </mat-sidenav>

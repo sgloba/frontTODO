@@ -1,80 +1,87 @@
-import {Component, ViewChild} from '@angular/core';
-import {ThemePalette} from '@angular/material/core';
-import {SidenavService} from "../../services/sidenav.service";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {TasksSandboxService} from "../../services/tasks-sandbox.service";
+import {Observable} from "rxjs";
+import {TodoI} from "../../models/app.todo.model";
+import {map, take} from "rxjs/operators";
 
-export interface Task {
-  name: string;
-  completed: boolean;
-  color: ThemePalette;
-  subtasks?: Task[];
-}
 
 @Component({
   selector: 'app-aside',
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.scss']
 })
-export class AsideComponent {
+
+export class AsideComponent implements OnInit{
 
   constructor(
-    private tasksSandboxService: TasksSandboxService
-  ) {
-    this.tasksSandboxService.selectedTodoId$.subscribe((id) => {
-      if(id) {
+    private tasksSandbox: TasksSandboxService
+  ) {}
+
+  ngOnInit() {
+    this.tasksSandbox.isTodoSelected$.subscribe((res) => {
+      if(res) {
         this.sidenav.open()
+      }  else if(!res && this.sidenav) {
+        this.sidenavClose()
       }
     })
+
+    this.currentSubtask$ = this.tasksSandbox.currentSubtask$
+    this.currentTodo$ = this.tasksSandbox.currentTodo$
+
   }
 
   @ViewChild(MatSidenav)
   sidenav: MatSidenav;
 
-  taskId: number
+  @ViewChild('subtaskInput')
+  subtaskInput: ElementRef;
 
-  task: Task = {
-    name: 'Indeterminate',
-    completed: false,
-    color: 'primary',
-    subtasks: [
-      {name: 'test task_1', completed: false, color: 'primary'},
-      {name: 'test task_2', completed: false, color: 'primary'},
-      {name: 'test task_12', completed: false, color: 'primary'}
-    ]
-  };
+  currentSubtask$: Observable<any>
+  currentTodo$: Observable<TodoI>
 
   allComplete: boolean = false;
   inputValue: any;
 
 
-  updateAllComplete() {
-    this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
-  }
-
-  someComplete(): boolean {
-    if (this.task.subtasks == null) {
-      return false;
-    }
-    return this.task.subtasks.filter(t => t.completed).length > 0 && !this.allComplete;
-  }
-
-  setAll(completed: boolean) {
-    this.allComplete = completed;
-    if (this.task.subtasks == null) {
-      return;
-    }
-    this.task.subtasks.forEach(t => t.completed = completed);
-  }
-
-
   sidenavClose(){
     this.sidenav.close()
-    this.tasksSandboxService.selectTodo(null)
+    this.tasksSandbox.selectTodo(null)
+
   }
 
-  addPlan(plan: any) {
+  addSubtask() {
+    if(!this.inputValue) {
+      return
+    }
+
+    this.currentTodo$
+      .pipe(take(1))
+      .subscribe((todo) => {
+        this.tasksSandbox.addSubtask(this.inputValue, todo._id)
+      })
+
+    this.inputValue = ''
+    this.subtaskInput.nativeElement.focus();
+
   }
 
+  toggleActiveSubtask(id) {
+    this.currentTodo$
+      .pipe(take(1))
+      .subscribe((todo) => {
+        this.tasksSandbox.toggleActiveSubtask(todo._id, id)
+      })
+  }
+
+  removeSubtask(id) {
+
+    this.currentTodo$
+      .pipe(take(1))
+      .subscribe((todo) => {
+        this.tasksSandbox.removeSubtask(todo._id, id)
+      })
+  }
 
 }

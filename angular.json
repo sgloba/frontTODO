@@ -126,5 +126,8 @@
       }
     }
   },
-  "defaultProject": "frontTODO"
+  "defaultProject": "frontTODO",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

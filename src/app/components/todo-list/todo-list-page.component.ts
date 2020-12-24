@@ -1,9 +1,9 @@
-import {Component, ElementRef, ViewChild, OnInit, Input} from '@angular/core';
+import {Component, ElementRef, ViewChild, OnInit, Input, OnDestroy} from '@angular/core';
 import { TasksSandboxService } from '../../services/tasks-sandbox.service';
-import { Observable } from 'rxjs';
-import { TodoI } from '../../models/app.todo.model';
-import {ActivatedRoute} from '@angular/router';
-import {SidenavService} from "../../services/sidenav.service";
+import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
+import {ActivatedRoute, Params} from '@angular/router';
+import {combineAll, filter, map, pairwise, startWith, switchMap, takeUntil, tap} from "rxjs/operators";
+import {OptionsI} from "../../models/app.options.model";
 
 
 
@@ -13,45 +13,75 @@ import {SidenavService} from "../../services/sidenav.service";
   templateUrl: './todo-list-page.component.html',
   styleUrls: ['./todo-list-page.component.scss']
 })
-export class TodoListPageComponent implements OnInit{
+export class TodoListPageComponent implements OnInit, OnDestroy {
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     private taskSandbox: TasksSandboxService,
     private activatedRoute: ActivatedRoute,
-    private sidenavService: SidenavService
   ) {}
-  @Input('sidenavOpened') sidenavOpened: boolean;
+
+
+  ngOnInit(): void {
+    this.taskSandbox.requestTodos();
+  }
+
 
   @ViewChild('todoInput')
   todoInput: ElementRef;
 
   inputValue: string;
-  todos$: Observable<TodoI[]>;
 
-  isEditing$: Observable<boolean> = this.taskSandbox.isEditing$;
+  options: OptionsI[] = [
+    {title: 'home', active: true},
+    {title: 'work', active: true},
+    {title: 'party', active: true},
+    {title: 'other', active: true},
+  ]
 
 
-  ngOnInit(): void {
-    this.taskSandbox.requestTodos();
+  categoriesSelected$ = new BehaviorSubject(this.options)
 
-    this.activatedRoute.queryParams.subscribe((p) => {
-      if (p.todos === 'active') {
-        this.todos$ = this.taskSandbox.activeTodos$;
-      } else if (p.todos === 'completed') {
-        this.todos$ = this.taskSandbox.completedTodos$;
-      } else {
-        this.todos$ = this.taskSandbox.allTodos$;
-      }
-    });
-  }
+  selectedCategories$ = this.categoriesSelected$.pipe(
+    map((options) => {
+      return options
+        .filter(({ active }) => active)     //????
+        .map(({ title }) => title)
+    })
+  );
+
+  selectedStatus$ = this.activatedRoute.queryParams
+    .pipe(
+      startWith(null),
+      pairwise(),
+      filter(([prev, current]) => {
+        return prev === null || prev?.todos !== current?.todos;
+      }),
+      map(([, current]) => current?.todos)
+    )
+
+  filteredTodos$ = combineLatest([
+    this.selectedStatus$,
+    this.selectedCategories$
+  ]).pipe(
+    switchMap(([status, category]) => this.taskSandbox.getFilteredTodos(status, category))
+  );
+
+
+
 
   addTodo(value: string): void {
 
-    if (!value) { return; }
+    if (!value) { return }
     this.taskSandbox.add(value);
 
     this.inputValue = '';
     this.todoInput.nativeElement.focus();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }

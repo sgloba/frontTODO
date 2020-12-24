@@ -1,78 +1,83 @@
+import {TodoI} from "../../models/app.todo.model";
+
+
 import {createReducer, on} from '@ngrx/store';
+import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
+import * as TodoActions from '../actions/todo.actions';
 
-import {
-  addTodoSuccess,
-  editValueSuccess,
-  fetchTodosSuccess,
-  removeTodoSuccess, selectTodo,
-  setInitialTodoEditingValue, setNewTodoEditingValue,
-  toggleActiveSuccess
-} from '../actions/todo.actions';
-import {TodoState} from '../states/todo.state';
+export const todosFeatureKey = 'todos';
 
-export const initialState: TodoState = {
-  items: [],
-  editing: {
-    initialValue: null,
-    newValue: null
-  },
-  selectedTodoId: null
-};
+
+export interface TodoState extends EntityState<TodoI> {
+  selectedTodoId: number,
+  selectedCategories: string[]
+}
+
+export const adapter: EntityAdapter<TodoI> = createEntityAdapter<TodoI>({
+  selectId: model => model._id
+});
+
+export const initialState: TodoState = adapter.getInitialState({
+  selectedTodoId: null,
+  selectedCategories: []
+});
+
 
 export const todoReducer = createReducer(
   initialState,
+  on(TodoActions.fetchTodosSuccess,
+    (state, {todos}) => adapter.setAll(todos, state)
+  ),
+  on(TodoActions.addTodoSuccess,
+    (state, {todo}) => adapter.addOne(todo, state)
+  ),
 
+  on(TodoActions.updateTodoSuccess,
+    (state, {id, value}) => adapter.updateOne({id, changes: {value}}, state)
+  ),
+  on(TodoActions.toggleActiveTodoSuccess,
+    (state, {id}) => {
+      let todo = state.entities[id]
+      return adapter.updateOne({id: id, changes: {isCompleted: !todo.isCompleted}}, state);
+    }
+  ),
+  on(TodoActions.removeTodoSuccess,
+    (state, {id}) => adapter.removeOne(id, state)
+  ),
 
-  on(addTodoSuccess, (state, {todo}) => ({
+  on(TodoActions.selectTodo, (state, {id}) => ({
     ...state,
-    items: [...state.items, todo]
+    selectedTodoId: id
   })),
 
-  on(removeTodoSuccess, (state, {_id}) => ({
-    ...state,
-    items: state.items.filter((todo) => todo._id !== _id)
-  })),
+  //Subtask
 
-  on(toggleActiveSuccess, (state, {_id}) => ({
-    ...state,
-    items: state.items.map(
-      (item) => item._id === _id ? {...item, isCompleted: !item.isCompleted} : item)
-  })),
+  on(TodoActions.addSubtaskSuccess,
+    (state, {id, subTasks}) => adapter.updateOne({id, changes: {subTasks}}, state)
+  ),
+  on(TodoActions.removeSubtaskSuccess,
+    (state, {id, subTasks}) => adapter.updateOne({id, changes: {subTasks}}, state)
+    ),
+  on(TodoActions.toggleActiveSubtaskSuccess,
+    (state, {id, subTasks}) => adapter.updateOne({id, changes: {subTasks}}, state)
+    ),
 
-  on(editValueSuccess, (state, {_id, value}) => ({
-    ...state,
-    items: state.items.map((item) => item._id === _id ? {...item, value} : item)
-  })),
+  //Categories
 
-  on(fetchTodosSuccess, (state, {todos}) => ({...state, items: todos})),
-
-  on(setInitialTodoEditingValue, (state, {value}) => {
-    return ({
+  on(TodoActions.selectCategories,
+    (state, {categories}) => ({
       ...state,
-      editing: {
-        initialValue: value,
-        newValue: value
-      }
-    });
-  }),
+      selectedCategories: [...categories]
+    })
+    ),
 
-  on(setNewTodoEditingValue, (state, {value}) => {
-    return ({
-      ...state,
-      editing: {
-        ...state.editing,
-        newValue: value
-      }
-    });
-  }),
-
-  on(selectTodo, (state, {_id}) => {
-    return ({
-      ...state,
-      selectedTodoId: _id
-    });
-  })
 );
 
 
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = adapter.getSelectors();
 
