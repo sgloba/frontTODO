@@ -1,24 +1,21 @@
-import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import {Injectable} from '@angular/core';
+import {Store, select} from '@ngrx/store';
 
-import { TodoHttpService } from 'src/app/services/todo-http.service';
+import {TodoHttpService} from 'src/app/services/todo-http.service';
 import {
   addTodoStart,
   fetchTodosStart,
   removeTodoStart, selectTodo,
   toggleActiveTodoStart,
   updateTodoStart,
-  addSubtaskStart, removeSubtaskStart, toggleActiveSubtaskStart
+  addSubtaskStart, removeSubtaskStart, toggleActiveSubtaskStart, selectCategories
 } from "../store/actions/todo.actions";
 import {
-  activeTodos,
-  allTodos,
-  completedTodos, currentSubtask,
+  currentSubtask,
   currentTodo,
   currentTodoId, isTodoSelected,
+  getFilteredTodos
 } from "../store/selectors/todos.selectors";
-
-
 
 
 @Injectable({
@@ -29,11 +26,13 @@ export class TasksSandboxService {
   constructor(
     private http: TodoHttpService,
     private store: Store
-  ) { }
+  ) {
+  }
 
-  allTodos$ = this.store.pipe(select(allTodos));
-  activeTodos$ = this.store.pipe(select(activeTodos));
-  completedTodos$  = this.store.pipe(select(completedTodos));
+
+  getFilteredTodos(status: 'active' | 'completed' | 'all' = 'all', categories: string[] = []) {
+    return this.store.pipe(select(getFilteredTodos(status, categories)))
+  }
 
 
   selectedTodoId$ = this.store.pipe(select(currentTodoId));
@@ -47,7 +46,7 @@ export class TasksSandboxService {
   }
 
   add(value: string): void {
-    this.store.dispatch(addTodoStart({ value }));
+    this.store.dispatch(addTodoStart({value}));
   }
 
   remove(id: number): void {
@@ -78,6 +77,11 @@ export class TasksSandboxService {
 
   toggleActiveSubtask(id: number, subId: number) {
     this.store.dispatch(toggleActiveSubtaskStart({id, subId}))
+  }
+
+  //Category
+  selectCategories(categories: string[]) {
+    this.store.dispatch(selectCategories({categories}))
   }
 
 }

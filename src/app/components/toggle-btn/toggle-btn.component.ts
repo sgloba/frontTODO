@@ -1,15 +1,9 @@
-import {Component, Input, forwardRef, Output, EventEmitter} from '@angular/core';
+import {Component, Input, forwardRef} from '@angular/core';
 import {OptionsI} from "../../models/app.options.model";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
   FormGroup,
-  NgControl,
-  Validators
 } from '@angular/forms';
-import {MAT_FORM_FIELD, MatFormField, MatFormFieldControl} from '@angular/material/form-field'
 
 @Component({
   selector: 'app-toggle-btn',
@@ -30,8 +24,6 @@ export class ToggleBtnComponent implements ControlValueAccessor {
 
 
   @Input() options: OptionsI[]
-  @Output() optionsChange = new EventEmitter()
-
 
   toggleActive(option) {
     this.options = this.options.map( item => {
@@ -40,7 +32,8 @@ export class ToggleBtnComponent implements ControlValueAccessor {
       }
       return item
     })
-    this.optionsChange.emit(this.options)
+    this.onTouched();
+    this.onChange(this.options);
   }
 
 
@@ -62,7 +55,6 @@ export class ToggleBtnComponent implements ControlValueAccessor {
   }
 
   writeValue(outsideValue: number) {
-    // получить из Forms API
     this.value = outsideValue;
   }
 
@@ -71,8 +63,8 @@ export class ToggleBtnComponent implements ControlValueAccessor {
   }
 
   updateValue(insideValue: number) {
-    this.value = insideValue; // html
-    this.onChange(insideValue); // уведомить Forms API
+    this.value = insideValue;
+    this.onChange(insideValue);
     this.onTouched();
   }
 }

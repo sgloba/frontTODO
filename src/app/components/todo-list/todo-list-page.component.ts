@@ -1,9 +1,9 @@
 import {Component, ElementRef, ViewChild, OnInit, Input, OnDestroy} from '@angular/core';
 import { TasksSandboxService } from '../../services/tasks-sandbox.service';
-import {Observable, Subject} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
-import {TodoI} from "../../models/app.todo.model";
-import {takeUntil} from "rxjs/operators";
+import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
+import {ActivatedRoute, Params} from '@angular/router';
+import {combineAll, filter, map, pairwise, startWith, switchMap, takeUntil, tap} from "rxjs/operators";
+import {OptionsI} from "../../models/app.options.model";
 
 
 
@@ -21,29 +21,54 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
   ) {}
 
+
+  ngOnInit(): void {
+    this.taskSandbox.requestTodos();
+  }
+
+
   @ViewChild('todoInput')
   todoInput: ElementRef;
 
   inputValue: string;
 
-  todos$:  Observable<TodoI[]>;
+  options: OptionsI[] = [
+    {title: 'home', active: true},
+    {title: 'work', active: true},
+    {title: 'party', active: true},
+    {title: 'other', active: true},
+  ]
 
 
-  ngOnInit(): void {
-    this.taskSandbox.requestTodos();
+  categoriesSelected$ = new BehaviorSubject(this.options)
 
-    this.activatedRoute.queryParams
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((p) => {
-        if (p.todos === 'active') {
-          this.todos$ = this.taskSandbox.activeTodos$;
-        } else if (p.todos === 'completed') {
-          this.todos$ = this.taskSandbox.completedTodos$;
-        } else {
-          this.todos$ = this.taskSandbox.allTodos$;
-        }
-      });
-  }
+  selectedCategories$ = this.categoriesSelected$.pipe(
+    map((options) => {
+      return options
+        .filter(({ active }) => active)     //????
+        .map(({ title }) => title)
+    })
+  );
+
+  selectedStatus$ = this.activatedRoute.queryParams
+    .pipe(
+      startWith(null),
+      pairwise(),
+      filter(([prev, current]) => {
+        return prev === null || prev?.todos !== current?.todos;
+      }),
+      map(([, current]) => current?.todos)
+    )
+
+  filteredTodos$ = combineLatest([
+    this.selectedStatus$,
+    this.selectedCategories$
+  ]).pipe(
+    switchMap(([status, category]) => this.taskSandbox.getFilteredTodos(status, category))
+  );
+
+
+
 
   addTodo(value: string): void {
 

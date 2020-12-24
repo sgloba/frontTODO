@@ -1,9 +1,10 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {createFeatureSelector, createSelector, select} from '@ngrx/store';
 import {TodoState} from "../states/todo.state";
 import {
   selectEntities,
   selectAll,
 } from '../reducers/todo.reducer'
+import {map, take} from "rxjs/operators";
 
 const todosState = createFeatureSelector<TodoState>('todos')
 
@@ -34,7 +35,7 @@ export const currentTodoId = createSelector(
   (todos) => todos.selectedTodoId
 )
 
-export const isTodoSelected =createSelector(
+export const isTodoSelected = createSelector(
   currentTodoId,
   (id) => !!id
 )
@@ -49,5 +50,27 @@ export const currentSubtask = createSelector(
   todosState,
   currentTodoId,
   (state, currentTodoId) => state.entities[currentTodoId]?.subTasks
+)
+
+export const selectedCategories = createSelector(
+  todosState,
+  state => state.selectedCategories
+)
+
+
+export const getFilteredTodos = (selectedStatus: string, selectedCategories: string[]) => createSelector(
+  allTodos,
+  (todos) => {
+    const filterByActivity = (status) => (todo) => {
+      if (status === 'all') return true;
+      return todo.isCompleted === (status === 'completed')
+    }
+    const filterByCategories = (categories) => (todo) => {
+      return todo.category.some((category) => categories.includes(category))
+    }
+    return todos
+      .filter(filterByActivity(selectedStatus))
+      .filter(filterByCategories(selectedCategories));
+  }
 )
 

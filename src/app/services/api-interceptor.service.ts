@@ -33,7 +33,8 @@ export class ApiInterceptorService {
     let modifiedReq
     if(currentUser) {
       modifiedReq = req.clone({
-        headers: req.headers.set('secret_token', currentUser.token)} )
+        headers: req.headers.set('secret_token', currentUser.token),
+      } )
     } else {
         modifiedReq = req
       }

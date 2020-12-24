@@ -1,1 +1,5 @@
-<app-toggle-btn [options]="options" (optionsChange)="this.optionsChange($event)"></app-toggle-btn>
+<app-toggle-btn
+  [options]="options"
+  [(ngModel)]="options"
+  (ngModelChange)="onModelChange($event)"
+></app-toggle-btn>

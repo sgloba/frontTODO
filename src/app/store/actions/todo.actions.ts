@@ -91,3 +91,10 @@ export const toggleActiveSubtaskSuccess = createAction(
   '[Todos] Toggle Active Subtask Success',
   props<{id: number, subTasks: SubtaskI[]}>()
 )
+
+//Category
+
+export const selectCategories = createAction(
+  '[Todos] Select Categories',
+  props<{ categories: string[] }>()
+)
