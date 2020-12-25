@@ -1,0 +1,14 @@
+.content-wrap{
+  display: flex;
+  padding-top: 120px;
+  margin: 0 auto;
+  max-width: 600px;
+}
+.sidenav-opened{
+  padding-left: 320px;
+  transition: padding-left ease-out .15s;
+}
+.sidenav-closed {
+  padding-left: 0;
+  transition: padding-left ease-out .15s;
+}

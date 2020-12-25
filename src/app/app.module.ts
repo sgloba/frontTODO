@@ -1,72 +1,36 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { StoreModule } from '@ngrx/store';
-import { todoReducer } from './store/reducers/todo.reducer';
-
-import { EffectsModule } from '@ngrx/effects';
-import { TodoEffects } from './store/effects/todo.effects';
-
-import { ToastrModule } from 'ngx-toastr';
-
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { TodoListPageComponent } from './components/todo-list/todo-list-page.component';
-import { TodoItemComponent } from './components/todo-item/todo-item.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {TodoHttpService} from './services/todo-http.service';
-import {ApiInterceptorService} from './services/api-interceptor.service';
-import { LoginComponent } from './components/login/login.component';
-import {UserHttpService} from "./services/user-http.service";
-import {LoginGuard} from "./guards/login.guard";
-import { HeaderComponent } from './components/header/header.component';
-import { UserComponent } from './components/header/user/user.component';
-import { CategoryComponent } from './components/category/category.component';
-import { FloatingActionBtnsComponent } from './components/floating-action-btns/floating-action-btns.component';
-import { AsideComponent } from './components/aside/aside.component';
-import { MainPageComponent } from './components/main-page/main-page.component';
-import {MaterialModule} from "./modules/material.module";
-import {StopClickPropagationDirective} from "./directives/stop-click-propagation.directive";
-import { ToggleBtnComponent } from './components/toggle-btn/toggle-btn.component';
-
-
-
+import {MaterialModule} from "./modules/material/material.module";
+import {CommonModule} from "@angular/common";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {ToastrModule} from "ngx-toastr";
+import {BrowserModule} from "@angular/platform-browser";
+import {ApiInterceptorService} from "./modules/appCommon/services/api-interceptor.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoListPageComponent,
-    TodoItemComponent,
-    LoginComponent,
-    HeaderComponent,
-    UserComponent,
-    CategoryComponent,
-    FloatingActionBtnsComponent,
-    AsideComponent,
-    MainPageComponent,
-    StopClickPropagationDirective,
-    ToggleBtnComponent
   ],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FontAwesomeModule,
-        FormsModule,
-        HttpClientModule,
-        StoreModule.forRoot({todos: todoReducer}),
-        EffectsModule.forRoot([TodoEffects]),
-        ToastrModule.forRoot(),
-        MaterialModule,
-        ReactiveFormsModule,
+      AppRoutingModule,
+      MaterialModule,
+      CommonModule,
+      BrowserAnimationsModule,
+      HttpClientModule,
+      ToastrModule.forRoot(),
+      BrowserModule
     ],
-  providers: [LoginGuard, UserHttpService, TodoHttpService, ApiInterceptorService,
+  providers: [
+    ApiInterceptorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptorService,
       multi: true
-    }],
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

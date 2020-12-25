@@ -1,0 +1,14 @@
+@import 'src/app/scss/colors';
+div{
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  button{
+    background: $primary-clr;
+    color: $text-clr;
+    margin: 0 1rem 1rem;
+    border: 2px solid $text-clr;
+  }
+}

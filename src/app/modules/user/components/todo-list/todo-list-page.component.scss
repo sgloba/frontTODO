@@ -1,0 +1,67 @@
+@import "src/app/scss/colors";
+
+.input-wrap{
+  display: flex;
+  font-size: 26px;
+
+  input {
+    border-bottom: none;
+  }
+}
+
+form{
+  button {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+  }
+}
+.mat-form-field{
+  width: 100%;
+}
+
+
+.todo-list-wrap{
+  min-width: 500px;
+}
+.mat-nav-list{
+  padding: 0;
+  margin: 1rem .5rem;
+  display: flex;
+  list-style: none;
+  font-size: 18px;
+  :hover,
+  :focus,
+  :active {
+    color: $secondary-clr;
+  }
+  a.active {
+    color: $secondary-clr;
+  }
+  a{
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    margin-right: 1rem;
+
+    &::before{
+      content: '/';
+      width: 5px;
+      height: 15px;
+      color: inherit;
+      position: absolute;
+      top: 0;
+      right: -12px;
+    }
+
+  }
+}
+
+.user-wrap{
+  display: flex;
+  justify-content: space-between;
+
+  button{
+    margin: 1rem 0;
+  }
+}
