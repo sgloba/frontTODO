@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 import {UserI} from "../models/app.user.model";
 import {Observable} from "rxjs";
 import {UserRegistrationResponseI} from "../models/app.user-registration-response.model";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class UserHttpService {
 
   ) { }
 
-  url = 'https://desolate-taiga-15678.herokuapp.com/api/auth';
+  url = environment.API_URL_AUTH;
 
 
   getCurrentUser(): UserI  {

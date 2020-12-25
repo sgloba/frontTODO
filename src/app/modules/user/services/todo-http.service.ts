@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TodoI} from '../models/app.todo.model';
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class TodoHttpService {
     private http: HttpClient,
   ) { }
 
-  url = 'https://desolate-taiga-15678.herokuapp.com/api/todos';
+  url = environment.API_URL_TODO;
 
   getTodos(): Observable<TodoI[]> {
     return this.http.get<TodoI[]>(this.url);

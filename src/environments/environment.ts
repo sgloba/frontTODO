@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API_URL_TODO: 'localhost:4444/api/todos',
+  API_URL_AUTH: 'localhost:4444/api/auth'
 };
 
 /*
