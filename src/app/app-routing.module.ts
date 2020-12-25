@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {LoginComponent} from "./components/login/login.component";
-import {LoginGuard} from "./guards/login.guard";
-import {MainPageComponent} from "./components/main-page/main-page.component";
 
 const routes: Routes = [
-  {path: 'main', component: MainPageComponent},
-  {path: '', component: LoginComponent,  canActivate: [LoginGuard]},
+  // {path: 'main', loadChildren: './modules/user/user.module#UserModule'},
+  // {path: '', loadChildren: './modules/guest/guest.module#GuestModule'}
+
+  {path: 'main',  loadChildren: async () => (await import('./modules/user/user.module')).UserModule},
+  {path: '',  loadChildren: async () => (await import('./modules/guest/guest.module')).GuestModule},
+
 ];
 
 @NgModule({

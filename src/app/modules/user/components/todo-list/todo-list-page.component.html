@@ -1,0 +1,45 @@
+<div class="todo-list-wrap">
+
+
+  <form class="input-wrap">
+    <mat-form-field class="example-full-width">
+      <input [(ngModel)]="inputValue"
+             matInput
+             #todoInput
+             name="todoInput"
+             type="text"
+             placeholder="What needs to be done?">
+    </mat-form-field>
+    <button
+      type="submit" mat-stroked-button (click)="addTodo(inputValue)">Add
+    </button>
+  </form>
+
+
+  <app-toggle-btn
+    name="fieldName"
+    ngDefaultControl
+    [options]="options"
+    [(ngModel)]="options"
+    (ngModelChange)="categoriesSelected$.next($event)"
+  ></app-toggle-btn>
+
+
+  <mat-nav-list>
+    <a [routerLink]="null" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      All
+    </a>
+
+    <a [routerLink]="null" [queryParams]="{todos: 'active'}" routerLinkActive="active">
+      Active
+    </a>
+    <a [routerLink]="null" [queryParams]="{todos: 'completed'}" routerLinkActive="active">
+      Completed
+    </a>
+  </mat-nav-list>
+
+  <app-todo-item
+    *ngFor="let todo of (filteredTodos$ | async)"
+    [todo]="todo"
+  ></app-todo-item>
+</div>
