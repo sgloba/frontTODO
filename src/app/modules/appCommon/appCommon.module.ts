@@ -6,9 +6,6 @@ import { StopClickPropagationDirective } from './directives/stop-click-propagati
 import {MaterialModule} from "../material/material.module";
 import {LoginGuard} from "./guards/login.guard";
 import {UserHttpService} from "./services/user-http.service";
-import {ApiInterceptorService} from "./services/api-interceptor.service";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {ToastrModule} from "ngx-toastr";
 import {CommonModule} from "@angular/common";
 
 

@@ -9,7 +9,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ToastrModule} from "ngx-toastr";
 import {BrowserModule} from "@angular/platform-browser";
 import {ApiInterceptorService} from "./modules/appCommon/services/api-interceptor.service";
-import {EnvInitService} from "./modules/appCommon/services/env-init.service";
+import {AppConfigInitService} from "./modules/appCommon/services/app-config-init.service";
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import {EnvInitService} from "./modules/appCommon/services/env-init.service";
     ],
   providers: [
     ApiInterceptorService,
-    EnvInitService,
+    AppConfigInitService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptorService,

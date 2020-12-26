@@ -8,7 +8,7 @@ import { environment } from "../../../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
-export class EnvInitService {
+export class AppConfigInitService {
 
   constructor(
     private http: HttpClient,
@@ -37,10 +37,5 @@ export class EnvInitService {
         console.log('config', config);
       })
   }
-  // envInit () {
-  //   this.http.get(this.localUrl).subscribe(res => console.log(res))
-  // }
-
-
 
 }
