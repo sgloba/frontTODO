@@ -21,7 +21,7 @@ export class AsideComponent implements OnInit{
   ngOnInit() {
     this.tasksSandbox.isTodoSelected$.subscribe((res) => {
       if(res) {
-        this.sidenav.open()
+        this.sidenav?.open()
       }  else if(!res && this.sidenav) {
         this.sidenavClose()
       }

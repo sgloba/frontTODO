@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL_TODO: 'localhost:4444/api/todos',
-  API_URL_AUTH: 'localhost:4444/api/auth'
+  API_URL_TODO: 'http://localhost:3000/api/todos',
+  API_URL_AUTH: 'http://localhost:3000/api/auth'
 };
 
 /*

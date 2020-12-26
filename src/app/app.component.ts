@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {EnvInitService} from "./modules/appCommon/services/env-init.service";
 
 
 @Component({
@@ -10,6 +11,7 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   title = 'frontTODO';
-  constructor() {
+  constructor(configService: EnvInitService) {
+    configService.init();
   }
 }
