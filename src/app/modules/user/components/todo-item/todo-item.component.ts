@@ -1,11 +1,10 @@
-import {Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {TodoI} from 'src/app/modules/user/models/app.todo.model';
 
 import {TasksSandboxService} from 'src/app/modules/user/services/tasks-sandbox.service';
 import {faCheck, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
-
 
 @Component({
   selector: 'app-todo-item',
@@ -24,6 +23,8 @@ export class TodoItemComponent {
       .subscribe((id) => {
       this.highlight = id === this.todo._id
     })
+
+    const id = this.todo._id;
   }
 
   ngOnInit() {
@@ -52,6 +53,11 @@ export class TodoItemComponent {
   }
 
   toggleActive(): void {
+    document.body.style.cursor='progress';
+
+    if(this.isTodoDisabled) {
+      return
+    }
     this.taskSandbox.toggleActive(this.todo._id);
   }
 
