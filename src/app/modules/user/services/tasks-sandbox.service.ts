@@ -13,9 +13,10 @@ import {
 import {
   currentSubtask,
   currentTodo,
-  currentTodoId, isTodoSelected,
+  currentTodoId, isTodoSelected,isTodoDisable,
   getFilteredTodos
 } from "../store/selectors/todos.selectors";
+import {distinctUntilChanged} from "rxjs/operators";
 
 
 @Injectable({
@@ -40,7 +41,6 @@ export class TasksSandboxService {
   currentSubtask$ = this.store.pipe(select(currentSubtask));
   isTodoSelected$ = this.store.pipe(select(isTodoSelected));
 
-
   requestTodos(): void {
     this.store.dispatch(fetchTodosStart());
   }
@@ -63,6 +63,10 @@ export class TasksSandboxService {
 
   selectTodo(id: number) {
     this.store.dispatch(selectTodo({id}))
+  }
+
+  isTodoDisabled1$(id: number) {
+    return this.store.pipe(select(isTodoDisable(id))).pipe()
   }
 
   //Subtask

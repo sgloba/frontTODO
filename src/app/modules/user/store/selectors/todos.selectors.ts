@@ -4,7 +4,6 @@ import {
   selectEntities,
   selectAll,
 } from '../reducers/todo.reducer'
-import {map, take} from "rxjs/operators";
 
 const todosState = createFeatureSelector<TodoState>('todos')
 
@@ -57,6 +56,12 @@ export const selectedCategories = createSelector(
   state => state.selectedCategories
 )
 
+export const isTodoDisable = (id: number) => createSelector(
+  todosState,
+  state => {
+    return !!state.disabledTodos.filter(item => item === id).length;
+  }
+)
 
 export const getFilteredTodos = (selectedStatus: string, selectedCategories: string[]) => createSelector(
   allTodos,

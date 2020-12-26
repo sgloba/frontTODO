@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY} from 'rxjs';
-import {map, catchError, concatMap, tap} from 'rxjs/operators';
+import {map, catchError, concatMap, tap, switchMap, mergeMap} from 'rxjs/operators';
 import {TodoHttpService} from '../../services/todo-http.service';
 import {
   fetchTodosStart,
@@ -18,9 +18,10 @@ import {
   addSubtaskSuccess,
   removeSubtaskStart,
   removeSubtaskSuccess,
-  toggleActiveSubtaskStart, toggleActiveSubtaskSuccess,
+  toggleActiveSubtaskStart, toggleActiveSubtaskSuccess, disableTodo, enableTodo,
 
 } from '../actions/todo.actions';
+import {Store} from "@ngrx/store";
 
 
 @Injectable()
@@ -29,6 +30,8 @@ export class TodoEffects {
   constructor(
     private actions$: Actions,
     private todoHttpService: TodoHttpService,
+    private store: Store
+
   ) {
   }
 
@@ -69,14 +72,18 @@ export class TodoEffects {
 
   toggleActive$ = createEffect(() => this.actions$.pipe(
     ofType(toggleActiveTodoStart.type),
-    concatMap(({id}) => this.todoHttpService.toggleActive(id)
+    tap(({id}) => this.store.dispatch(disableTodo({id})) ),
+    mergeMap(({id}) => this.todoHttpService.toggleActive(id)
       .pipe(
         map(() => toggleActiveTodoSuccess({id})),
         catchError((err) => {
           return EMPTY;
         })
       )
-    ))
+    ),
+    tap(({id}) => this.store.dispatch(enableTodo({id}))
+    ),
+    )
   );
 
   updateTodo$ = createEffect(() => this.actions$.pipe(

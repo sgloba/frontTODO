@@ -10,7 +10,8 @@ export const todosFeatureKey = 'todos';
 
 export interface TodoState extends EntityState<TodoI> {
   selectedTodoId: number,
-  selectedCategories: string[]
+  selectedCategories: string[],
+  disabledTodos: number[]
 }
 
 export const adapter: EntityAdapter<TodoI> = createEntityAdapter<TodoI>({
@@ -19,7 +20,8 @@ export const adapter: EntityAdapter<TodoI> = createEntityAdapter<TodoI>({
 
 export const initialState: TodoState = adapter.getInitialState({
   selectedTodoId: null,
-  selectedCategories: []
+  selectedCategories: [],
+  disabledTodos: []
 });
 
 
@@ -49,6 +51,16 @@ export const todoReducer = createReducer(
     ...state,
     selectedTodoId: id
   })),
+
+  on(TodoActions.disableTodo, (state, {id}) => ({
+    ...state,
+    disabledTodos: [...state.disabledTodos, id]})
+    ),
+  on(TodoActions.enableTodo, (state, {id}) => ({
+      ...state,
+      disabledTodos: [...state.disabledTodos.filter(item => item !== id)]
+    })
+  ),
 
   //Subtask
 

@@ -48,15 +48,17 @@ export const removeTodoSuccess = createAction(
   props<{id: number}>()
 );
 
-
-
-export const clearTodos = createAction(
-  '[Todos] Clear Todos'
-);
-
-
 export const selectTodo = createAction(
   '[Todos] Select Todo',
+  props<{id: number}>()
+)
+
+export const disableTodo = createAction(
+  '[Todos] Disable Todo',
+  props<{id: number}>()
+)
+export const enableTodo = createAction(
+  '[Todos] EnableTodo Todo',
   props<{id: number}>()
 )
 

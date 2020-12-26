@@ -1,6 +1,7 @@
 <div
+  [class.animated-background]="isTodoDisabled"
   [class.is-completed]="todo?.isCompleted"
-  class="todo-item"
+  class="todo-item loader"
   [class.highlight]="highlight"
   (click)="onSelectTodo()">
   <div class="text-wrap">
