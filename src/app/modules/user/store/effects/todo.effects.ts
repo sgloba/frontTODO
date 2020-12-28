@@ -85,9 +85,10 @@ export class TodoEffects {
     ),
     )
   );
-
+//
   updateTodo$ = createEffect(() => this.actions$.pipe(
     ofType(updateTodoStart.type),
+    tap(({id}) => this.store.dispatch(disableTodo({id})) ),
     concatMap(({id, value}) => this.todoHttpService.editValue(id, value)
       .pipe(
         map(() => updateTodoSuccess({id, value})),
@@ -95,7 +96,10 @@ export class TodoEffects {
           return EMPTY;
         })
       )
-    ))
+    ),
+    tap(({id}) => this.store.dispatch(enableTodo({id}))
+    ),
+    )
   );
 
   //Subtask

@@ -1,8 +1,8 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
 import {TodoI} from 'src/app/modules/user/models/app.todo.model';
 
-import { TasksSandboxService } from 'src/app/modules/user/services/tasks-sandbox.service';
-import { faCheck, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {TasksSandboxService} from 'src/app/modules/user/services/tasks-sandbox.service';
+import {faCheck, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -42,32 +42,35 @@ export class TodoItemComponent {
   faPencilAlt = faPencilAlt;
   faTrash = faTrash;
 
-
-
-  removeTodo(): void {
+    removeTodo(): void {
+    if(this.isTodoDisabled) {
+      return
+    }
     this.taskSandbox.remove(this.todo._id);
   }
 
   toggleActive(): void {
-    document.body.style.cursor='progress';
-
-    if(this.isTodoDisabled) {
+    if (this.isTodoDisabled) {
       return
     }
     this.taskSandbox.toggleActive(this.todo._id);
   }
 
   onSpanBlur(): void {
-      this.taskSandbox.editValue(this.todo._id, this.editableSpan.nativeElement.innerText);
+    if (this.isTodoDisabled) {
+      return
+    }
+    this.taskSandbox.editValue(this.todo._id, this.editableSpan.nativeElement.innerText);
   }
 
-  onSpanInput(): void {
-  }
 
   toggleSpanEditable(): void {
-   this.allowEdit = !this.allowEdit;
+    if(this.isTodoDisabled) {
+      return
+    }
+    this.allowEdit = !this.allowEdit;
 
-   if (this.allowEdit) {
+    if (this.allowEdit) {
       setTimeout(() => {
         this.editableSpan.nativeElement.focus();
       }, 0);

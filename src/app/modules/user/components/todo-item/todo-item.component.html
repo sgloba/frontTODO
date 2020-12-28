@@ -1,11 +1,11 @@
 <div
-  [class.animated-background]="isTodoDisabled"
+  [class.loading-spinner]="isTodoDisabled"
   [class.is-completed]="todo?.isCompleted"
   class="todo-item loader"
   [class.highlight]="highlight"
   (click)="onSelectTodo()">
   <div class="text-wrap">
-    <button mat-stroked-button color="accent" (click)="toggleActive()" stop-click-propagation>
+    <button mat-stroked-button color="accent" (click)="toggleActive();" stop-click-propagation>
       <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
     </button>
     <span
@@ -13,7 +13,6 @@
       [attr.contenteditable]="allowEdit"
       (blur)="onSpanBlur()"
       (keydown.enter)="onSpanBlur(); $event.preventDefault()"
-      (input)="onSpanInput()"
     >
       {{todo?.value}}
     </span>
