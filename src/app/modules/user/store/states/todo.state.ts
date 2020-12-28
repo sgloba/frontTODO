@@ -3,7 +3,8 @@ import {EntityState} from "@ngrx/entity";
 
 export interface TodoState extends EntityState<TodoI>{
     selectedTodoId: number,
-    selectedCategories: string[]
+    selectedCategories: string[],
+    disabledTodos: number[]
 }
 
 
