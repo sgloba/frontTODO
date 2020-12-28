@@ -23,8 +23,6 @@ export class TodoItemComponent {
       .subscribe((id) => {
       this.highlight = id === this.todo._id
     })
-
-    const id = this.todo._id;
   }
 
   ngOnInit() {
