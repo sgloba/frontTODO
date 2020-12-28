@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
 import {TodoI} from 'src/app/modules/user/models/app.todo.model';
 
 import {TasksSandboxService} from 'src/app/modules/user/services/tasks-sandbox.service';
@@ -49,13 +49,14 @@ export class TodoItemComponent {
   faTrash = faTrash;
 
     removeTodo(): void {
+    if(this.isTodoDisabled) {
+      return
+    }
     this.taskSandbox.remove(this.todo._id);
   }
 
   toggleActive(): void {
-    document.body.style.cursor='progress';
-
-    if(this.isTodoDisabled) {
+    if (this.isTodoDisabled) {
       return
     }
     this.taskSandbox.toggleActive(this.todo._id);
@@ -70,6 +71,9 @@ export class TodoItemComponent {
 
 
   toggleSpanEditable(): void {
+    if(this.isTodoDisabled) {
+      return
+    }
     this.allowEdit = !this.allowEdit;
 
     if (this.allowEdit) {

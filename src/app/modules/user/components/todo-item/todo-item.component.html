@@ -1,12 +1,19 @@
 <div
   [class.loading-spinner]="isTodoDisabled"
+<<<<<<< HEAD
   [class.animated-background]="isTodoDisabled"
+=======
+>>>>>>> issue#10 done + added spinner
   [class.is-completed]="todo?.isCompleted"
   class="todo-item loader"
   [class.highlight]="highlight"
   (click)="onSelectTodo()">
   <div class="text-wrap">
+<<<<<<< HEAD
     <button mat-stroked-button color="accent" [disabled]="isTodoDisabled" (click)="toggleActive();" stop-click-propagation>
+=======
+    <button mat-stroked-button color="accent" (click)="toggleActive();" stop-click-propagation>
+>>>>>>> issue#10 done + added spinner
       <fa-icon class="fa-icon check" [icon]="faCheck"></fa-icon>
     </button>
     <span
