@@ -65,7 +65,7 @@ export class TasksSandboxService {
     this.store.dispatch(selectTodo({id}))
   }
 
-  isTodoDisabled1$(id: number) {
+  isTodoDisabled$(id: number) {
     return this.store.pipe(select(isTodoDisable(id))).pipe()
   }
 

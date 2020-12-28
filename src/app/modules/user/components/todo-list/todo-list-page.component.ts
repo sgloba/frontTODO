@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild, OnInit, OnDestroy} from '@angular/core
 import { TasksSandboxService } from '../../services/tasks-sandbox.service';
 import {BehaviorSubject, combineLatest, Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {filter, map, pairwise, startWith, switchMap} from "rxjs/operators";
+import {filter, map, pairwise, startWith, switchMap, takeUntil} from "rxjs/operators";
 import {OptionsI} from "../../../appCommon/models/app.options.model";
 
 
@@ -51,6 +51,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   );
 
   selectedStatus$ = this.activatedRoute.queryParams
+    .pipe(takeUntil(this.unsubscribe$))
     .pipe(
       startWith(null),
       pairwise(),

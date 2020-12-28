@@ -77,6 +77,7 @@ export class TodoEffects {
       .pipe(
         map(() => toggleActiveTodoSuccess({id})),
         catchError((err) => {
+          this.store.dispatch(enableTodo({id}))
           return EMPTY;
         })
       )
@@ -93,6 +94,7 @@ export class TodoEffects {
       .pipe(
         map(() => updateTodoSuccess({id, value})),
         catchError(() => {
+          this.store.dispatch(enableTodo({id}))
           return EMPTY;
         })
       )

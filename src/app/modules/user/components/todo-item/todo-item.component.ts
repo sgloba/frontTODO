@@ -3,6 +3,8 @@ import {TodoI} from 'src/app/modules/user/models/app.todo.model';
 
 import {TasksSandboxService} from 'src/app/modules/user/services/tasks-sandbox.service';
 import {faCheck, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 
 @Component({
@@ -11,20 +13,23 @@ import {faCheck, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./todo-item.component.scss']
 })
 export class TodoItemComponent {
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     private taskSandbox: TasksSandboxService,
   ) {
 
-    this.taskSandbox.selectedTodoId$.subscribe((id) => {
+    this.taskSandbox.selectedTodoId$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((id) => {
       this.highlight = id === this.todo._id
     })
-
-    const id = this.todo._id;
   }
 
   ngOnInit() {
-    this.taskSandbox.isTodoDisabled1$(this.todo._id).subscribe((disabled) => {
+    this.taskSandbox.isTodoDisabled$(this.todo._id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((disabled) => {
       this.isTodoDisabled = disabled;
     })
   }
@@ -70,6 +75,11 @@ export class TodoItemComponent {
 
   onSelectTodo() {
     this.taskSandbox.selectTodo(this.todo._id)
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }
