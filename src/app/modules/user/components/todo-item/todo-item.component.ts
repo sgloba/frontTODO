@@ -43,16 +43,10 @@ export class TodoItemComponent {
   faTrash = faTrash;
 
     removeTodo(): void {
-    if(this.isTodoDisabled) {
-      return
-    }
     this.taskSandbox.remove(this.todo._id);
   }
 
   toggleActive(): void {
-    if (this.isTodoDisabled) {
-      return
-    }
     this.taskSandbox.toggleActive(this.todo._id);
   }
 
@@ -65,9 +59,6 @@ export class TodoItemComponent {
 
 
   toggleSpanEditable(): void {
-    if(this.isTodoDisabled) {
-      return
-    }
     this.allowEdit = !this.allowEdit;
 
     if (this.allowEdit) {
