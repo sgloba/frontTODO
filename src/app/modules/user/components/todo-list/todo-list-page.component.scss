@@ -1,5 +1,24 @@
 @import "src/app/scss/colors";
+.recycle-div {
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  border: 2px dashed $border-clr;
+  visibility: visible;
+  opacity: .5;
 
+}
+.remove_circle_outline {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(4);
+}
+.none {
+  visibility: hidden;
+}
 .input-wrap{
   display: flex;
   font-size: 26px;

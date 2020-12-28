@@ -31,6 +31,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   todoInput: ElementRef;
 
   inputValue: string;
+  showRecycleBin: boolean = false;
 
   options: OptionsI[] = [
     {title: 'home', active: true},
@@ -68,9 +69,6 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
     switchMap(([status, category]) => this.taskSandbox.getFilteredTodos(status, category))
   );
 
-
-
-
   addTodo(value: string): void {
 
     if (!value) { return }
@@ -78,6 +76,17 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
 
     this.inputValue = '';
     this.todoInput.nativeElement.focus();
+  }
+
+  onDrop(e) {
+      this.taskSandbox.remove(e.previousContainer.data._id)
+  }
+
+  onDragStart() {
+    this.showRecycleBin = true
+  }
+  onDragEnd() {
+    this.showRecycleBin = false
   }
 
   ngOnDestroy() {

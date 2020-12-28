@@ -34,7 +34,6 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 const modules = [

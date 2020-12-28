@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TasksSandboxService} from "../../services/tasks-sandbox.service";
 
 @Component({
   selector: 'app-floating-action-btns',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FloatingActionBtnsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private taskSandbox: TasksSandboxService,
+  ) { }
 
   ngOnInit(): void {
   }

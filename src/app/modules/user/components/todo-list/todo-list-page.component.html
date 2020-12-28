@@ -1,5 +1,5 @@
-<div class="todo-list-wrap">
 
+<div class="todo-list-wrap">
 
   <form class="input-wrap">
     <mat-form-field class="example-full-width">
@@ -38,8 +38,32 @@
     </a>
   </mat-nav-list>
 
-  <app-todo-item
+  <div
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="todo"
+    [cdkDropListConnectedTo]="[deleteFloatingBtn]"
     *ngFor="let todo of (filteredTodos$ | async)"
+
+  >
+  <app-todo-item
+    cdkDrag
+    (cdkDragStarted)="onDragStart()"
+    (cdkDragEnded)="onDragEnd()"
     [todo]="todo"
+
   ></app-todo-item>
+  </div>
+
+  <div
+    class="recycle-div"
+    [class.none]="!showRecycleBin"
+    id="recycle"
+    cdkDropList
+    #deleteFloatingBtn="cdkDropList"
+    (cdkDropListDropped)="onDrop($event)"
+  >
+    <mat-icon class="remove_circle_outline">remove_circle_outline</mat-icon>
+  </div>
+
 </div>
