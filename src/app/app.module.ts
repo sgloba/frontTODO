@@ -22,7 +22,7 @@ import {AppConfigInitService} from "./modules/appCommon/services/app-config-init
       BrowserAnimationsModule,
       HttpClientModule,
       ToastrModule.forRoot(),
-      BrowserModule
+      BrowserModule,
     ],
   providers: [
     ApiInterceptorService,

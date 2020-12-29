@@ -13,6 +13,7 @@ position: relative;
 }
 
 .loading-spinner {
+.animated-background {
 
   &:after{
     content: " ";
@@ -42,7 +43,7 @@ position: relative;
     }
 
   }
-}
+}}
 
 .todo-item {
   display: flex;

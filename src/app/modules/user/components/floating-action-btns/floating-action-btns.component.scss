@@ -1,14 +1,15 @@
 @import 'src/app/scss/colors';
 div{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
-  flex-direction: column;
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
+  align-items: center;
+  justify-content: center;
   button{
     background: $primary-clr;
     color: $text-clr;
-    margin: 0 1rem 1rem;
     border: 2px solid $text-clr;
   }
 }

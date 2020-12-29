@@ -6,7 +6,6 @@ import {faCheck, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 
-
 @Component({
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',

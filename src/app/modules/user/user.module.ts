@@ -18,6 +18,7 @@ import {MaterialModule} from "../material/material.module";
 import {CommonModule} from "@angular/common";
 import {TasksSandboxService} from "./services/tasks-sandbox.service";
 import {TodoHttpService} from "./services/todo-http.service";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 
 
@@ -31,17 +32,18 @@ import {TodoHttpService} from "./services/todo-http.service";
     TodoListPageComponent,
 
   ],
-  imports: [
-    AppCommonModule,
-    UserRoutingModule,
-    StoreModule.forRoot({todos: todoReducer}),
-    EffectsModule.forRoot([TodoEffects]),
-    ReactiveFormsModule,
-    FontAwesomeModule,
-    FormsModule,
-    MaterialModule,
-    CommonModule
-  ],
+    imports: [
+        AppCommonModule,
+        UserRoutingModule,
+        StoreModule.forRoot({todos: todoReducer}),
+        EffectsModule.forRoot([TodoEffects]),
+        ReactiveFormsModule,
+        FontAwesomeModule,
+        FormsModule,
+        MaterialModule,
+        CommonModule,
+        DragDropModule
+    ],
   providers: [
     TasksSandboxService,
     TodoHttpService,
