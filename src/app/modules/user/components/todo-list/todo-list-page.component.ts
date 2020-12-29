@@ -32,6 +32,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
 
   inputValue: string;
   showRecycleBin: boolean = false;
+  highlightRecycleBin: boolean = false;
 
   options: OptionsI[] = [
     {title: 'home', active: true},
@@ -79,10 +80,12 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   }
 
   onDrop(e) {
+    if (e.isPointerOverContainer) {
       this.taskSandbox.remove(e.previousContainer.data._id)
+    }
   }
 
-  onDragStart() {
+    onDragStart() {
     this.showRecycleBin = true
   }
   onDragEnd() {

@@ -1,4 +1,7 @@
 @import "src/app/scss/colors";
+.cdk-drag-placeholder {
+  display:none;
+}
 .recycle-div {
   position: fixed;
   bottom: 50px;
@@ -9,6 +12,9 @@
   visibility: visible;
   opacity: .5;
 
+}
+.highlight-recycle{
+  opacity: 1;
 }
 .remove_circle_outline {
   position: absolute;

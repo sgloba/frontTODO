@@ -51,7 +51,6 @@
     (cdkDragStarted)="onDragStart()"
     (cdkDragEnded)="onDragEnd()"
     [todo]="todo"
-
   ></app-todo-item>
   </div>
 
@@ -60,6 +59,9 @@
     [class.none]="!showRecycleBin"
     id="recycle"
     cdkDropList
+    [class.highlight-recycle] = 'highlightRecycleBin'
+    (mouseleave)="highlightRecycleBin = false"
+    (mouseover)="highlightRecycleBin = true"
     #deleteFloatingBtn="cdkDropList"
     (cdkDropListDropped)="onDrop($event)"
   >
