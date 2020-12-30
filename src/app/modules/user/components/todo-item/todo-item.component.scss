@@ -12,8 +12,8 @@ position: relative;
   }
 }
 
+
 .loading-spinner {
-.animated-background {
 
   &:after{
     content: " ";
@@ -41,9 +41,8 @@ position: relative;
     100% {
       transform: rotate(1800deg);
     }
-
   }
-}}
+}
 
 .todo-item {
   display: flex;

@@ -1,4 +1,8 @@
 @import "src/app/scss/colors";
+.mat-menu-item{
+  display: flex;
+  align-items: center;
+}
 .cdk-drag-placeholder {
   display:none;
 }

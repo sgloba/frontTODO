@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-
 import { UserRoutingModule } from './user-routing.module';
 import {AsideComponent} from "./components/aside/aside.component";
 import {FloatingActionBtnsComponent} from "./components/floating-action-btns/floating-action-btns.component";
@@ -42,7 +41,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
         FormsModule,
         MaterialModule,
         CommonModule,
-        DragDropModule
+        DragDropModule,
+
     ],
   providers: [
     TasksSandboxService,

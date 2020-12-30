@@ -33,6 +33,7 @@ export class TodoItemComponent {
     })
   }
 
+
   @ViewChild('editableSpan')
   editableSpan: ElementRef;
 
@@ -42,9 +43,12 @@ export class TodoItemComponent {
   highlight: boolean = false;
   isTodoDisabled: boolean = false;
 
+
   faCheck = faCheck;
   faPencilAlt = faPencilAlt;
   faTrash = faTrash;
+
+
 
     removeTodo(): void {
     this.taskSandbox.remove(this.todo._id);

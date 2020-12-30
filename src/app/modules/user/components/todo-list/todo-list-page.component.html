@@ -1,4 +1,3 @@
-
 <div class="todo-list-wrap">
 
   <form class="input-wrap">
@@ -38,34 +37,51 @@
     </a>
   </mat-nav-list>
 
-  <div
-    cdkDropList
-    #todoList="cdkDropList"
-    [cdkDropListData]="todo"
-    [cdkDropListConnectedTo]="[deleteFloatingBtn]"
-    *ngFor="let todo of (filteredTodos$ | async)"
 
-  >
-  <app-todo-item
-    cdkDrag
-    (cdkDragStarted)="onDragStart()"
-    (cdkDragEnded)="onDragEnd()"
-    [todo]="todo"
-  ></app-todo-item>
+  <div class="todos-wrap" (contextmenu)="$event.preventDefault()">
+    <div
+      (contextmenu)="onTodoRightClick($event, todo)"
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="[deleteFloatingBtn]"
+      *ngFor="let todo of (filteredTodos$ | async)">
+      <app-todo-item
+        cdkDrag
+        (cdkDragStarted)="onDragStart()"
+        (cdkDragEnded)="onDragEnd()"
+        [todo]="todo"></app-todo-item>
+    </div>
+
+    <div
+      class="recycle-div"
+      [class.none]="!showRecycleBin"
+      id="recycle"
+      cdkDropList
+      [class.highlight-recycle]='highlightRecycleBin'
+      (mouseleave)="highlightRecycleBin = false"
+      (mouseover)="highlightRecycleBin = true"
+      #deleteFloatingBtn="cdkDropList"
+      (cdkDropListDropped)="onDrop($event)">
+      <mat-icon class="remove_circle_outline">remove_circle_outline</mat-icon>
+    </div>
+
   </div>
-
-  <div
-    class="recycle-div"
-    [class.none]="!showRecycleBin"
-    id="recycle"
-    cdkDropList
-    [class.highlight-recycle] = 'highlightRecycleBin'
-    (mouseleave)="highlightRecycleBin = false"
-    (mouseover)="highlightRecycleBin = true"
-    #deleteFloatingBtn="cdkDropList"
-    (cdkDropListDropped)="onDrop($event)"
-  >
-    <mat-icon class="remove_circle_outline">remove_circle_outline</mat-icon>
-  </div>
-
 </div>
+
+<!--invisible trigger for todo contextmenu-->
+<div style="visibility: hidden; position: fixed;"
+     [style.left]="menuTopLeftPosition.x"
+     [style.top]="menuTopLeftPosition.y"
+     [matMenuTriggerFor]="menu"
+></div>
+
+<mat-menu #menu="matMenu" xPosition="after" >
+  <ng-template matMenuContent let-todo="todo">
+    <button mat-menu-item
+    (click)="removeTodo(todo._id)">
+      <mat-icon>delete_forever</mat-icon>
+      <span>Remove</span>
+    </button>
+  </ng-template>
+</mat-menu>
