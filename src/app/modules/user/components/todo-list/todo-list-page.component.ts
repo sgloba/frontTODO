@@ -1,6 +1,6 @@
-import {Component, ElementRef, ViewChild, OnInit, OnDestroy, Input, EventEmitter, HostListener} from '@angular/core';
+import {Component, ElementRef, ViewChild, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {TasksSandboxService} from '../../services/tasks-sandbox.service';
-import {BehaviorSubject, combineLatest, Subject} from 'rxjs';
+import {BehaviorSubject, combineLatest, fromEvent, Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {filter, map, pairwise, startWith, switchMap, takeUntil} from "rxjs/operators";
 import {OptionsI} from "../../../appCommon/models/app.options.model";
@@ -19,12 +19,12 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   onRightClick(event: MouseEvent) {
     if (this.matMenuTrigger.menuOpen) {
       event.preventDefault();
-      // @ts-ignore
-      if (event.target.classList.contains('cdk-overlay-backdrop')) {
+      if ((event.target as HTMLElement).classList.contains('cdk-overlay-backdrop')) {
         this.matMenuTrigger.closeMenu();
       }
     }
   }
+
 
 
   constructor(
@@ -35,8 +35,13 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.taskSandbox.requestTodos();
+    fromEvent(document, 'wheel', { passive: false })
+      .pipe(
+        filter(() => this.matMenuTrigger.menuOpen),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((e) => e.preventDefault());
   }
 
   @ViewChild(MatMenuTrigger)
@@ -50,7 +55,6 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   showRecycleBin: boolean = false;
   highlightRecycleBin: boolean = false;
   menuTopLeftPosition = {x: '0', y: '0'}
-
 
   options: OptionsI[] = [
     {title: 'home', active: true},
@@ -120,7 +124,9 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   removeTodo(id: number) {
     this.taskSandbox.remove(id)
   }
-
+  noScroll() {
+    window.scrollTo(0, 0);
+  }
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

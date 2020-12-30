@@ -76,12 +76,12 @@
      [matMenuTriggerFor]="menu"
 ></div>
 
-<mat-menu #menu="matMenu"  >
+<mat-menu #menu="matMenu" xPosition="after" >
   <ng-template matMenuContent let-todo="todo">
     <button mat-menu-item
     (click)="removeTodo(todo._id)">
       <mat-icon>delete_forever</mat-icon>
-      <span>Remove {{todo.value}}</span>
+      <span>Remove</span>
     </button>
   </ng-template>
 </mat-menu>
