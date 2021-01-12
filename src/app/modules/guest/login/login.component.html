@@ -23,6 +23,9 @@
         type="password">
     </mat-form-field>
     <button mat-raised-button type="submit" color="primary" (click)="onLogin()">Submit</button>
+    <button type="button" mat-raised-button color="primary" (click)="onGoogleLogin()">
+      Log in with Google
+    </button>
   </form>
 
   <form *ngIf="!login" class="input-wrap">
