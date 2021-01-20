@@ -5,7 +5,6 @@ import { ToggleBtnComponent } from './components/toggle-btn/toggle-btn.component
 import { StopClickPropagationDirective } from './directives/stop-click-propagation.directive';
 import {MaterialModule} from "../material/material.module";
 import {MainGuard} from "./guards/main.guard";
-import {UserHttpService} from "./services/user-http.service";
 import {CommonModule} from "@angular/common";
 
 
@@ -24,6 +23,6 @@ import {CommonModule} from "@angular/common";
     ToggleBtnComponent,
     StopClickPropagationDirective,
   ],
-  providers: [MainGuard, UserHttpService]
+  providers: [MainGuard]
 })
 export class AppCommonModule { }

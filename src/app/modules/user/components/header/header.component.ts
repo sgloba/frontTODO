@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {UserI} from "../../../appCommon/models/app.user.model";
-import {UserHttpService} from "../../../appCommon/services/user-http.service";
+import {AuthService} from "../../../appCommon/services/auth.service";
 
 
 @Component({
@@ -12,12 +12,14 @@ import {UserHttpService} from "../../../appCommon/services/user-http.service";
 export class HeaderComponent {
 
   constructor(
-    private userHttpService: UserHttpService,
+    private AuthService: AuthService,
     private route:Router
   ) {}
 
-  user: UserI = this.userHttpService.getCurrentUser()
+  user: UserI = this.AuthService.currentUser
 
+  userDisplay = this.user.name ? this.user.name : this.user.email
+  usePicSrc = this.user.picture ? this.user.picture : 'https://source.unsplash.com/random/40x40'
 
   logout(): void {
     localStorage.removeItem('currentUser')

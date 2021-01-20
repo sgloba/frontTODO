@@ -6,7 +6,6 @@ import {MainGuard} from "../appCommon/guards/main.guard";
 const routes: Routes = [
   {path: '', component: LoginComponent, },
 ];
-// canActivate: [MainGuard]
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
