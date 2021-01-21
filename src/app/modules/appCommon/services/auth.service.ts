@@ -33,7 +33,7 @@ export class AuthService {
     if(localStorage.getItem('currentUser')) {
       const decoded = JSON.parse(localStorage.getItem('currentUser'));
       const user = jwt_decode(decoded.token);
-      console.log(user)
+      console.log(user);
       return user.email_verified
     } else {
       return false

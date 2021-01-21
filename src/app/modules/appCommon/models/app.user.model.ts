@@ -12,7 +12,7 @@ export interface UserI  {
   email_verified: boolean,
   firebase: {
     identities: {
-      "google.com": string[],
+      'google.com': string[],
       email: string[]
     },
     sign_in_provider: string
