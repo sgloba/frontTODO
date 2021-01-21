@@ -96,38 +96,15 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
     switchMap(([status, category]) => this.taskSandbox.getFilteredTodos(status, category))
   );
 
-  @HostListener('document:contextmenu', ['$event'])
-  onRightClick(event: MouseEvent) {
-    if (this.matMenuTrigger.menuOpen) {
-      event.preventDefault();
-      if ((event.target as HTMLElement).classList.contains('cdk-overlay-backdrop')) {
-        this.matMenuTrigger.closeMenu();
-      }
-    }
-  }
-
-  ngOnInit(): void {
-    this.taskSandbox.requestTodos();
-    fromEvent(document, 'wheel', { passive: false })
-      .pipe(
-        filter(() => this.matMenuTrigger.menuOpen),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe((e) => e.preventDefault());
-  }
-
   addTodo(value: string): void {
     if (!value) {
       return;
-    if (!value) {
-      return
+      }
+      this.taskSandbox.add(value);
+
+      this.inputValue = '';
+      this.todoInput.nativeElement.focus();
     }
-    this.taskSandbox.add(value);
-
-    this.inputValue = '';
-    this.todoInput.nativeElement.focus();
-  }
-
   onDrop(e) {
     if (e.isPointerOverContainer) {
       this.taskSandbox.remove(e.previousContainer.data._id);
@@ -152,22 +129,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
     this.taskSandbox.remove(id);
   }
 
-  onTodoRightClick(event, todo) {
-    this.menuTopLeftPosition.x = event.clientX + 'px';
-    this.menuTopLeftPosition.y = event.clientY + 'px';
-    this.matMenuTrigger.menuData = {todo: todo};
-    this.matMenuTrigger.openMenu()
-  }
 
-  removeTodo(id: number) {
-    this.taskSandbox.remove(id)
-  }
-
-
-
-  noScroll() {
-    window.scrollTo(0, 0);
-  }
 
   ngOnDestroy() {
     this.unsubscribe$.next();

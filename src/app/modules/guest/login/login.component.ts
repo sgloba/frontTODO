@@ -48,12 +48,5 @@ export class LoginComponent {
 
   }
 
-  onGoogleLogin() {
-    this.authService.GoogleAuth().then(()=> {
-      this.route.navigate(['/main'])
-      this.userHttpService.getCurrentUser()
-    })
-
-  }
 }
 
