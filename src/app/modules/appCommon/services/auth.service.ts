@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
 import jwt_decode from 'jwt-decode';
 import {UserI} from '../models/app.user.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,6 +39,7 @@ export class AuthService {
       return user.email_verified;
     } else {
       return false;
+
     }
   }
 }

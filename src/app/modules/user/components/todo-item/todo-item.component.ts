@@ -26,6 +26,7 @@ export class TodoItemComponent {
   unsubscribe$ = new Subject<void>();
 
 
+
   @ViewChild('editableSpan')
   editableSpan: ElementRef;
 
@@ -34,6 +35,7 @@ export class TodoItemComponent {
   allowEdit = false;
   highlight = false;
   isTodoDisabled = false;
+
 
 
   faCheck = faCheck;
@@ -47,6 +49,7 @@ export class TodoItemComponent {
       this.isTodoDisabled = disabled;
     });
   }
+
 
 
 

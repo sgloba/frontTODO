@@ -7,6 +7,7 @@ import {OptionsI} from '../../../appCommon/models/app.options.model';
 import {MatMenuTrigger} from '@angular/material/menu';
 
 
+
 @Component({
   selector: 'app-todo-list-page',
   templateUrl: './todo-list-page.component.html',
@@ -16,11 +17,32 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
 
 
 
+  @HostListener('document:contextmenu', ['$event'])
+  onRightClick(event: MouseEvent) {
+    if (this.matMenuTrigger.menuOpen) {
+      event.preventDefault();
+      if ((event.target as HTMLElement).classList.contains('cdk-overlay-backdrop')) {
+        this.matMenuTrigger.closeMenu();
+      }
+    }
+  }
+
+
+
   constructor(
     private taskSandbox: TasksSandboxService,
     private activatedRoute: ActivatedRoute,
   ) {
+  }
 
+  ngOnInit(): void {
+    this.taskSandbox.requestTodos();
+    fromEvent(document, 'wheel', { passive: false })
+      .pipe(
+        filter(() => this.matMenuTrigger.menuOpen),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((e) => e.preventDefault());
   }
   unsubscribe$ = new Subject<void>();
 
@@ -35,6 +57,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   showRecycleBin = false;
   highlightRecycleBin = false;
   menuTopLeftPosition = {x: '0', y: '0'};
+
 
   options: OptionsI[] = [
     {title: 'home', active: true},
@@ -51,6 +74,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
       return options
         .filter(({active}) => active)     // ????
         .map(({title}) => title);
+
     })
   );
 
@@ -95,6 +119,8 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   addTodo(value: string): void {
     if (!value) {
       return;
+    if (!value) {
+      return
     }
     this.taskSandbox.add(value);
 
@@ -109,6 +135,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   }
   onDragStart() {
     this.showRecycleBin = true;
+
   }
   onDragEnd() {
     this.showRecycleBin = false;
@@ -123,6 +150,23 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
 
   removeTodo(id: number) {
     this.taskSandbox.remove(id);
+  }
+
+  onTodoRightClick(event, todo) {
+    this.menuTopLeftPosition.x = event.clientX + 'px';
+    this.menuTopLeftPosition.y = event.clientY + 'px';
+    this.matMenuTrigger.menuData = {todo: todo};
+    this.matMenuTrigger.openMenu()
+  }
+
+  removeTodo(id: number) {
+    this.taskSandbox.remove(id)
+  }
+
+
+
+  noScroll() {
+    window.scrollTo(0, 0);
   }
 
   ngOnDestroy() {

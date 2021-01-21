@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {AuthService} from '../../appCommon/services/auth.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -44,6 +45,14 @@ export class LoginComponent {
       this.route.navigate(['/main']);
       this.userHttpService.getCurrentUser();
     });
+
+  }
+
+  onGoogleLogin() {
+    this.authService.GoogleAuth().then(()=> {
+      this.route.navigate(['/main'])
+      this.userHttpService.getCurrentUser()
+    })
 
   }
 }
