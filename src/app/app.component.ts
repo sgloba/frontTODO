@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AppConfigInitService} from "./modules/appCommon/services/app-config-init.service";
+import {AppConfigInitService} from './modules/appCommon/services/app-config-init.service';
 
 
 @Component({

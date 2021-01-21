@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {TasksSandboxService} from "../../services/tasks-sandbox.service";
+import {TasksSandboxService} from '../../services/tasks-sandbox.service';
 
 @Component({
   selector: 'app-main-page',
@@ -13,9 +13,9 @@ export class MainPageComponent {
   ) {
     this.taskSandbox.selectedTodoId$.subscribe((id) => {
       this.sidenavOpened = !!id;
-    })
+    });
   }
 
 
-  sidenavOpened: boolean
+  sidenavOpened: boolean;
 }

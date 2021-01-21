@@ -1,4 +1,4 @@
-import {TodoI} from "../../models/app.todo.model";
+import {TodoI} from '../../models/app.todo.model';
 
 
 import {createReducer, on} from '@ngrx/store';
@@ -9,9 +9,9 @@ export const todosFeatureKey = 'todos';
 
 
 export interface TodoState extends EntityState<TodoI> {
-  selectedTodoId: number,
-  selectedCategories: string[],
-  disabledTodos: number[]
+  selectedTodoId: number;
+  selectedCategories: string[];
+  disabledTodos: number[];
 }
 
 export const adapter: EntityAdapter<TodoI> = createEntityAdapter<TodoI>({
@@ -39,8 +39,8 @@ export const todoReducer = createReducer(
   ),
   on(TodoActions.toggleActiveTodoSuccess,
     (state, {id}) => {
-      let todo = state.entities[id]
-      return adapter.updateOne({id: id, changes: {isCompleted: !todo.isCompleted}}, state);
+      const todo = state.entities[id];
+      return adapter.updateOne({id, changes: {isCompleted: !todo.isCompleted}}, state);
     }
   ),
   on(TodoActions.removeTodoSuccess,
@@ -62,7 +62,7 @@ export const todoReducer = createReducer(
     })
   ),
 
-  //Subtask
+  // Subtask
 
   on(TodoActions.addSubtaskSuccess,
     (state, {id, subTasks}) => adapter.updateOne({id, changes: {subTasks}}, state)
@@ -74,7 +74,7 @@ export const todoReducer = createReducer(
     (state, {id, subTasks}) => adapter.updateOne({id, changes: {subTasks}}, state)
     ),
 
-  //Categories
+  // Categories
 
   on(TodoActions.selectCategories,
     (state, {categories}) => ({

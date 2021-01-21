@@ -8,7 +8,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, retry, tap} from 'rxjs/operators';
 
 import { ToastrService } from 'ngx-toastr';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 
 
@@ -20,7 +20,7 @@ export class ApiInterceptorService {
 
   constructor(
     private toastr: ToastrService,
-    private route:Router
+    private route: Router
 
   ) { }
 
@@ -29,21 +29,21 @@ export class ApiInterceptorService {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    let modifiedReq
-    if(currentUser) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let modifiedReq;
+    if (currentUser) {
       modifiedReq = req.clone({
         headers: req.headers.set('secret_token', currentUser.token),
-      } )
+      } );
     } else {
-        modifiedReq = req
+        modifiedReq = req;
       }
 
     return next.handle(modifiedReq).pipe(
       retry(2),
       catchError(err => {
-        if(err.status === 401) {
-          this.route.navigate(['/'])
+        if (err.status === 401) {
+          this.route.navigate(['/']);
         }
         this.toastr.error(err.message, err.title);
         return throwError(err);

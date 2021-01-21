@@ -1,4 +1,4 @@
 export interface OptionsI {
-  title: string,
-  active: boolean
+  title: string;
+  active: boolean;
 }
