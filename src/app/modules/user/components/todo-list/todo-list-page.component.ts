@@ -125,6 +125,12 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
     this.taskSandbox.remove(id)
   }
 
+
+
+  noScroll() {
+    window.scrollTo(0, 0);
+  }
+
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
