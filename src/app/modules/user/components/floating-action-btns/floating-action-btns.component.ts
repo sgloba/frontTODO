@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TasksSandboxService} from "../../services/tasks-sandbox.service";
+import {TasksSandboxService} from '../../services/tasks-sandbox.service';
 
 @Component({
   selector: 'app-floating-action-btns',

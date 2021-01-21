@@ -3,7 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
   FormGroup,
 } from '@angular/forms';
-import {OptionsI} from "../../models/app.options.model";
+import {OptionsI} from '../../models/app.options.model';
 
 @Component({
   selector: 'app-toggle-btn',
@@ -23,18 +23,7 @@ export class ToggleBtnComponent implements ControlValueAccessor {
   });
 
 
-  @Input() options: OptionsI[]
-
-  toggleActive(option) {
-    this.options = this.options.map( item => {
-      if(item.title === option.title) {
-        item.active = !item.active
-      }
-      return item
-    })
-    this.onTouched();
-    this.onChange(this.options);
-  }
+  @Input() options: OptionsI[];
 
 
 
@@ -42,6 +31,17 @@ export class ToggleBtnComponent implements ControlValueAccessor {
 
   value = 0;
   disabled = false;
+
+  toggleActive(option) {
+    this.options = this.options.map( item => {
+      if (item.title === option.title) {
+        item.active = !item.active;
+      }
+      return item;
+    });
+    this.onTouched();
+    this.onChange(this.options);
+  }
   private onChange = (value: any) => {};
 
   private onTouched = () => {};

@@ -1,9 +1,9 @@
 export interface UserRegistrationResponseI {
-  message: string,
+  message: string;
   user: {
     password: string,
     username: string,
     _v: number,
     _id: string
-  }
+  };
 }

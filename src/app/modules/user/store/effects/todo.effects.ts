@@ -21,7 +21,7 @@ import {
   toggleActiveSubtaskStart, toggleActiveSubtaskSuccess, disableTodo, enableTodo,
 
 } from '../actions/todo.actions';
-import {Store} from "@ngrx/store";
+import {Store} from '@ngrx/store';
 
 
 @Injectable()
@@ -77,7 +77,7 @@ export class TodoEffects {
       .pipe(
         map(() => toggleActiveTodoSuccess({id})),
         catchError((err) => {
-          this.store.dispatch(enableTodo({id}))
+          this.store.dispatch(enableTodo({id}));
           return EMPTY;
         })
       )
@@ -94,7 +94,7 @@ export class TodoEffects {
       .pipe(
         map(() => updateTodoSuccess({id, value})),
         catchError(() => {
-          this.store.dispatch(enableTodo({id}))
+          this.store.dispatch(enableTodo({id}));
           return EMPTY;
         })
       )
@@ -104,7 +104,7 @@ export class TodoEffects {
     )
   );
 
-  //Subtask
+  // Subtask
 
   addSubtask$ = createEffect(() => this.actions$.pipe(
     ofType(addSubtaskStart.type),
@@ -112,10 +112,10 @@ export class TodoEffects {
       .pipe(
         map((todo) => {
           const subTasks = todo.subTasks;
-          return addSubtaskSuccess({id, subTasks})
+          return addSubtaskSuccess({id, subTasks});
         }),
         catchError(() => {
-          return EMPTY
+          return EMPTY;
         })
       )
     ))
@@ -127,7 +127,7 @@ export class TodoEffects {
       .pipe(
         map((todo) => {
           const subTasks = todo.subTasks;
-          return removeSubtaskSuccess({id, subTasks})
+          return removeSubtaskSuccess({id, subTasks});
         }),
         catchError(() => EMPTY)
       )
@@ -140,7 +140,7 @@ export class TodoEffects {
       .pipe(
         map((todo) => {
           const subTasks = todo.subTasks;
-          return toggleActiveSubtaskSuccess({id, subTasks})
+          return toggleActiveSubtaskSuccess({id, subTasks});
         }),
         catchError(() => EMPTY)
       )

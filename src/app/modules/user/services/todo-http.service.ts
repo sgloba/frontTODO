@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TodoI} from '../models/app.todo.model';
-import {AppConfigInitService} from "../../appCommon/services/app-config-init.service";
+import {AppConfigInitService} from '../../appCommon/services/app-config-init.service';
 
 @Injectable({
   providedIn: 'root'
@@ -36,18 +36,18 @@ export class TodoHttpService {
     return this.http.put<TodoI>(`${this.url}/todos/${id}`, {value});
   }
 
-  //Subtask
+  // Subtask
 
   addSubtask(value: string, id: number): Observable<TodoI> {
-    return this.http.put<TodoI>(`${this.url}/todos/${id}/subtask/add`, {value})
+    return this.http.put<TodoI>(`${this.url}/todos/${id}/subtask/add`, {value});
   }
 
   removeSubtask(id: number, subId: number): Observable<TodoI> {
-    return this.http.delete<TodoI>(`${this.url}/todos/${id}/subtask/${subId}/delete`)
+    return this.http.delete<TodoI>(`${this.url}/todos/${id}/subtask/${subId}/delete`);
   }
 
   toggleActiveSubtask(id: number, subId: number): Observable<TodoI> {
-    return this.http.put<TodoI>(`${this.url}/todos/${id}/subtask/${subId}/toggle`, {})
+    return this.http.put<TodoI>(`${this.url}/todos/${id}/subtask/${subId}/toggle`, {});
   }
 
 }

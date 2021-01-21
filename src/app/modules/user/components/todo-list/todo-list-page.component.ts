@@ -2,9 +2,9 @@ import {Component, ElementRef, ViewChild, OnInit, OnDestroy, HostListener} from 
 import {TasksSandboxService} from '../../services/tasks-sandbox.service';
 import {BehaviorSubject, combineLatest, fromEvent, Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {filter, map, pairwise, startWith, switchMap, takeUntil} from "rxjs/operators";
-import {OptionsI} from "../../../appCommon/models/app.options.model";
-import {MatMenuTrigger} from "@angular/material/menu";
+import {filter, map, pairwise, startWith, switchMap, takeUntil} from 'rxjs/operators';
+import {OptionsI} from '../../../appCommon/models/app.options.model';
+import {MatMenuTrigger} from '@angular/material/menu';
 
 
 @Component({
@@ -13,17 +13,6 @@ import {MatMenuTrigger} from "@angular/material/menu";
   styleUrls: ['./todo-list-page.component.scss']
 })
 export class TodoListPageComponent implements OnInit, OnDestroy {
-  unsubscribe$ = new Subject<void>();
-
-  @HostListener('document:contextmenu', ['$event'])
-  onRightClick(event: MouseEvent) {
-    if (this.matMenuTrigger.menuOpen) {
-      event.preventDefault();
-      if ((event.target as HTMLElement).classList.contains('cdk-overlay-backdrop')) {
-        this.matMenuTrigger.closeMenu();
-      }
-    }
-  }
 
 
 
@@ -33,16 +22,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   ) {
 
   }
-
-  ngOnInit(): void {
-    this.taskSandbox.requestTodos();
-    fromEvent(document, 'wheel', { passive: false })
-      .pipe(
-        filter(() => this.matMenuTrigger.menuOpen),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe((e) => e.preventDefault());
-  }
+  unsubscribe$ = new Subject<void>();
 
   @ViewChild(MatMenuTrigger)
   matMenuTrigger: MatMenuTrigger;
@@ -52,25 +32,25 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
 
 
   inputValue: string;
-  showRecycleBin: boolean = false;
-  highlightRecycleBin: boolean = false;
-  menuTopLeftPosition = {x: '0', y: '0'}
+  showRecycleBin = false;
+  highlightRecycleBin = false;
+  menuTopLeftPosition = {x: '0', y: '0'};
 
   options: OptionsI[] = [
     {title: 'home', active: true},
     {title: 'work', active: true},
     {title: 'party', active: true},
     {title: 'other', active: true},
-  ]
+  ];
 
 
-  categoriesSelected$ = new BehaviorSubject(this.options)
+  categoriesSelected$ = new BehaviorSubject(this.options);
 
   selectedCategories$ = this.categoriesSelected$.pipe(
     map((options) => {
       return options
-        .filter(({active}) => active)     //????
-        .map(({title}) => title)
+        .filter(({active}) => active)     // ????
+        .map(({title}) => title);
     })
   );
 
@@ -83,7 +63,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
         return prev === null || prev?.todos !== current?.todos;
       }),
       map(([, current]) => current?.todos)
-    )
+    );
 
   filteredTodos$ = combineLatest([
     this.selectedStatus$,
@@ -92,9 +72,29 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
     switchMap(([status, category]) => this.taskSandbox.getFilteredTodos(status, category))
   );
 
+  @HostListener('document:contextmenu', ['$event'])
+  onRightClick(event: MouseEvent) {
+    if (this.matMenuTrigger.menuOpen) {
+      event.preventDefault();
+      if ((event.target as HTMLElement).classList.contains('cdk-overlay-backdrop')) {
+        this.matMenuTrigger.closeMenu();
+      }
+    }
+  }
+
+  ngOnInit(): void {
+    this.taskSandbox.requestTodos();
+    fromEvent(document, 'wheel', { passive: false })
+      .pipe(
+        filter(() => this.matMenuTrigger.menuOpen),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((e) => e.preventDefault());
+  }
+
   addTodo(value: string): void {
     if (!value) {
-      return
+      return;
     }
     this.taskSandbox.add(value);
 
@@ -104,25 +104,25 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
 
   onDrop(e) {
     if (e.isPointerOverContainer) {
-      this.taskSandbox.remove(e.previousContainer.data._id)
+      this.taskSandbox.remove(e.previousContainer.data._id);
     }
   }
   onDragStart() {
-    this.showRecycleBin = true
+    this.showRecycleBin = true;
   }
   onDragEnd() {
-    this.showRecycleBin = false
+    this.showRecycleBin = false;
   }
 
   onTodoRightClick(event, todo) {
     this.menuTopLeftPosition.x = event.clientX + 'px';
     this.menuTopLeftPosition.y = event.clientY + 'px';
-    this.matMenuTrigger.menuData = {todo: todo};
-    this.matMenuTrigger.openMenu()
+    this.matMenuTrigger.menuData = {todo};
+    this.matMenuTrigger.openMenu();
   }
 
   removeTodo(id: number) {
-    this.taskSandbox.remove(id)
+    this.taskSandbox.remove(id);
   }
 
   ngOnDestroy() {

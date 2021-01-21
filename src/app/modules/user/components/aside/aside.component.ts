@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MatSidenav} from "@angular/material/sidenav";
-import {TasksSandboxService} from "../../services/tasks-sandbox.service";
-import {Observable} from "rxjs";
-import {TodoI} from "../../models/app.todo.model";
-import {map, take} from "rxjs/operators";
+import {MatSidenav} from '@angular/material/sidenav';
+import {TasksSandboxService} from '../../services/tasks-sandbox.service';
+import {Observable} from 'rxjs';
+import {TodoI} from '../../models/app.todo.model';
+import {map, take} from 'rxjs/operators';
 
 
 @Component({
@@ -18,51 +18,51 @@ export class AsideComponent implements OnInit{
     private tasksSandbox: TasksSandboxService
   ) {}
 
-  ngOnInit() {
-    this.tasksSandbox.isTodoSelected$.subscribe((res) => {
-      if(res) {
-        this.sidenav?.open()
-      }  else if(!res && this.sidenav) {
-        this.sidenavClose()
-      }
-    })
-
-    this.currentSubtask$ = this.tasksSandbox.currentSubtask$
-    this.currentTodo$ = this.tasksSandbox.currentTodo$
-
-  }
-
   @ViewChild(MatSidenav)
   sidenav: MatSidenav;
 
   @ViewChild('subtaskInput')
   subtaskInput: ElementRef;
 
-  currentSubtask$: Observable<any>
-  currentTodo$: Observable<TodoI>
+  currentSubtask$: Observable<any>;
+  currentTodo$: Observable<TodoI>;
 
-  allComplete: boolean = false;
+  allComplete = false;
   inputValue: any;
+
+  ngOnInit() {
+    this.tasksSandbox.isTodoSelected$.subscribe((res) => {
+      if (res) {
+        this.sidenav?.open();
+      }  else if (!res && this.sidenav) {
+        this.sidenavClose();
+      }
+    });
+
+    this.currentSubtask$ = this.tasksSandbox.currentSubtask$;
+    this.currentTodo$ = this.tasksSandbox.currentTodo$;
+
+  }
 
 
   sidenavClose(){
-    this.sidenav.close()
-    this.tasksSandbox.selectTodo(null)
+    this.sidenav.close();
+    this.tasksSandbox.selectTodo(null);
 
   }
 
   addSubtask() {
-    if(!this.inputValue) {
-      return
+    if (!this.inputValue) {
+      return;
     }
 
     this.currentTodo$
       .pipe(take(1))
       .subscribe((todo) => {
-        this.tasksSandbox.addSubtask(this.inputValue, todo._id)
-      })
+        this.tasksSandbox.addSubtask(this.inputValue, todo._id);
+      });
 
-    this.inputValue = ''
+    this.inputValue = '';
     this.subtaskInput.nativeElement.focus();
 
   }
@@ -71,8 +71,8 @@ export class AsideComponent implements OnInit{
     this.currentTodo$
       .pipe(take(1))
       .subscribe((todo) => {
-        this.tasksSandbox.toggleActiveSubtask(todo._id, id)
-      })
+        this.tasksSandbox.toggleActiveSubtask(todo._id, id);
+      });
   }
 
   removeSubtask(id) {
@@ -80,8 +80,8 @@ export class AsideComponent implements OnInit{
     this.currentTodo$
       .pipe(take(1))
       .subscribe((todo) => {
-        this.tasksSandbox.removeSubtask(todo._id, id)
-      })
+        this.tasksSandbox.removeSubtask(todo._id, id);
+      });
   }
 
 }

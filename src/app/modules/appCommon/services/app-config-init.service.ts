@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {take} from "rxjs/operators";
+import {take} from 'rxjs/operators';
 
-import { environment } from "../../../../environments/environment";
+import { environment } from '../../../../environments/environment';
 
 
 @Injectable({
@@ -19,7 +19,7 @@ export class AppConfigInitService {
 
   private _config = {
     backendUrl: 'backendUrl'
-  }
+  };
 
   get config() {
     return this._config;
@@ -33,7 +33,7 @@ export class AppConfigInitService {
       .pipe(take(1))
       .subscribe((config) => {
         this._config = config;
-      })
+      });
   }
 
 }

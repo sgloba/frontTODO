@@ -1,6 +1,6 @@
 export interface SubtaskI {
-  value: string,
-  isCompleted: boolean
+  value: string;
+  isCompleted: boolean;
 }
 
 

@@ -9,14 +9,14 @@ import {
   toggleActiveTodoStart,
   updateTodoStart,
   addSubtaskStart, removeSubtaskStart, toggleActiveSubtaskStart, selectCategories
-} from "../store/actions/todo.actions";
+} from '../store/actions/todo.actions';
 import {
   currentSubtask,
   currentTodo,
-  currentTodoId, isTodoSelected,isTodoDisable,
+  currentTodoId, isTodoSelected, isTodoDisable,
   getFilteredTodos
-} from "../store/selectors/todos.selectors";
-import {distinctUntilChanged} from "rxjs/operators";
+} from '../store/selectors/todos.selectors';
+import {distinctUntilChanged} from 'rxjs/operators';
 
 
 @Injectable({
@@ -31,15 +31,15 @@ export class TasksSandboxService {
   }
 
 
-  getFilteredTodos(status: 'active' | 'completed' | 'all' = 'all', categories: string[] = []) {
-    return this.store.pipe(select(getFilteredTodos(status, categories)))
-  }
-
-
   selectedTodoId$ = this.store.pipe(select(currentTodoId));
   currentTodo$ = this.store.pipe(select(currentTodo));
   currentSubtask$ = this.store.pipe(select(currentSubtask));
   isTodoSelected$ = this.store.pipe(select(isTodoSelected));
+
+
+  getFilteredTodos(status: 'active' | 'completed' | 'all' = 'all', categories: string[] = []) {
+    return this.store.pipe(select(getFilteredTodos(status, categories)));
+  }
 
   requestTodos(): void {
     this.store.dispatch(fetchTodosStart());
@@ -50,42 +50,42 @@ export class TasksSandboxService {
   }
 
   remove(id: number): void {
-    this.store.dispatch(removeTodoStart({id}))
+    this.store.dispatch(removeTodoStart({id}));
   }
 
   toggleActive(id: number): void {
-    this.store.dispatch(toggleActiveTodoStart({id}))
+    this.store.dispatch(toggleActiveTodoStart({id}));
   }
 
   editValue(id: number, value: string): void {
-    this.store.dispatch(updateTodoStart({id, value}))
+    this.store.dispatch(updateTodoStart({id, value}));
   }
 
   selectTodo(id: number) {
-    this.store.dispatch(selectTodo({id}))
+    this.store.dispatch(selectTodo({id}));
   }
 
   isTodoDisabled$(id: number) {
-    return this.store.pipe(select(isTodoDisable(id))).pipe()
+    return this.store.pipe(select(isTodoDisable(id))).pipe();
   }
 
-  //Subtask
+  // Subtask
 
   addSubtask(value: string, id: number): void {
-    this.store.dispatch(addSubtaskStart({value, id}))
+    this.store.dispatch(addSubtaskStart({value, id}));
   }
 
   removeSubtask(id: number, subId: number) {
-    this.store.dispatch(removeSubtaskStart({id, subId}))
+    this.store.dispatch(removeSubtaskStart({id, subId}));
   }
 
   toggleActiveSubtask(id: number, subId: number) {
-    this.store.dispatch(toggleActiveSubtaskStart({id, subId}))
+    this.store.dispatch(toggleActiveSubtaskStart({id, subId}));
   }
 
-  //Category
+  // Category
   selectCategories(categories: string[]) {
-    this.store.dispatch(selectCategories({categories}))
+    this.store.dispatch(selectCategories({categories}));
   }
 
 }

@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import {TodoI} from '../../models/app.todo.model';
-import {SubtaskI} from "../../models/app.subtask.model";
+import {SubtaskI} from '../../models/app.subtask.model';
 
 
 export const fetchTodosStart = createAction(
@@ -51,52 +51,52 @@ export const removeTodoSuccess = createAction(
 export const selectTodo = createAction(
   '[Todos] Select Todo',
   props<{id: number}>()
-)
+);
 
 export const disableTodo = createAction(
   '[Todos] Disable Todo',
   props<{id: number}>()
-)
+);
 export const enableTodo = createAction(
   '[Todos] EnableTodo Todo',
   props<{id: number}>()
-)
+);
 
-//Subtask
+// Subtask
 
 
 export const removeSubtaskStart = createAction(
   '[Todos] Delete Subtask',
   props<{id: number, subId: number}>()
-)
+);
 export const removeSubtaskSuccess = createAction(
   '[Todos] Delete Subtask Success',
   props<{id: number, subTasks: SubtaskI[]}>()
-)
+);
 
 
 export const addSubtaskStart = createAction(
   '[Todos] Add Subtask',
   props<{value: string, id: number}>()
-)
+);
 export const addSubtaskSuccess = createAction(
   '[Todos] Add Subtask Success',
   props<{id: number, subTasks: SubtaskI[]}>()
-)
+);
 
 
 export const toggleActiveSubtaskStart = createAction(
   '[Todos] Toggle Active Subtask Start',
   props<{id: number, subId: number}>()
-)
+);
 export const toggleActiveSubtaskSuccess = createAction(
   '[Todos] Toggle Active Subtask Success',
   props<{id: number, subTasks: SubtaskI[]}>()
-)
+);
 
-//Category
+// Category
 
 export const selectCategories = createAction(
   '[Todos] Select Categories',
   props<{ categories: string[] }>()
-)
+);

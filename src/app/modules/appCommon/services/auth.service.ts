@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from "@angular/fire/auth";
-import firebase from "firebase/app";
-import jwt_decode from "jwt-decode";
+import { AngularFireAuth } from '@angular/fire/auth';
+import firebase from 'firebase/app';
+import jwt_decode from 'jwt-decode';
+import {UserI} from '../models/app.user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,24 +20,24 @@ export class AuthService {
   AuthLogin(provider) {
     return this.afAuth.signInWithPopup(provider)
       .then((result) => {
-        console.log('You have been successfully logged in!')
+        console.log('You have been successfully logged in!');
         return  result.user.getIdToken(true)
-          .then((res)=> {
-          localStorage.setItem('currentUser', JSON.stringify({token: res}))
+          .then((res) => {
+          localStorage.setItem('currentUser', JSON.stringify({token: res}));
 
-        })
+        });
       }).catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
   }
   get isLoggedIn(): boolean {
-    if(localStorage.getItem('currentUser')) {
+    if (localStorage.getItem('currentUser')) {
       const decoded = JSON.parse(localStorage.getItem('currentUser'));
-      const user = jwt_decode(decoded.token);
+      const user: UserI = jwt_decode(decoded.token);
       console.log(user);
-      return user.email_verified
+      return user.email_verified;
     } else {
-      return false
+      return false;
     }
   }
 }
