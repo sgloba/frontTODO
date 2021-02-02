@@ -1,1 +1,9 @@
-<p>file-input-button works!</p>
+<div class="input-wrap">
+  <form (submit)="upload()">
+    <label for="file">
+      <span mat-ripple class="input-fake">Choose file</span>
+      <input #fileInput id="file" type="file" class="inputfile" accept=".jpeg, .png, .gif, .txt"/>
+      <button mat-button mat-stroked-button type="submit">Send file</button>
+    </label>
+  </form>
+</div>

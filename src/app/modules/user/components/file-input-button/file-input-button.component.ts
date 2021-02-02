@@ -1,15 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FileStorageService} from '../../services/file-storage.service';
+import {ToastrService} from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-file-input-button',
   templateUrl: './file-input-button.component.html',
   styleUrls: ['./file-input-button.component.scss']
 })
-export class FileInputButtonComponent implements OnInit {
+export class FileInputButtonComponent {
+  @Input() showToast = true;
+  @Output()
+  uploadSuccess: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() { }
+  @ViewChild('fileInput') input;
+  constructor(
+    private fileStorage: FileStorageService,
+    private toast: ToastrService,
+  ) { }
 
-  ngOnInit(): void {
+  upload = () => {
+    const file = this.input.nativeElement.files[0];
+    this.fileStorage.uploadFiles(file).subscribe(() => {
+      this.uploadSuccess.emit();
+      if(this.showToast) {
+        this.toast.success('file uploaded');
+      }
+    });
   }
-
 }
