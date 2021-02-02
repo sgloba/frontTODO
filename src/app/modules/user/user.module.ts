@@ -18,6 +18,8 @@ import {CommonModule} from '@angular/common';
 import {TasksSandboxService} from './services/tasks-sandbox.service';
 import {TodoHttpService} from './services/todo-http.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { FileInputButtonComponent } from './components/file-input-button/file-input-button.component';
 
 
 
@@ -29,6 +31,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MainPageComponent,
     TodoItemComponent,
     TodoListPageComponent,
+    FileUploadComponent,
+    FileInputButtonComponent,
 
   ],
     imports: [
@@ -42,7 +46,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
         MaterialModule,
         CommonModule,
         DragDropModule,
-
     ],
   providers: [
     TasksSandboxService,

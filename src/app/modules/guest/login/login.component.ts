@@ -13,13 +13,8 @@ import {AuthService} from '../../appCommon/services/auth.service';
 export class LoginComponent {
 
   constructor(
-    private userHttpService: UserHttpService,
-    private route: Router,
-    private toastr: ToastrService,
     public authService: AuthService
   ) { }
-
-
 
   login = true;
 
@@ -27,26 +22,15 @@ export class LoginComponent {
   passwordInput: string;
 
   onRegister() {
-    this.userHttpService.register(this.usernameInput, this.passwordInput).subscribe((res: any) => {
-      console.log(res);
-      this.toastr.success(`${res.message}`);
-    });
+    this.authService.register(this.usernameInput, this.passwordInput);
   }
 
   onLogin() {
-    this.userHttpService.login(this.usernameInput, this.passwordInput).subscribe(() => {
-      this.route.navigate(['/main']);
-      this.userHttpService.getCurrentUser();
-    });
+    this.authService.signIn(this.usernameInput, this.passwordInput);
   }
 
   onGoogleLogin() {
-    this.authService.GoogleAuth().then(() => {
-      this.route.navigate(['/main']);
-      this.userHttpService.getCurrentUser();
-    });
-
+    this.authService.GoogleAuth();
   }
-
 }
 

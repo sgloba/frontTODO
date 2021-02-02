@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-11-todo": {
+      "hosting": {
+        "frontTODO": [
+          "angular-11-todo"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-11-todo"
+  }
+}

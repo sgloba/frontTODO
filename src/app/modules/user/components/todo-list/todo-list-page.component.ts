@@ -17,32 +17,10 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
 
 
 
-  @HostListener('document:contextmenu', ['$event'])
-  onRightClick(event: MouseEvent) {
-    if (this.matMenuTrigger.menuOpen) {
-      event.preventDefault();
-      if ((event.target as HTMLElement).classList.contains('cdk-overlay-backdrop')) {
-        this.matMenuTrigger.closeMenu();
-      }
-    }
-  }
-
-
-
   constructor(
     private taskSandbox: TasksSandboxService,
     private activatedRoute: ActivatedRoute,
   ) {
-  }
-
-  ngOnInit(): void {
-    this.taskSandbox.requestTodos();
-    fromEvent(document, 'wheel', { passive: false })
-      .pipe(
-        filter(() => this.matMenuTrigger.menuOpen),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe((e) => e.preventDefault());
   }
   unsubscribe$ = new Subject<void>();
 
@@ -96,14 +74,36 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
     switchMap(([status, category]) => this.taskSandbox.getFilteredTodos(status, category))
   );
 
+
+
+  @HostListener('document:contextmenu', ['$event'])
+  onRightClick(event: MouseEvent) {
+    if (this.matMenuTrigger.menuOpen) {
+      event.preventDefault();
+      if ((event.target as HTMLElement).classList.contains('cdk-overlay-backdrop')) {
+        this.matMenuTrigger.closeMenu();
+      }
+    }
+  }
+
+  ngOnInit(): void {
+    this.taskSandbox.requestTodos();
+    fromEvent(document, 'wheel', { passive: false })
+      .pipe(
+        filter(() => this.matMenuTrigger.menuOpen),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((e) => e.preventDefault());
+  }
+
   addTodo(value: string): void {
     if (!value) {
       return;
       }
-      this.taskSandbox.add(value);
+    this.taskSandbox.add(value);
 
-      this.inputValue = '';
-      this.todoInput.nativeElement.focus();
+    this.inputValue = '';
+    this.todoInput.nativeElement.focus();
     }
   onDrop(e) {
     if (e.isPointerOverContainer) {

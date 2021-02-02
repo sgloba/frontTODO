@@ -23,4 +23,5 @@ export class HeaderComponent {
     localStorage.removeItem('currentUser');
     this.route.navigate(['/']);
   }
+
 }
