@@ -1,0 +1,28 @@
+@import "src/app/scss/colors";
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.input-fake {
+
+  padding: .3rem;
+  margin-right: 1rem;
+  border-radius: 5px;
+  color: $text-clr;
+  background-color: $primary-clr;
+  cursor: pointer;
+}
+label{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.input-fake:focus,
+.input-fake:hover {
+  background-color: $secondary-clr;
+}
+
