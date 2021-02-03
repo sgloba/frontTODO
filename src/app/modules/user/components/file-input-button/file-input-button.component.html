@@ -2,8 +2,18 @@
   <form (submit)="upload()">
     <label for="file">
       <span mat-ripple class="input-fake">Choose file</span>
-      <input #fileInput id="file" type="file" class="inputfile" accept=".jpeg, .png, .gif, .txt"/>
-      <button mat-button mat-stroked-button type="submit">Send file</button>
+      <input #fileInput id="file" type="file" class="inputfile" [accept]="acceptedFileTypes" [multiple]="multiple" (change)="setSelectedFiles()"/>
+      <button mat-button mat-stroked-button type="submit" [disabled]="!selectedFiles.length">Upload</button>
+      <button mat-button mat-stroked-button type="button" (click)="reset()" [disabled]="!selectedFiles.length">Reset</button>
     </label>
   </form>
+  <div class="staged">
+    <p>Files staged for upload:</p>
+    <ul>
+      <li *ngFor="let file of selectedFiles ; index as i">
+        {{ i + 1 }}:  {{ file.name }}
+      </li>
+    </ul>
+  </div>
+
 </div>

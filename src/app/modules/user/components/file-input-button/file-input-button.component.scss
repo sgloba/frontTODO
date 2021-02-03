@@ -25,4 +25,13 @@ label{
 .input-fake:hover {
   background-color: $secondary-clr;
 }
+.staged{
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid $border-clr;
+  ul {
+    list-style: none;
+  }
+}
+
 

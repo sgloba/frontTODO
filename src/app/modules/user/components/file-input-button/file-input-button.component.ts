@@ -1,6 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {FileStorageService} from '../../services/file-storage.service';
 import {ToastrService} from 'ngx-toastr';
+import {map} from "rxjs/operators";
+
+// TODO: allow to set custom button via ng-content
 
 
 @Component({
@@ -10,22 +13,37 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class FileInputButtonComponent {
   @Input() showToast = true;
+  @Input() acceptedFileTypes: string[] = ['.jpeg', '.png', '.gif', '.txt'];
+  @Input() multiple = true;
   @Output()
   uploadSuccess: EventEmitter<void> = new EventEmitter<void>();
-
   @ViewChild('fileInput') input;
+
   constructor(
     private fileStorage: FileStorageService,
     private toast: ToastrService,
-  ) { }
+  ) {
+  }
 
-  upload = () => {
-    const file = this.input.nativeElement.files[0];
-    this.fileStorage.uploadFiles(file).subscribe(() => {
-      this.uploadSuccess.emit();
-      if(this.showToast) {
-        this.toast.success('file uploaded');
-      }
-    });
+  selectedFiles: File[] = [];
+
+  setSelectedFiles(): void {
+    this.selectedFiles = Array.from(this.input.nativeElement.files);
+  }
+  reset():void{
+    this.selectedFiles = [];
+    this.input.nativeElement.value = '';
+  }
+  upload():void  {
+    const files = this.input.nativeElement.files;
+    this.fileStorage.uploadFiles([...files])
+      .subscribe((res) => {
+        if (this.showToast) {
+          const fileNames = res.map(file => file.name).join(', ');
+          this.toast.success(`${fileNames} uploaded`);
+        }
+        this.uploadSuccess.emit();
+      });
+    this.reset();
   }
 }
