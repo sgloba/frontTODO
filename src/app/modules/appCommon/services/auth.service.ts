@@ -19,7 +19,10 @@ export class AuthService {
     private userHttpService: UserHttpService,
     public afAuth: AngularFireAuth,
   ) { }
-
+  currentUserId(): string {
+    // @ts-ignore
+    return jwt_decode(localStorage.getItem('currentUser'))?.user_id;
+  }
   register (email, password) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
