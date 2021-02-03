@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {UserHttpService} from '../../appCommon/services/user-http.service';
+import {Router} from '@angular/router';
+
 import {AuthService} from '../../appCommon/services/auth.service';
 
 

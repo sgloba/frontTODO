@@ -5,6 +5,7 @@ import {map} from "rxjs/operators";
 
 // TODO: allow to set custom button via ng-content
 
+
 @Component({
   selector: 'app-file-input-button',
   templateUrl: './file-input-button.component.html',

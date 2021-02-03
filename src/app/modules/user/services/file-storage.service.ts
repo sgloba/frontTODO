@@ -7,6 +7,7 @@ import {Reference} from '@angular/fire/storage/interfaces';
 import FullMetadata = firebase.storage.FullMetadata;
 import {AuthService} from '../../appCommon/services/auth.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,4 +41,5 @@ export class FileStorageService {
       files.map((file) => this.uploadFile(file))
     );
   }
+
 }
