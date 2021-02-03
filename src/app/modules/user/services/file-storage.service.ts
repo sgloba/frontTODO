@@ -20,6 +20,7 @@ export class FileStorageService {
   ) { }
 
   getDownloadUrl (file) {
+    /
     console.log(this.storage.ref(`${this.authService.currentUserId()}/${file.name}`).getDownloadURL().subscribe(r => console.log(r)))
   }
   getFiles$(): Observable<Reference[]> {
