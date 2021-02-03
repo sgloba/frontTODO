@@ -19,20 +19,23 @@ export class FileStorageService {
 
   ) { }
 
-
+  getDownloadUrl (file) {
+    console.log(this.storage.ref(`${this.authService.currentUserId()}/${file.name}`).getDownloadURL().subscribe(r => console.log(r)))
+  }
   getFiles$(): Observable<Reference[]> {
    return this.storage.ref(this.authService.currentUserId()).listAll().pipe(
      map(res => res.items)
    );
   }
   uploadFile(file): Observable<FullMetadata> {
+    this.getDownloadUrl(file)
     return from(
       firebase.storage()
         .ref()
         .child(`${this.authService.currentUserId()}/${file.name}`)
         .put(file)
         .then((a) => {
-          return a.metadata;
+          return a;
         })
     );
   }

@@ -1,9 +1,18 @@
 <app-header></app-header>
 <div class="content">
 <app-file-input-button class="input-wrap" (uploadSuccess)="updateFilesList()"></app-file-input-button>
-  <ul>
-    <li *ngFor="let item of collection$ | async; index as i">
-      {{ i + 1 }}: {{ item.name }}
-    </li>
-  </ul>
+
+  <mat-card class="card" *ngFor="let item of collection$ | async">
+    <mat-card-title>
+      <mat-icon>{{getIcon(item)}}</mat-icon>
+      {{item.name}}
+    </mat-card-title>
+    <mat-card-content>
+      <p>{{item}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button mat-flat-button>View</button>
+      <button mat-button mat-flat-button>Download</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
