@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FileStorageService} from '../../services/file-storage.service';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Reference} from '@angular/fire/storage/interfaces';
 import {FileService} from '../../services/file.service';
 
@@ -12,14 +12,15 @@ import {FileService} from '../../services/file.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FileUploadComponent {
-  collection$: Observable<Reference[]> = this.fileStorage.getFiles$();
-  // TODO: create files service and move logic there
+  collection$: Observable<Reference[]> = this.fileStorage.getFiles$()
   // TODO: Implement viewing images
   constructor(
     private fileStorage: FileStorageService,
     private fileService: FileService,
   ) { }
-
+  viewFile(filename) :void {
+    this.fileStorage.getDownloadUrl$(filename).subscribe(url => window.open(url));
+  }
   updateFilesList(): void {
     this.collection$ = this.fileStorage.getFiles$();
   }

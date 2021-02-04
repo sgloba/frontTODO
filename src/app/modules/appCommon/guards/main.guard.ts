@@ -12,17 +12,15 @@ import {AuthService} from '../services/auth.service';
 export class MainGuard implements CanActivate{
   constructor(
     private userHttpService: UserHttpService,
-    private AuthService: AuthService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
 
-    if (this.AuthService.isLoggedIn) {
-      console.log('canActivate', this.AuthService.isLoggedIn);
+    if (this.authService.isLoggedIn) {
       return true;
     } else {
-      console.log('canActivate', this.AuthService.isLoggedIn);
       this.router.navigate(['']);
       return false;
 

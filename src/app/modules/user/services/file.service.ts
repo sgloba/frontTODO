@@ -12,6 +12,7 @@ export class FileService {
     txt: 'description',
     png: 'image',
     jpeg: 'image',
+    jpg: 'image',
     gif: 'image',
   };
 

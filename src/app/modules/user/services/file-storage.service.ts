@@ -16,20 +16,18 @@ export class FileStorageService {
   constructor(
     private storage: AngularFireStorage,
     private authService: AuthService,
-
   ) { }
 
-  getDownloadUrl (file) {
-    /
-    console.log(this.storage.ref(`${this.authService.currentUserId()}/${file.name}`).getDownloadURL().subscribe(r => console.log(r)))
+  getDownloadUrl$(filename): Observable<string> {
+    return this.storage.ref(`${this.authService.currentUserId()}/${filename}`).getDownloadURL();
   }
+
   getFiles$(): Observable<Reference[]> {
    return this.storage.ref(this.authService.currentUserId()).listAll().pipe(
      map(res => res.items)
    );
   }
-  uploadFile(file): Observable<FullMetadata> {
-    this.getDownloadUrl(file)
+  uploadFile$(file): Observable<FullMetadata> {
     return from(
       firebase.storage()
         .ref()
@@ -40,9 +38,9 @@ export class FileStorageService {
         })
     );
   }
-  uploadFiles(files: File[]): Observable<FullMetadata[]> {
+  uploadFiles$(files: File[]): Observable<FullMetadata[]> {
     return forkJoin(
-      files.map((file) => this.uploadFile(file))
+      files.map((file) => this.uploadFile$(file))
     );
   }
 
