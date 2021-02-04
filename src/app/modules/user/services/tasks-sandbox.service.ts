@@ -17,6 +17,9 @@ import {
   getFilteredTodos
 } from '../store/selectors/todos.selectors';
 import {distinctUntilChanged} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {TodoI} from '../models/app.todo.model';
+import {FilesState} from "../store/reducers/files.reducer";
 
 
 @Injectable({
@@ -26,7 +29,7 @@ export class TasksSandboxService {
 
   constructor(
     private http: TodoHttpService,
-    private store: Store
+    private store: Store<FilesState>
   ) {
   }
 
@@ -37,7 +40,7 @@ export class TasksSandboxService {
   isTodoSelected$ = this.store.pipe(select(isTodoSelected));
 
 
-  getFilteredTodos(status: 'active' | 'completed' | 'all' = 'all', categories: string[] = []) {
+  getFilteredTodos$(status: 'active' | 'completed' | 'all' = 'all', categories: string[] = []): Observable<TodoI[]> {
     return this.store.pipe(select(getFilteredTodos(status, categories)));
   }
 

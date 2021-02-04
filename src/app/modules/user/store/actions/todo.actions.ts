@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
 import {TodoI} from '../../models/app.todo.model';
 import {SubtaskI} from '../../models/app.subtask.model';
 
@@ -100,3 +99,4 @@ export const selectCategories = createAction(
   '[Todos] Select Categories',
   props<{ categories: string[] }>()
 );
+

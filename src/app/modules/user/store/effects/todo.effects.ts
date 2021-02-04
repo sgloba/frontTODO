@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY} from 'rxjs';
-import {map, catchError, concatMap, tap, switchMap, mergeMap} from 'rxjs/operators';
+import {map, catchError, concatMap, tap, mergeMap} from 'rxjs/operators';
 import {TodoHttpService} from '../../services/todo-http.service';
 import {
   fetchTodosStart,
@@ -31,7 +31,6 @@ export class TodoEffects {
     private actions$: Actions,
     private todoHttpService: TodoHttpService,
     private store: Store
-
   ) {
   }
 
