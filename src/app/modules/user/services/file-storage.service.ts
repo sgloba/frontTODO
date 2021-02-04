@@ -16,29 +16,31 @@ export class FileStorageService {
   constructor(
     private storage: AngularFireStorage,
     private authService: AuthService,
-
   ) { }
 
+  getDownloadUrl$(filename): Observable<string> {
+    return this.storage.ref(`${this.authService.currentUserId()}/${filename}`).getDownloadURL();
+  }
 
   getFiles$(): Observable<Reference[]> {
    return this.storage.ref(this.authService.currentUserId()).listAll().pipe(
      map(res => res.items)
    );
   }
-  uploadFile(file): Observable<FullMetadata> {
+  uploadFile$(file): Observable<FullMetadata> {
     return from(
       firebase.storage()
         .ref()
         .child(`${this.authService.currentUserId()}/${file.name}`)
         .put(file)
         .then((a) => {
-          return a.metadata;
+          return a;
         })
     );
   }
-  uploadFiles(files: File[]): Observable<FullMetadata[]> {
+  uploadFiles$(files: File[]): Observable<FullMetadata[]> {
     return forkJoin(
-      files.map((file) => this.uploadFile(file))
+      files.map((file) => this.uploadFile$(file))
     );
   }
 

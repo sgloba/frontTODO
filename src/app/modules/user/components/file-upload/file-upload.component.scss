@@ -1,10 +1,13 @@
+@import "src/app/scss/colors";
+
 .content {
   margin-top: 64px;
+  background-color: $bg-main-clr;
   }
 ul {
   list-style: none;
   li {
-    border: 1px solid #69f0ae;
+    border: 1px solid $secondary-clr;
     padding: .2rem;
     margin: .2rem;
   }
@@ -14,4 +17,13 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.card{
+  overflow: hidden;
+  margin: 0 auto 1rem auto;
+  background-color: $bg-main-clr-light;
+  width: 400px;
+  mat-icon {
+    vertical-align: bottom;
+  }
 }

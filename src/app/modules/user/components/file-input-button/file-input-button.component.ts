@@ -13,7 +13,7 @@ import {map} from "rxjs/operators";
 })
 export class FileInputButtonComponent {
   @Input() showToast = true;
-  @Input() acceptedFileTypes: string[] = ['.jpeg', '.png', '.gif', '.txt'];
+  @Input() acceptedFileTypes: string[] = ['.jpeg', '.png', '.gif', '.txt', '.jpg'];
   @Input() multiple = true;
   @Output()
   uploadSuccess: EventEmitter<void> = new EventEmitter<void>();
@@ -36,7 +36,7 @@ export class FileInputButtonComponent {
   }
   upload():void  {
     const files = this.input.nativeElement.files;
-    this.fileStorage.uploadFiles([...files])
+    this.fileStorage.uploadFiles$([...files])
       .subscribe((res) => {
         if (this.showToast) {
           const fileNames = res.map(file => file.name).join(', ');
