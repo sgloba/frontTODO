@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {take} from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
+import {ConfigI} from "../models/app.config.model";
 
 
 @Injectable({
@@ -22,7 +23,7 @@ export class AppConfigInitService {
     backendUrl: 'backendUrl'
   };
 
-  get config() : object {
+  get config(): ConfigI {
     return this._config;
   }
 
