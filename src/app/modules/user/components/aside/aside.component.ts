@@ -12,11 +12,12 @@ import {map, take} from 'rxjs/operators';
   styleUrls: ['./aside.component.scss']
 })
 
-export class AsideComponent implements OnInit{
+export class AsideComponent implements OnInit {
 
   constructor(
     private tasksSandbox: TasksSandboxService
-  ) {}
+  ) {
+  }
 
   @ViewChild(MatSidenav)
   sidenav: MatSidenav;
@@ -30,44 +31,37 @@ export class AsideComponent implements OnInit{
   allComplete = false;
   inputValue: any;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.tasksSandbox.isTodoSelected$.subscribe((res) => {
       if (res) {
         this.sidenav?.open();
-      }  else if (!res && this.sidenav) {
+      } else if (!res && this.sidenav) {
         this.sidenavClose();
       }
     });
-
     this.currentSubtask$ = this.tasksSandbox.currentSubtask$;
     this.currentTodo$ = this.tasksSandbox.currentTodo$;
-
   }
 
-
-  sidenavClose(){
+  sidenavClose(): void {
     this.sidenav.close();
     this.tasksSandbox.selectTodo(null);
-
   }
 
-  addSubtask() {
+  addSubtask(): void {
     if (!this.inputValue) {
       return;
     }
-
     this.currentTodo$
       .pipe(take(1))
       .subscribe((todo) => {
         this.tasksSandbox.addSubtask(this.inputValue, todo._id);
       });
-
     this.inputValue = '';
     this.subtaskInput.nativeElement.focus();
-
   }
 
-  toggleActiveSubtask(id) {
+  toggleActiveSubtask(id): void {
     this.currentTodo$
       .pipe(take(1))
       .subscribe((todo) => {
@@ -75,8 +69,7 @@ export class AsideComponent implements OnInit{
       });
   }
 
-  removeSubtask(id) {
-
+  removeSubtask(id): void {
     this.currentTodo$
       .pipe(take(1))
       .subscribe((todo) => {

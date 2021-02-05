@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TodoI} from 'src/app/modules/user/models/app.todo.model';
 
 import {TasksSandboxService} from 'src/app/modules/user/services/tasks-sandbox.service';
@@ -11,7 +11,7 @@ import {takeUntil} from 'rxjs/operators';
   templateUrl: './todo-item.component.html',
   styleUrls: ['./todo-item.component.scss']
 })
-export class TodoItemComponent {
+export class TodoItemComponent implements OnInit,OnDestroy {
 
   constructor(
     private taskSandbox: TasksSandboxService,
@@ -20,11 +20,11 @@ export class TodoItemComponent {
     this.taskSandbox.selectedTodoId$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((id) => {
-      this.highlight = id === this.todo._id;
-    });
+        this.highlight = id === this.todo._id;
+      });
   }
-  unsubscribe$ = new Subject<void>();
 
+  unsubscribe$ = new Subject<void>();
 
 
   @ViewChild('editableSpan')
@@ -37,23 +37,19 @@ export class TodoItemComponent {
   isTodoDisabled = false;
 
 
-
   faCheck = faCheck;
   faPencilAlt = faPencilAlt;
   faTrash = faTrash;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.taskSandbox.isTodoDisabled$(this.todo._id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((disabled) => {
-      this.isTodoDisabled = disabled;
-    });
+        this.isTodoDisabled = disabled;
+      });
   }
 
-
-
-
-    removeTodo(): void {
+  removeTodo(): void {
     this.taskSandbox.remove(this.todo._id);
   }
 
@@ -79,11 +75,11 @@ export class TodoItemComponent {
     }
   }
 
-  onSelectTodo() {
+  onSelectTodo(): void {
     this.taskSandbox.selectTodo(this.todo._id);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

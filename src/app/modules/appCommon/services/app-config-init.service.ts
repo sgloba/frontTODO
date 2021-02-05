@@ -17,15 +17,16 @@ export class AppConfigInitService {
 
   private readonly PORT = '8080';
 
+  // tslint:disable-next-line:variable-name
   private _config = {
     backendUrl: 'backendUrl'
   };
 
-  get config() {
+  get config() : object {
     return this._config;
   }
 
-  init() {
+  init(): void {
     const { protocol, hostname } = window.location;
     const portPostfix = environment.production ? '' : `:${this.PORT}`;
     const url = `${protocol}//${hostname}${portPostfix}` + '/config';

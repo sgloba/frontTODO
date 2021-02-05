@@ -1,12 +1,7 @@
 import {TodoI} from '../../models/app.todo.model';
-
-
 import {createReducer, on} from '@ngrx/store';
 import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
 import * as TodoActions from '../actions/todo.actions';
-
-export const todosFeatureKey = 'todos';
-
 
 export interface TodoState extends EntityState<TodoI> {
   selectedTodoId: number;
@@ -21,9 +16,8 @@ export const adapter: EntityAdapter<TodoI> = createEntityAdapter<TodoI>({
 export const initialState: TodoState = adapter.getInitialState({
   selectedTodoId: null,
   selectedCategories: [],
-  disabledTodos: []
+  disabledTodos: [],
 });
-
 
 export const todoReducer = createReducer(
   initialState,
@@ -84,7 +78,6 @@ export const todoReducer = createReducer(
     ),
 
 );
-
 
 export const {
   selectIds,
