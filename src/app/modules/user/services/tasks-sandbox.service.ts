@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Store, select} from '@ngrx/store';
-
 import {TodoHttpService} from 'src/app/modules/user/services/todo-http.service';
 import {
   addTodoStart,
@@ -8,18 +7,22 @@ import {
   removeTodoStart, selectTodo,
   toggleActiveTodoStart,
   updateTodoStart,
-  addSubtaskStart, removeSubtaskStart, toggleActiveSubtaskStart, selectCategories
+  addSubtaskStart,
+  removeSubtaskStart,
+  toggleActiveSubtaskStart,
+  selectCategories
 } from '../store/actions/todo.actions';
 import {
   currentSubtask,
   currentTodo,
-  currentTodoId, isTodoSelected, isTodoDisable,
+  currentTodoId,
+  isTodoSelected,
+  isTodoDisable,
   getFilteredTodos
 } from '../store/selectors/todos.selectors';
-import {distinctUntilChanged} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {TodoI} from '../models/app.todo.model';
-import {FilesState} from "../store/reducers/files.reducer";
+import {FilesState} from '../store/reducers/files.reducer';
 
 
 @Injectable({
@@ -32,7 +35,6 @@ export class TasksSandboxService {
     private store: Store<FilesState>
   ) {
   }
-
 
   selectedTodoId$ = this.store.pipe(select(currentTodoId));
   currentTodo$ = this.store.pipe(select(currentTodo));
@@ -64,11 +66,11 @@ export class TasksSandboxService {
     this.store.dispatch(updateTodoStart({id, value}));
   }
 
-  selectTodo(id: number) {
+  selectTodo(id: number): void {
     this.store.dispatch(selectTodo({id}));
   }
 
-  isTodoDisabled$(id: number) {
+  isTodoDisabled$(id: number): Observable<boolean> {
     return this.store.pipe(select(isTodoDisable(id))).pipe();
   }
 
@@ -78,16 +80,16 @@ export class TasksSandboxService {
     this.store.dispatch(addSubtaskStart({value, id}));
   }
 
-  removeSubtask(id: number, subId: number) {
+  removeSubtask(id: number, subId: number): void {
     this.store.dispatch(removeSubtaskStart({id, subId}));
   }
 
-  toggleActiveSubtask(id: number, subId: number) {
+  toggleActiveSubtask(id: number, subId: number): void {
     this.store.dispatch(toggleActiveSubtaskStart({id, subId}));
   }
 
   // Category
-  selectCategories(categories: string[]) {
+  selectCategories(categories: string[]): void {
     this.store.dispatch(selectCategories({categories}));
   }
 

@@ -18,7 +18,7 @@ import {TodoHttpService} from './services/todo-http.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { FileInputButtonComponent } from './components/file-input-button/file-input-button.component';
-import {FilesEffects} from "./store/effects/files.effects";
+import {FilesEffects} from './store/effects/files.effects';
 
 
 

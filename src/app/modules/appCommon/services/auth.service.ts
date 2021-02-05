@@ -23,18 +23,17 @@ export class AuthService {
     // @ts-ignore
     return jwt_decode(localStorage.getItem('currentUser'))?.user_id;
   }
-  register (email, password) {
+  register(email, password): void {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         this.toastr.success(`${userCredential.user.email} registered`);
       })
       .catch((error) => {
         this.toastr.error(`${error.code} ${error.message}`);
-
       });
   }
 
-  signIn (email, password) {
+  signIn(email, password): void {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Signed in
@@ -50,11 +49,11 @@ export class AuthService {
       });
   }
 
-  GoogleAuth() {
+  GoogleAuth(): Promise<void> {
     return this.GoogleAuthLogin(new firebase.auth.GoogleAuthProvider());
   }
 
-  GoogleAuthLogin(provider) {
+  GoogleAuthLogin(provider): Promise<void> {
     return this.afAuth.signInWithPopup(provider)
       .then((result) => {
         this.toastr.success(`${result.user.email} signed in`);
@@ -76,7 +75,6 @@ export class AuthService {
       return user.iss === 'https://securetoken.google.com/angular-11-todo';
     } else {
       return false;
-
     }
   }
 }

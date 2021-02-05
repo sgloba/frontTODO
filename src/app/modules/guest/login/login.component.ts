@@ -21,15 +21,15 @@ export class LoginComponent {
   usernameInput: string;
   passwordInput: string;
 
-  onRegister() {
+  onRegister(): void {
     this.authService.register(this.usernameInput, this.passwordInput);
   }
 
-  onLogin() {
+  onLogin(): void {
     this.authService.signIn(this.usernameInput, this.passwordInput);
   }
 
-  onGoogleLogin() {
+  onGoogleLogin(): void {
     this.authService.GoogleAuth();
   }
 }

@@ -22,17 +22,12 @@ export class ToggleBtnComponent implements ControlValueAccessor {
   form: FormGroup = new FormGroup({
   });
 
-
   @Input() options: OptionsI[];
-
-
-
-  ///////////////////////////////////
 
   value = 0;
   disabled = false;
 
-  toggleActive(option) {
+  toggleActive(option): void {
     this.options = this.options.map( item => {
       if (item.title === option.title) {
         item.active = !item.active;
@@ -42,27 +37,28 @@ export class ToggleBtnComponent implements ControlValueAccessor {
     this.onTouched();
     this.onChange(this.options);
   }
+  // for future use
   private onChange = (value: any) => {};
 
   private onTouched = () => {};
 
-  registerOnChange(fn: any) {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
   registerOnTouched(fn: () => {}): void {
     this.onTouched = fn;
   }
-
-  writeValue(outsideValue: number) {
+ // for future use
+  writeValue(outsideValue: number): void {
     this.value = outsideValue;
   }
 
-  setDisabledState(isDisabled: boolean) {
+  setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 
-  updateValue(insideValue: number) {
+  updateValue(insideValue: number):void {
     this.value = insideValue;
     this.onChange(insideValue);
     this.onTouched();
