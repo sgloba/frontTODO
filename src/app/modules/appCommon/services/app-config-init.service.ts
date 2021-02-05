@@ -29,6 +29,7 @@ export class AppConfigInitService {
     const { protocol, hostname } = window.location;
     const portPostfix = environment.production ? '' : `:${this.PORT}`;
     const url = `${protocol}//${hostname}${portPostfix}` + '/config';
+    console.log('url', url)
     this.http.get<any>(url)
       .pipe(take(1))
       .subscribe((config) => {

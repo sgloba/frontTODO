@@ -8,8 +8,7 @@
   z-index: -1;
 }
 .input-fake {
-
-  padding: .3rem;
+  padding: .35rem;
   margin-right: 1rem;
   border-radius: 5px;
   color: $text-clr;
@@ -32,6 +31,9 @@ label{
   ul {
     list-style: none;
   }
+}
+button {
+  margin: .3rem;
 }
 
 

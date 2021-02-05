@@ -14,7 +14,9 @@ export class TodoHttpService {
     private configService: AppConfigInitService
   ) { }
 
-  url = this.configService.config.backendUrl;
+  get url(): string {
+    return this.configService.config.backendUrl;
+  }
 
   getTodos(): Observable<TodoI[]> {
     return this.http.get<TodoI[]>(this.url + '/todos');

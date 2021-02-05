@@ -3,7 +3,7 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY, forkJoin} from 'rxjs';
 import {map, catchError, switchMap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import {fetchFilesStart, fetchFilesSuccess, uploadFilesSuccess} from '../actions/files.actions';
+import {fetchFilesStart, fetchFilesSuccess} from '../actions/files.actions';
 import {FileStorageService} from '../../services/file-storage.service';
 
 
