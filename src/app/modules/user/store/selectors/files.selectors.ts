@@ -7,4 +7,8 @@ export const allFiles = createSelector(
   filesState,
   ({files}) => files
 );
-
+export const searchFiles = (searchQuery: string) => createSelector(
+  allFiles,
+  (files) => files.filter((file) => file.name.includes(searchQuery)
+  )
+);

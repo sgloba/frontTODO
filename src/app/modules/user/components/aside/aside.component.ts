@@ -3,7 +3,8 @@ import {MatSidenav} from '@angular/material/sidenav';
 import {TasksSandboxService} from '../../services/tasks-sandbox.service';
 import {Observable} from 'rxjs';
 import {TodoI} from '../../models/app.todo.model';
-import {map, take} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,9 @@ import {map, take} from 'rxjs/operators';
 export class AsideComponent implements OnInit {
 
   constructor(
-    private tasksSandbox: TasksSandboxService
+    private tasksSandbox: TasksSandboxService,
+    private activatedRoute: ActivatedRoute,
+    private route: Router,
   ) {
   }
 
@@ -32,10 +35,10 @@ export class AsideComponent implements OnInit {
   inputValue: any;
 
   ngOnInit(): void {
-    this.tasksSandbox.isTodoSelected$.subscribe((res) => {
-      if (res) {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params.todo !== undefined) {
         this.sidenav?.open();
-      } else if (!res && this.sidenav) {
+      } else if (this.sidenav) {
         this.sidenavClose();
       }
     });
@@ -46,6 +49,7 @@ export class AsideComponent implements OnInit {
   sidenavClose(): void {
     this.sidenav.close();
     this.tasksSandbox.selectTodo(null);
+    this.route.navigate(['/main'], { queryParams: { todo: null}, queryParamsHandling: 'merge' } );
   }
 
   addSubtask(): void {

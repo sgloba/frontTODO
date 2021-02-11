@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {take} from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
-import {ConfigI} from "../models/app.config.model";
+import {ConfigI} from '../models/app.config.model';
 
 
 @Injectable({

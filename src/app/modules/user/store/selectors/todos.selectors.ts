@@ -1,9 +1,10 @@
-import {createFeatureSelector, createSelector, select} from '@ngrx/store';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {TodoState} from '../states/todo.state';
 import {
   selectEntities,
   selectAll,
 } from '../reducers/todo.reducer';
+import {allFiles} from './files.selectors';
 
 const todosState = createFeatureSelector<TodoState>('todos');
 
@@ -77,5 +78,10 @@ export const getFilteredTodos = (selectedStatus: string, selectedCategories: str
       .filter(filterByActivity(selectedStatus))
       .filter(filterByCategories(selectedCategories));
   }
+);
+export const searchTodos = (searchQuery: string) => createSelector(
+  allTodos,
+  (todos) => todos.filter((todo) => todo.value.includes(searchQuery)
+  )
 );
 

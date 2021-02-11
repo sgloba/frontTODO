@@ -3,8 +3,21 @@
     <label for="file">
       <span mat-ripple class="input-fake">Choose file</span>
       <input #fileInput id="file" type="file" class="inputfile" [accept]="acceptedFileTypes" [multiple]="multiple" (change)="setSelectedFiles()"/>
-      <button mat-button mat-stroked-button type="submit" [disabled]="!selectedFiles.length">Upload</button>
-      <button mat-button mat-stroked-button type="button" (click)="reset()" [disabled]="!selectedFiles.length">Reset</button>
+
+      <div #resetBtn>
+        <ng-content select="#resetBtn"></ng-content>
+      </div>
+      <ng-container *ngIf="!resetBtn.hasChildNodes()">
+        <button mat-button mat-stroked-button type="button" (click)="reset()" [disabled]="!selectedFiles.length">Reset</button>
+      </ng-container>
+
+      <div #uploadBtn>
+        <ng-content select="#uploadBtn"></ng-content>
+      </div>
+      <ng-container *ngIf="!uploadBtn.hasChildNodes()">
+        <button mat-button mat-stroked-button type="submit" [disabled]="!selectedFiles.length">Upload</button>
+      </ng-container>
+
     </label>
   </form>
   <div class="staged">
@@ -15,5 +28,7 @@
       </li>
     </ul>
   </div>
-
 </div>
+
+
+

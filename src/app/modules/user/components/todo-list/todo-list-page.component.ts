@@ -1,11 +1,11 @@
 import {Component, ElementRef, ViewChild, OnInit, OnDestroy, HostListener} from '@angular/core';
 import {TasksSandboxService} from '../../services/tasks-sandbox.service';
 import {BehaviorSubject, combineLatest, fromEvent, Subject} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
-import {filter, map, pairwise, startWith, switchMap, takeUntil} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {distinctUntilChanged, filter, map, pairwise, startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {OptionsI} from '../../../appCommon/models/app.options.model';
 import {MatMenuTrigger} from '@angular/material/menu';
-
+import {isEqual} from 'lodash';
 
 
 @Component({
@@ -16,12 +16,13 @@ import {MatMenuTrigger} from '@angular/material/menu';
 export class TodoListPageComponent implements OnInit, OnDestroy {
 
 
-
   constructor(
     private taskSandbox: TasksSandboxService,
     private activatedRoute: ActivatedRoute,
+    private route: Router,
   ) {
   }
+
   unsubscribe$ = new Subject<void>();
 
   @ViewChild(MatMenuTrigger)
@@ -50,7 +51,7 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   selectedCategories$ = this.categoriesSelected$.pipe(
     map((options) => {
       return options
-        .filter(({active}) => active)     // ????
+        .filter(({active}) => active)
         .map(({title}) => title);
 
     })
@@ -71,9 +72,9 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
     this.selectedStatus$,
     this.selectedCategories$
   ]).pipe(
-    switchMap(([status, category]) => this.taskSandbox.getFilteredTodos$(status, category))
+    switchMap(([status, category]) => this.taskSandbox.getFilteredTodos$(status, category)),
+    distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
   );
-
 
 
   @HostListener('document:contextmenu', ['$event'])
@@ -88,7 +89,20 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.taskSandbox.requestTodos();
-    fromEvent(document, 'wheel', { passive: false })
+    this.route.navigate(
+      [],
+      {
+        queryParams: {todos: 'all'},
+      });
+
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((params) => {
+       if (params.todo !== undefined) {
+         this.taskSandbox.selectTodo(params.todo);
+       }
+    });
+    fromEvent(document, 'wheel', {passive: false})
       .pipe(
         filter(() => this.matMenuTrigger.menuOpen),
         takeUntil(this.unsubscribe$)
@@ -99,21 +113,24 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   addTodo(value: string): void {
     if (!value) {
       return;
-      }
+    }
     this.taskSandbox.add(value);
 
     this.inputValue = '';
     this.todoInput.nativeElement.focus();
-    }
-  onDrop(e) :void {
+  }
+
+  onDrop(e): void {
     if (e.isPointerOverContainer) {
       this.taskSandbox.remove(e.previousContainer.data._id);
     }
   }
+
   onDragStart(): void {
     this.showRecycleBin = true;
 
   }
+
   onDragEnd(): void {
     this.showRecycleBin = false;
   }
@@ -128,7 +145,6 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   removeTodo(id: number): void {
     this.taskSandbox.remove(id);
   }
-
 
 
   ngOnDestroy(): void {

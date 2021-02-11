@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {TasksSandboxService} from '../../services/tasks-sandbox.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -10,9 +11,10 @@ export class MainPageComponent {
 
   constructor(
     private taskSandbox: TasksSandboxService,
+    private activatedRoute: ActivatedRoute,
   ) {
-    this.taskSandbox.selectedTodoId$.subscribe((id) => {
-      this.sidenavOpened = !!id;
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.sidenavOpened = !!params.todo;
     });
   }
 

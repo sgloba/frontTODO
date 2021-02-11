@@ -2,7 +2,7 @@
   [class.loading-spinner]="isTodoDisabled"
   [class.is-completed]="todo?.isCompleted"
   class="todo-item loader"
-  [class.highlight]="highlight"
+  [class.highlight]="highlight$ | async"
   (click)="onSelectTodo()">
   <div class="text-wrap">
     <button mat-stroked-button color="accent" [disabled]="isTodoDisabled" (click)="toggleActive();" stop-click-propagation>
@@ -28,5 +28,3 @@
     </button>
   </div>
 </div>
-
-

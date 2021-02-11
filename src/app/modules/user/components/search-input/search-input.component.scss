@@ -1,0 +1,34 @@
+@import "src/app/scss/colors";
+form {
+  position: relative;
+  &:before {
+    z-index: 2;
+    top: -30px;
+    position: absolute;
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 50px;
+    background: $primary-clr;
+  }
+}
+
+::ng-deep.mat-menu-panel {
+  padding: 1rem;
+}
+ul {
+  list-style: none;
+  li{
+    border-bottom: 1px solid $secondary-clr;
+    margin-right: 1rem;
+  }
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.material-icons {
+  margin-right: .5rem;
+  vertical-align: bottom;
+  cursor: pointer;
+}

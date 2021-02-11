@@ -1,0 +1,25 @@
+<form>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Search..." type="text" autocomplete="off" #input (focus)="openSearchMenu()">
+    <mat-menu #menu="matMenu">
+      <div stop-click-propagation>
+        <h3>Todos:</h3>
+        <ul *ngFor="let item of searchResultsTodos">
+          <li>
+            <span class="material-icons" (click)="gotoTodo(item._id)">visibility</span>
+            {{item.value}}
+          </li>
+        </ul>
+        <h3>Files:</h3>
+        <ul *ngFor="let item of searchResultsFiles">
+          <li>
+            <span class="material-icons" (click)="openFile(item.url)">visibility</span>
+            {{item.name}}
+          </li>
+        </ul>
+      </div>
+    </mat-menu>
+  </mat-form-field>
+</form>
+
+<div #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"></div>

@@ -23,7 +23,8 @@ import {
 import {Observable} from 'rxjs';
 import {TodoI} from '../models/app.todo.model';
 import {FilesState} from '../store/reducers/files.reducer';
-
+import {distinctUntilChanged, tap} from 'rxjs/operators';
+import {isEqual} from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,10 @@ export class TasksSandboxService {
 
 
   getFilteredTodos$(status: 'active' | 'completed' | 'all' = 'all', categories: string[] = []): Observable<TodoI[]> {
-    return this.store.pipe(select(getFilteredTodos(status, categories)));
+    return this.store.pipe(
+      select(getFilteredTodos(status, categories)),
+      distinctUntilChanged((prev, curr) => isEqual(prev, curr))
+    );
   }
 
   requestTodos(): void {

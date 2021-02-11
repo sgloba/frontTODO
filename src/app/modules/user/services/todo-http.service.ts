@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TodoI} from '../models/app.todo.model';
 import {AppConfigInitService} from '../../appCommon/services/app-config-init.service';
+import {filter, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,11 @@ export class TodoHttpService {
   getTodos(): Observable<TodoI[]> {
     return this.http.get<TodoI[]>(this.url + '/todos');
   }
-
+  getTodosBySearchQuery(searchQuery): Observable<TodoI[]> {
+    return this.http.get<TodoI[]>(this.url + '/todos').pipe(
+      map((todo) => todo.filter((todo) => todo.value.includes(searchQuery)))
+    );
+  }
   removeTodo(id: number): Observable<TodoI> {
     return this.http.delete<TodoI>(`${this.url}/todos/${id}`);
   }

@@ -25,14 +25,14 @@
 
 
   <mat-nav-list>
-    <a [routerLink]="null" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="null" routerLinkActive="active" [queryParams]="{todos: 'all'}" [queryParamsHandling]="'merge'">
       All
     </a>
 
-    <a [routerLink]="null" [queryParams]="{todos: 'active'}" routerLinkActive="active">
+    <a [routerLink]="null" [queryParams]="{todos: 'active'}" routerLinkActive="active" [queryParamsHandling]="'merge'">
       Active
     </a>
-    <a [routerLink]="null" [queryParams]="{todos: 'completed'}" routerLinkActive="active">
+    <a [routerLink]="null" [queryParams]="{todos: 'completed'}" routerLinkActive="active" [queryParamsHandling]="'merge'">
       Completed
     </a>
   </mat-nav-list>

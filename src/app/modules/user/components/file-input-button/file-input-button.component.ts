@@ -1,9 +1,6 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
 import {FileStorageService} from '../../services/file-storage.service';
 import {ToastrService} from 'ngx-toastr';
-import {map} from 'rxjs/operators';
-
-// TODO: allow to set custom button via ng-content
 
 
 @Component({
@@ -22,8 +19,7 @@ export class FileInputButtonComponent {
   constructor(
     private fileStorage: FileStorageService,
     private toast: ToastrService,
-  ) {
-  }
+  ) { }
 
   selectedFiles: File[] = [];
 

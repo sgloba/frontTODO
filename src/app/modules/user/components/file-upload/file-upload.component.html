@@ -1,6 +1,11 @@
 <app-header></app-header>
 <div class="content">
-<app-file-input-button class="input-wrap" (uploadSuccess)="updateFilesList()"></app-file-input-button>
+<app-file-input-button
+  class="input-wrap"
+  (uploadSuccess)="updateFilesList()"
+>
+
+</app-file-input-button>
 
   <mat-card class="card" *ngFor="let item of collection$ | async">
     <mat-card-title>
@@ -10,9 +15,12 @@
     <mat-card-actions>
       <a [href]="item.url" target="_blank">
         <button mat-button mat-flat-button>View</button>
-
       </a>
       <button mat-button mat-flat-button disabled>Download</button>
     </mat-card-actions>
   </mat-card>
 </div>
+
+<ng-template #btnTemplate>
+  <button>btnTemplate</button>
+</ng-template>

@@ -1,10 +1,11 @@
-import {Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TodoI} from 'src/app/modules/user/models/app.todo.model';
 
 import {TasksSandboxService} from 'src/app/modules/user/services/tasks-sandbox.service';
 import {faCheck, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-todo-item',
@@ -15,14 +16,8 @@ export class TodoItemComponent implements OnInit,OnDestroy {
 
   constructor(
     private taskSandbox: TasksSandboxService,
-  ) {
-
-    this.taskSandbox.selectedTodoId$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((id) => {
-        this.highlight = id === this.todo._id;
-      });
-  }
+    private route: Router,
+  ) { }
 
   unsubscribe$ = new Subject<void>();
 
@@ -33,7 +28,10 @@ export class TodoItemComponent implements OnInit,OnDestroy {
   @Input() todo: TodoI = {} as TodoI;
 
   allowEdit = false;
-  highlight = false;
+  highlight$ = this.taskSandbox.selectedTodoId$
+    .pipe(
+      map((id) => id === this.todo._id)
+    );
   isTodoDisabled = false;
 
 
@@ -76,7 +74,7 @@ export class TodoItemComponent implements OnInit,OnDestroy {
   }
 
   onSelectTodo(): void {
-    this.taskSandbox.selectTodo(this.todo._id);
+    this.route.navigate(['/main'], { queryParams: { todo: this.todo._id }, queryParamsHandling: 'merge' });
   }
 
   ngOnDestroy(): void {
