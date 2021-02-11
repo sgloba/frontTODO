@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {TasksSandboxService} from '../../services/tasks-sandbox.service';
+import {TasksSandboxService} from '../../modules/todo/services/tasks-sandbox.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

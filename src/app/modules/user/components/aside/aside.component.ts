@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
-import {TasksSandboxService} from '../../services/tasks-sandbox.service';
+import {TasksSandboxService} from '../../modules/todo/services/tasks-sandbox.service';
 import {Observable} from 'rxjs';
 import {TodoI} from '../../models/app.todo.model';
 import {take} from 'rxjs/operators';
@@ -39,7 +39,8 @@ export class AsideComponent implements OnInit {
       if (params.todo !== undefined) {
         this.sidenav?.open();
       } else if (this.sidenav) {
-        this.sidenavClose();
+        this.sidenav.close();
+        this.tasksSandbox.selectTodo(null);
       }
     });
     this.currentSubtask$ = this.tasksSandbox.currentSubtask$;
@@ -49,7 +50,7 @@ export class AsideComponent implements OnInit {
   sidenavClose(): void {
     this.sidenav.close();
     this.tasksSandbox.selectTodo(null);
-    this.route.navigate(['/main'], { queryParams: { todo: null}, queryParamsHandling: 'merge' } );
+    this.route.navigate(['/main/todos/'], { queryParams: { todo: null}, queryParamsHandling: 'merge' } );
   }
 
   addSubtask(): void {

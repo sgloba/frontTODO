@@ -13,7 +13,7 @@ export class HeaderComponent {
 
   constructor(
     private userHttpService: UserHttpService,
-    private route: Router
+    private route: Router,
   ) {}
 
   user: UserI = this.userHttpService.getCurrentUser();

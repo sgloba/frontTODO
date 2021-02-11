@@ -3,9 +3,9 @@ import {FileStorageService} from '../../services/file-storage.service';
 import {Observable} from 'rxjs';
 import {FileService} from '../../services/file.service';
 import {Store} from '@ngrx/store';
-import {allFiles} from '../../store/selectors/files.selectors';
-import {fetchFilesStart} from '../../store/actions/files.actions';
-import {FilesI} from '../../models/app.files.model';
+import {allFiles} from '../../../../store/selectors/files.selectors';
+import {fetchFilesStart} from '../../../../store/actions/files.actions';
+import {FilesI} from '../../../../models/app.files.model';
 
 
 @Component({
