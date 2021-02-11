@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Store, select} from '@ngrx/store';
-import {TodoHttpService} from 'src/app/modules/user/services/todo-http.service';
+import {TodoHttpService} from 'src/app/modules/user/modules/todo/services/todo-http.service';
 import {
   addTodoStart,
   fetchTodosStart,
@@ -11,7 +11,7 @@ import {
   removeSubtaskStart,
   toggleActiveSubtaskStart,
   selectCategories
-} from '../store/actions/todo.actions';
+} from '../../../store/actions/todo.actions';
 import {
   currentSubtask,
   currentTodo,
@@ -19,10 +19,10 @@ import {
   isTodoSelected,
   isTodoDisable,
   getFilteredTodos
-} from '../store/selectors/todos.selectors';
+} from '../../../store/selectors/todos.selectors';
 import {Observable} from 'rxjs';
-import {TodoI} from '../models/app.todo.model';
-import {FilesState} from '../store/reducers/files.reducer';
+import {TodoI} from '../../../models/app.todo.model';
+import {FilesState} from '../../../store/reducers/files.reducer';
 import {distinctUntilChanged, tap} from 'rxjs/operators';
 import {isEqual} from 'lodash';
 

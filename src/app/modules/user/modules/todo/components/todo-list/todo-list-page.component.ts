@@ -3,7 +3,7 @@ import {TasksSandboxService} from '../../services/tasks-sandbox.service';
 import {BehaviorSubject, combineLatest, fromEvent, Subject} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {distinctUntilChanged, filter, map, pairwise, startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
-import {OptionsI} from '../../../appCommon/models/app.options.model';
+import {OptionsI} from '../../../../../appCommon/models/app.options.model';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {isEqual} from 'lodash';
 
@@ -90,11 +90,10 @@ export class TodoListPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.taskSandbox.requestTodos();
     this.route.navigate(
-      [],
+      ['/main/todos'],
       {
         queryParams: {todos: 'all'},
       });
-
     this.activatedRoute.queryParams
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {

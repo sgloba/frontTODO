@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TodoI} from '../models/app.todo.model';
-import {AppConfigInitService} from '../../appCommon/services/app-config-init.service';
+import {TodoI} from '../../../models/app.todo.model';
+import {AppConfigInitService} from '../../../../appCommon/services/app-config-init.service';
 import {filter, map} from 'rxjs/operators';
 
 @Injectable({

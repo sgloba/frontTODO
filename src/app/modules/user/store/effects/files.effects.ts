@@ -4,7 +4,7 @@ import {EMPTY, forkJoin} from 'rxjs';
 import {map, catchError, switchMap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {fetchFilesStart, fetchFilesSuccess} from '../actions/files.actions';
-import {FileStorageService} from '../../services/file-storage.service';
+import {FileStorageService} from '../../modules/file/services/file-storage.service';
 
 
 @Injectable()

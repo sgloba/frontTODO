@@ -4,9 +4,9 @@ import {debounceTime, distinctUntilChanged, filter, map, switchMap} from 'rxjs/o
 import {Store} from '@ngrx/store';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {TodoI} from '../../models/app.todo.model';
-import {TasksSandboxService} from '../../services/tasks-sandbox.service';
-import {FileStorageService} from '../../services/file-storage.service';
-import {TodoHttpService} from '../../services/todo-http.service';
+import {TasksSandboxService} from '../../modules/todo/services/tasks-sandbox.service';
+import {FileStorageService} from '../../modules/file/services/file-storage.service';
+import {TodoHttpService} from '../../modules/todo/services/todo-http.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -81,7 +81,7 @@ export class SearchInputComponent implements AfterViewInit {
 
   gotoTodo(id): void {
     this.route.navigate(
-      ['/main'],
+      ['/main/todos'],
       {
         queryParams: {todo: id},
         queryParamsHandling: 'merge'

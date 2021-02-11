@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {TodoI} from 'src/app/modules/user/models/app.todo.model';
 
-import {TasksSandboxService} from 'src/app/modules/user/services/tasks-sandbox.service';
+import {TasksSandboxService} from 'src/app/modules/user/modules/todo/services/tasks-sandbox.service';
 import {faCheck, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
@@ -74,7 +74,7 @@ export class TodoItemComponent implements OnInit,OnDestroy {
   }
 
   onSelectTodo(): void {
-    this.route.navigate(['/main'], { queryParams: { todo: this.todo._id }, queryParamsHandling: 'merge' });
+    this.route.navigate(['/main/todos'], { queryParams: { todo: this.todo._id }, queryParamsHandling: 'merge' });
   }
 
   ngOnDestroy(): void {

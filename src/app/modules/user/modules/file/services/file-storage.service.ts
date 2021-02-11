@@ -5,9 +5,9 @@ import {map} from 'rxjs/operators';
 import {forkJoin, from, Observable} from 'rxjs';
 import {Reference} from '@angular/fire/storage/interfaces';
 import FullMetadata = firebase.storage.FullMetadata;
-import {AuthService} from '../../appCommon/services/auth.service';
+import {AuthService} from '../../../../appCommon/services/auth.service';
 import {Store} from '@ngrx/store';
-import {fetchFilesStart} from '../store/actions/files.actions';
+import {fetchFilesStart} from '../../../store/actions/files.actions';
 
 
 @Injectable({

@@ -1,5 +1,5 @@
 <app-header></app-header>
 <app-aside ></app-aside>
 <div class="content-wrap" [class.sidenav-opened]="sidenavOpened" [class.sidenav-closed]="!sidenavOpened">
-  <app-todo-list-page></app-todo-list-page>
+  <router-outlet></router-outlet>
 </div>
