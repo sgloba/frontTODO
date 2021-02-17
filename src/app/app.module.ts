@@ -19,6 +19,8 @@ import {filesReducer} from './modules/user/store/reducers/files.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {TodoEffects} from './modules/user/store/effects/todo.effects';
 import {FilesEffects} from './modules/user/store/effects/files.effects';
+import {articleReducer} from "./modules/user/store/reducers/articles.reducer";
+import {ArticlesEffects} from "./modules/user/store/effects/articles.effects";
 
 
 
@@ -38,10 +40,10 @@ import {FilesEffects} from './modules/user/store/effects/files.effects';
       BrowserModule,
       StoreModule.forRoot({
         todos: todoReducer,
-        files: filesReducer
+        files: filesReducer,
+        articles: articleReducer
       }),
-      EffectsModule.forRoot([TodoEffects, FilesEffects]),
-
+      EffectsModule.forRoot([TodoEffects, FilesEffects, ArticlesEffects]),
     ],
   providers: [
     ApiInterceptorService,

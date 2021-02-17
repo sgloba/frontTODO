@@ -38,12 +38,10 @@ export class ArticleCardComponent implements OnInit {
     this.blogService
       .setArticleMarks(this.article._id, {
         marks: [{user: this.userService.getCurrentUser().user_id, rate: mark}]
-      })
-      .subscribe();
+      });
   }
 
   private _getMarks(isPositive: boolean): number {
-    console.log('marks', this.article._id, this.article.marks)
     if (this.article.marks) {
       return this.article.marks
         .map((mark) => mark.rate)

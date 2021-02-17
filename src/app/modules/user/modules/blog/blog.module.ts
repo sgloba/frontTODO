@@ -21,7 +21,8 @@ import {BlogMockService} from "./services/blog-mock.service";
     BlogRoutingModule,
     UserModule,
     MaterialModule
-  ]
+  ],
+  providers: [BlogService]
 })
 export class BlogModule {
 }
