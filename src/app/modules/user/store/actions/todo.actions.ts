@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import {TodoI} from '../../models/app.todo.model';
-import {SubtaskI} from '../../models/app.subtask.model';
+import {TodoI} from '../../modules/todo/models/app.todo.model';
+import {SubtaskI} from '../../modules/todo/models/app.subtask.model';
 
 
 export const fetchTodosStart = createAction(

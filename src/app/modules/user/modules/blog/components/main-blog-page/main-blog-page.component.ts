@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {BlogService} from "../../services/blog.service";
+import {Observable} from "rxjs";
+import {ArticleI} from "../../models/app.article.model";
 
 @Component({
   selector: 'app-main-blog-page',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainBlogPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private blogService: BlogService,
+  ) {
+  }
 
   ngOnInit(): void {
   }
+  articles$: Observable<ArticleI[]> = this.blogService.fetchArticles$();
 
 }

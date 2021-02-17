@@ -1,8 +1,10 @@
+@import "src/app/scss/colors";
 .content-wrap{
+  background-color: $bg-main-clr;
   display: flex;
-  padding-top: 120px;
-  margin: 0 auto;
-  max-width: 600px;
+  padding-top: 80px;
+  justify-content: center;
+  align-items: center;
 }
 .sidenav-opened{
   padding-left: 320px;

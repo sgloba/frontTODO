@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 import {TasksSandboxService} from '../../modules/todo/services/tasks-sandbox.service';
 import {Observable} from 'rxjs';
-import {TodoI} from '../../models/app.todo.model';
+import {TodoI} from '../../modules/todo/models/app.todo.model';
 import {take} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 

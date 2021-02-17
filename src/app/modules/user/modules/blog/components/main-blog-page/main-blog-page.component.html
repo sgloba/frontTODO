@@ -1,4 +1,5 @@
-<div class="content-wrap"></div>
-<p>main-blog-page works!</p>
-
-
+<div class="blog-wrap">
+  <ng-container *ngFor="let article of (articles$ | async)">
+    <app-article-card [article]="article"></app-article-card>
+  </ng-container>
+</div>

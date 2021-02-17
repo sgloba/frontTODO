@@ -1,6 +1,6 @@
 import {createReducer, on} from '@ngrx/store';
 import * as FilesAction from '../actions/files.actions';
-import {FilesI} from '../../models/app.files.model';
+import {FilesI} from '../../modules/file/models/app.files.model';
 
 export interface FilesState {
   files: FilesI[];

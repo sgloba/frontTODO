@@ -3,7 +3,7 @@ import {fromEvent, combineLatest, forkJoin} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map, switchMap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {MatMenuTrigger} from '@angular/material/menu';
-import {TodoI} from '../../models/app.todo.model';
+import {TodoI} from '../../modules/todo/models/app.todo.model';
 import {TasksSandboxService} from '../../modules/todo/services/tasks-sandbox.service';
 import {FileStorageService} from '../../modules/file/services/file-storage.service';
 import {TodoHttpService} from '../../modules/todo/services/todo-http.service';

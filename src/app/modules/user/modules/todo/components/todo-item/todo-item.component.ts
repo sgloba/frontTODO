@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {TodoI} from 'src/app/modules/user/models/app.todo.model';
+import {TodoI} from 'src/app/modules/user/modules/todo/models/app.todo.model';
 
 import {TasksSandboxService} from 'src/app/modules/user/modules/todo/services/tasks-sandbox.service';
 import {faCheck, faPencilAlt, faTrash} from '@fortawesome/free-solid-svg-icons';

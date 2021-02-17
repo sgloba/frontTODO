@@ -1,0 +1,15 @@
+@import 'src/app/scss/colors';
+
+.article-card {
+  background-color: $primary-clr;
+  margin: 1rem;
+}
+.like-dislike-btn {
+  vertical-align: center;
+}
+.like-dislike-count {
+  padding-right: .5rem;
+}
+img{
+  max-height: 336px;
+}

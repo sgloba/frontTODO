@@ -1,0 +1,28 @@
+<mat-card class="article-card">
+  <mat-card-header>
+    <mat-card-title>{{ translate('title') }}</mat-card-title>
+    <mat-card-subtitle>Author: {{article.author}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]='article.img' [alt]="article.title">
+  <mat-card-content>
+    <p>
+      {{ translate('preview') }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="toggleLanguage()">
+      <span class="material-icons">language</span>
+    </button>
+    <button mat-button class="like-dislike-btn" (click)="setMark(1)">
+      <span class="like-dislike-count">{{likes}}</span>
+      <span class="material-icons">thumb_up</span>
+    </button>
+    <button mat-button class="like-dislike-btn" (click)="setMark(-1)">
+      <span class="like-dislike-count">{{dislikes}}</span>
+      <span class="material-icons">thumb_down</span>
+    </button>
+    <button mat-button>
+      <span class="material-icons">visibility</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

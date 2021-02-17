@@ -1,4 +1,4 @@
-import {TodoI} from '../../models/app.todo.model';
+import {TodoI} from '../../modules/todo/models/app.todo.model';
 import {createReducer, on} from '@ngrx/store';
 import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
 import * as TodoActions from '../actions/todo.actions';
