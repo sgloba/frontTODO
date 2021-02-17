@@ -14,28 +14,11 @@ import {setMarkStart} from "../../../store/actions/articles.actions";
 export class BlogService {
 
   constructor(
-    private http: HttpClient,
-    private configService: AppConfigInitService,
-    private store: Store
-  ) {
-  }
+  ) { }
 
-  get url(): string {
 
-    return this.configService.config.nestJsURL;
-  }
 
-  fetchArticles$(): Observable<ArticleI[]> {
-    return this.http.get<ArticleI[]>(this.url + '/articles');
-  }
 
-  HTTPsetArticleMarks$(id, mark): Observable<any> {
-    return this.http.put(this.url + `/articles/${id}`, mark);
-  }
-
-  setArticleMarks(id, mark): void{
-    this.store.dispatch(setMarkStart({id, mark}));
-  }
 }
 
 

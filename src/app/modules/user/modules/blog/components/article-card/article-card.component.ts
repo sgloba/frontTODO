@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {ArticleI, ArticleTranslatableFieldI, ArticleTranslatableProp} from '../../models/app.article.model';
-import {BlogService} from "../../services/blog.service";
 import {UserHttpService} from "../../../../../appCommon/services/user-http.service";
+import {SandboxBlogService} from "../../services/sandbox-blog.service";
 
 @Component({
   selector: 'app-article-card',
@@ -12,7 +12,7 @@ import {UserHttpService} from "../../../../../appCommon/services/user-http.servi
 export class ArticleCardComponent implements OnInit {
 
   constructor(
-    private blogService: BlogService,
+    private blogSandbox: SandboxBlogService,
     private userService: UserHttpService,
   ) {
   }
@@ -35,7 +35,7 @@ export class ArticleCardComponent implements OnInit {
   }
 
   setMark(mark): void {
-    this.blogService
+    this.blogSandbox
       .setArticleMarks(this.article._id, {
         marks: [{user: this.userService.getCurrentUser().user_id, rate: mark}]
       });

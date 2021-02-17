@@ -3,8 +3,8 @@ import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY} from 'rxjs';
 import {map, catchError, switchMap, tap} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
-import {BlogService} from "../../modules/blog/services/blog.service";
 import {fetchArticlesStart, fetchArticlesSuccess, setMarkStart, setMarkSuccess} from "../actions/articles.actions";
+import {HttpBlogService} from "../../modules/blog/services/http-blog.service";
 
 
 @Injectable()
@@ -13,13 +13,13 @@ export class ArticlesEffects {
   constructor(
     private actions$: Actions,
     private store: Store,
-    private blogService: BlogService,
+    private httpBlog: HttpBlogService,
   ) {
   }
 
-  fetchArtcles$ = createEffect(() => this.actions$.pipe(
+  fetchArticles$ = createEffect(() => this.actions$.pipe(
     ofType(fetchArticlesStart.type),
-    switchMap(() => this.blogService.fetchArticles$()
+    switchMap(() => this.httpBlog.fetchArticles$()
       .pipe(
         map((articles) => {
           return fetchArticlesSuccess({articles});
@@ -31,7 +31,7 @@ export class ArticlesEffects {
 
   setMark$ = createEffect(() => this.actions$.pipe(
     ofType(setMarkStart.type),
-    switchMap(({id, mark}) => this.blogService.HTTPsetArticleMarks$(id, mark)
+    switchMap(({id, mark}) => this.httpBlog.setArticleMarks$(id, mark)
       .pipe(
         map((article) => {
           return setMarkSuccess({article});
