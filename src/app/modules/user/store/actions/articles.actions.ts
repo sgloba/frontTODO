@@ -8,6 +8,10 @@ export const fetchArticlesSuccess = createAction(
   '[Articles] Fetch Articles Success',
   props<{ articles: ArticleI[] }>()
 );
+export const setMark =createAction(
+  '[Articles] Set Mark',
+  props<{ id, mark }>()
+);
 
 export const setMarkStart = createAction(
   '[Articles] Set Mark Start',

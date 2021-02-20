@@ -24,5 +24,8 @@ export class HttpBlogService {
   setArticleMarks$(id, mark): Observable<any> {
     return this.http.put(this.url + `/articles/${id}`, mark);
   }
+  createArticle$(body): Observable<any> {
+    return this.http.post(this.url + `/articles`, body)
+  }
 
 }

@@ -6,23 +6,26 @@ import {UserModule} from '../../user.module';
 import {AppCommonModule} from '../../../appCommon/appCommon.module';
 import {MaterialModule} from "../../../material/material.module";
 import {ArticleCardComponent} from "./components/article-card/article-card.component";
-import {BlogService} from "./services/blog.service";
-import {BlogMockService} from "./services/blog-mock.service";
+import { CreateArticleComponent } from './components/create-article/create-article.component';
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [
     MainBlogPageComponent,
     ArticleCardComponent,
+    CreateArticleComponent,
   ],
   imports: [
+    CKEditorModule,
     CommonModule,
     AppCommonModule,
     BlogRoutingModule,
     UserModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ],
-  providers: [BlogService]
 })
 export class BlogModule {
 }

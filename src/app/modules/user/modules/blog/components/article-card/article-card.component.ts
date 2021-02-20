@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {ArticleI, ArticleTranslatableFieldI, ArticleTranslatableProp} from '../../models/app.article.model';
 import {UserHttpService} from "../../../../../appCommon/services/user-http.service";
 import {SandboxBlogService} from "../../services/sandbox-blog.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-article-card',
@@ -23,41 +24,42 @@ export class ArticleCardComponent implements OnInit {
   @Input() article: ArticleI;
 
   selectedLanguage = 'en';
+  userId = this.userService.getCurrentUser().user_id;
 
   toggleLanguage(): void {
     this.selectedLanguage = this.selectedLanguage === 'en' ? 'ru' : 'en';
   }
 
   translate(prop: ArticleTranslatableProp): string {
-    return (this.article[prop] as ArticleTranslatableFieldI[])
+    const translatedProp = (this.article[prop] as ArticleTranslatableFieldI[])
       .find((item) => item.lang === this.selectedLanguage)
       ?.content;
+    if(!translatedProp) {
+      return (this.article[prop] as ArticleTranslatableFieldI[])[0].content;
+    } else {
+      return translatedProp;
+    }
   }
 
   setMark(mark): void {
     this.blogSandbox
       .setArticleMarks(this.article._id, {
-        marks: [{user: this.userService.getCurrentUser().user_id, rate: mark}]
+        marks: [{user: this.userId, rate: mark}]
       });
   }
 
-  private _getMarks(isPositive: boolean): number {
-    if (this.article.marks) {
-      return this.article.marks
-        .map((mark) => mark.rate)
-        .filter((rate) => isPositive ? rate > 0 : rate < 0)
-        .reduce((sum, cur) => sum + Math.abs(cur), 0);
-    } else {
-      return null;
-    }
+  get dislikes(): Observable<number> {
+    return this.blogSandbox.totalDislikes$(this.article._id);
   }
 
-  get dislikes(): number {
-    return this._getMarks(false);
+  get likes(): Observable<number> {
+    return this.blogSandbox.totalLikes$(this.article._id);
   }
 
-  get likes(): number {
-    return this._getMarks(true);
+  get isLikedByUser(): Observable<boolean> {
+    return this.blogSandbox.isLikedByUser(this.article._id, this.userId);
   }
-
+  get isDislikedByUser(): Observable<boolean> {
+    return this.blogSandbox.isDislikedByUser(this.article._id, this.userId);
+  }
 }

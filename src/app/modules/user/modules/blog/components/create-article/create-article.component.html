@@ -1,0 +1,47 @@
+<div class="nav">
+  <button mat-flat-button routerLink="/main/blog" routerLinkActive="active">Show articles</button>
+</div>
+<div class="wrap" >
+  <h3>Title:</h3>
+  <input type="text" [(ngModel)]="title">
+  <h3>Body:</h3>
+
+  <ckeditor
+    #edit
+    class="ckeditor"
+    [editor]="editor"
+  ></ckeditor>
+
+  <h3>Preview(optional):</h3>
+  <textarea [(ngModel)]="preview"></textarea>
+
+  <h3>Tags(optional):</h3>
+  <mat-form-field class="tags-chip-list">
+    <mat-chip-list #tagsChip aria-label="Tags selection">
+      <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                [removable]="removable" (removed)="remove(tag)">
+        {{tag}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input placeholder="New tag..."
+             [matChipInputFor]="tagsChip"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             [matChipInputAddOnBlur]="addOnBlur"
+             (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="language-input">
+    <mat-label>Choose article language</mat-label>
+    <mat-select [(value)]="lang">
+      <mat-option value="ru">Russian</mat-option>
+      <mat-option value="en">English</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+<button (click)="submit()" mat-flat-button>Submit</button>
+<button (click)="f()" mat-flat-button>FFF</button>
+
+<footer></footer>

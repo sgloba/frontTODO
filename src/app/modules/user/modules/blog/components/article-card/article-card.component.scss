@@ -3,12 +3,20 @@
 .article-card {
   background-color: $primary-clr;
   margin: 1rem;
+  width: 335px;
+  height: 512px;
 }
 .like-dislike-btn {
   vertical-align: center;
 }
 .like-dislike-count {
   padding-right: .5rem;
+}
+.highlight-like-button {
+  color: $secondary-clr;
+}
+.highlight-dislike-button {
+  color: darkred;
 }
 img{
   max-height: 336px;

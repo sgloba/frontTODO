@@ -9,8 +9,25 @@ export const allArticles = createSelector(
     return articles;
   }
 );
-// export const searchFiles = (searchQuery: string) => createSelector(
-//   allArticles,
-//   (articles) => articles.filter((article) => article.author.includes(searchQuery)
-//   )
-// );
+
+export const articleById = (id: string) => createSelector(
+  allArticles,
+  (articles) => articles.find((article) => article._id === id)
+);
+
+export const totalMarks = (articleId: string, rate: 1 | -1) => createSelector(
+  articleById(articleId),
+  (article) => {
+    return article.marks.filter((mark) => mark.rate === rate).length;
+  }
+);
+
+export const isMarkedByUser = (articleId: string, userId: string, rate: 1 | -1) => createSelector(
+  articleById(articleId),
+  (article) => {
+    return !!article.marks
+      .filter((mark) => mark.rate === rate)
+      .find((like) => like.user === userId);
+  }
+);
+
