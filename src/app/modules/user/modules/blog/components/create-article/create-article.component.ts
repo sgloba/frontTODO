@@ -52,6 +52,14 @@ export class CreateArticleComponent {
       this.toast.error('Title and Body required');
       return;
     }
+    if(this.preview.length > 200) {
+      this.toast.error('Preview must be 200 characters max');
+      return;
+    }
+    if(this.title.length > 40) {
+      this.toast.error('Title must be 40 characters max');
+      return;
+    }
     const data = {
       title: [{lang: this.lang, content: this.title}],
       body: [{lang: this.lang, content: this.edit.editorInstance.getData()}],
@@ -71,7 +79,4 @@ export class CreateArticleComponent {
     this.tags = [];
   }
 
-  f() {
-    console.log(window.navigator.language.substring(0, 2))
-  }
 }

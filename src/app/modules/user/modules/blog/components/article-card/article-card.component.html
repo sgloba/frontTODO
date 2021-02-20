@@ -1,12 +1,12 @@
 <mat-card class="article-card">
   <mat-card-header>
-    <mat-card-title>{{ translate('title') }}</mat-card-title>
+    <mat-card-title>{{ translate(article, 'title', selectedLanguage) }}</mat-card-title>
     <mat-card-subtitle>Author: {{article.author}}</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image [src]='article.img' [alt]="article.title">
-  <mat-card-content>
+  <mat-card-content class="preview">
     <p>
-      {{ translate('preview') }}
+      {{ translate(article, 'preview', selectedLanguage) }}
     </p>
   </mat-card-content>
   <mat-card-actions>
@@ -25,8 +25,11 @@
             [class.highlight-dislike-button]="isDislikedByUser | async"
       >thumb_down</span>
     </button>
-    <button mat-button>
+
+    <button mat-button routerLink="view" routerLinkActive="active" [queryParams]="{id: article._id}">
       <span class="material-icons">visibility</span>
     </button>
+
   </mat-card-actions>
 </mat-card>
+

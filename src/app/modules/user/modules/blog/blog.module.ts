@@ -9,6 +9,7 @@ import {ArticleCardComponent} from "./components/article-card/article-card.compo
 import { CreateArticleComponent } from './components/create-article/create-article.component';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {FormsModule} from "@angular/forms";
+import { ViewArticleComponent } from './components/view-article/view-article.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {FormsModule} from "@angular/forms";
     MainBlogPageComponent,
     ArticleCardComponent,
     CreateArticleComponent,
+    ViewArticleComponent,
   ],
   imports: [
     CKEditorModule,

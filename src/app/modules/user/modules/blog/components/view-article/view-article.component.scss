@@ -1,0 +1,8 @@
+@import "src/app/scss/colors";
+.wrap{
+  max-width: 70%;
+  margin: 0 auto;
+  background-color: $gray-clr;
+  border-radius: 10px;
+  padding: 2rem;
+}

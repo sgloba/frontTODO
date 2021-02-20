@@ -4,7 +4,7 @@
   background-color: $primary-clr;
   margin: 1rem;
   width: 335px;
-  height: 512px;
+  height: 600px;
 }
 .like-dislike-btn {
   vertical-align: center;
@@ -20,4 +20,15 @@
 }
 img{
   max-height: 336px;
+}
+.preview{
+  overflow: hidden;
+  max-height: 130px;
+}
+mat-card {
+  display: flex;
+  flex-wrap: wrap;
+}
+mat-card-actions {
+  align-self: flex-end;
 }

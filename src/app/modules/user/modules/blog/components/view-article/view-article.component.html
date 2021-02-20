@@ -1,0 +1,5 @@
+<div *ngIf="(article$| async) as article" class="wrap">
+  <h1>{{ translate(article, 'title', selectedLanguage) }}</h1>
+  <p>Author: {{article.author}}</p>
+  <div [innerHTML]="articleBody"></div>
+</div>

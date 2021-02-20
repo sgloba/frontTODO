@@ -1,3 +1,5 @@
+@import "src/app/scss/colors";
+
 .wrap {
   width: 900px;
   margin: 0 auto;
@@ -16,11 +18,18 @@ input {
   box-sizing:border-box;
   width: 100%;
 }
+input[type="text"], textarea {
+  background-color : $gray-clr;
+}
 button{
   margin-top: 1rem;
 }
 :host ::ng-deep .ck-editor__editable_inline {
   min-height: 400px;
+}
+:host ::ng-deep .ck.ck-editor__main>.ck-editor__editable {
+  background-color: $gray-clr;
+  color: $text-clr;
 }
 textarea{
   resize: none;

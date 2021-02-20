@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {ArticleI, ArticleTranslatableFieldI, ArticleTranslatableProp} from '../../models/app.article.model';
+import {ArticleI, ArticleTranslatableProp} from '../../models/app.article.model';
 import {UserHttpService} from "../../../../../appCommon/services/user-http.service";
 import {SandboxBlogService} from "../../services/sandbox-blog.service";
 import {Observable} from "rxjs";
@@ -30,16 +30,9 @@ export class ArticleCardComponent implements OnInit {
     this.selectedLanguage = this.selectedLanguage === 'en' ? 'ru' : 'en';
   }
 
-  translate(prop: ArticleTranslatableProp): string {
-    const translatedProp = (this.article[prop] as ArticleTranslatableFieldI[])
-      .find((item) => item.lang === this.selectedLanguage)
-      ?.content;
-    if(!translatedProp) {
-      return (this.article[prop] as ArticleTranslatableFieldI[])[0].content;
-    } else {
-      return translatedProp;
-    }
-  }
+ translate(article: ArticleI, prop: ArticleTranslatableProp, lang: string): string {
+    return this.blogSandbox.translate(article, prop, lang);
+ }
 
   setMark(mark): void {
     this.blogSandbox
