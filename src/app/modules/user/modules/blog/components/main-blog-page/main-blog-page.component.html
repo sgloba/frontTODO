@@ -1,11 +1,8 @@
 <div class="blog-wrap">
-  <button mat-flat-button routerLink="create" routerLinkActive="active">Create article</button>
+  <button mat-flat-button routerLink="../create" routerLinkActive="active">Create article</button>
 </div>
 <div class="blog-wrap">
   <ng-container *ngFor="let article of (articles$ | async)">
     <app-article-card [article]="article"></app-article-card>
   </ng-container>
 </div>
-
-
-

@@ -10,6 +10,7 @@ import { CreateArticleComponent } from './components/create-article/create-artic
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {FormsModule} from "@angular/forms";
 import { ViewArticleComponent } from './components/view-article/view-article.component';
+import { BlogInitComponent } from './components/blog-init/blog-init.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ViewArticleComponent } from './components/view-article/view-article.com
     ArticleCardComponent,
     CreateArticleComponent,
     ViewArticleComponent,
+    BlogInitComponent,
   ],
   imports: [
     CKEditorModule,

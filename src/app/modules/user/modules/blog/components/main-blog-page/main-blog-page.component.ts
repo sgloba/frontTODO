@@ -15,7 +15,6 @@ export class MainBlogPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.blogSandbox.fetchAllArticles();
   }
 
   articles$: Observable<ArticleI[]> = this.blogSandbox.allArticles$;

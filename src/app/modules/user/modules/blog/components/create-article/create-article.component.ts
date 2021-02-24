@@ -14,8 +14,20 @@ export class CreateArticleComponent {
   constructor(
     private httpBlog: HttpBlogService,
     private toast: ToastrService,
-  ) {
-  }
+  ) { }
+
+  data: {
+    translatable: {
+      en: {
+        title: '1',
+        body: 'a',
+        preview: 'a'
+      },
+    },
+    common: {
+      tags: []
+    }
+  };
 
   editor = ckEditor;
   selectable = true;
