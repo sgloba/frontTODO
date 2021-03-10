@@ -1,45 +1,99 @@
-import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
-import {FileStorageService} from '../../services/file-storage.service';
+import {Component, EventEmitter, forwardRef, Input, Output, TemplateRef, ViewChild} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 
 @Component({
   selector: 'app-file-input-button',
   templateUrl: './file-input-button.component.html',
-  styleUrls: ['./file-input-button.component.scss']
+  styleUrls: ['./file-input-button.component.scss'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => FileInputButtonComponent),
+    multi: true
+  }]
 })
-export class FileInputButtonComponent {
+export class FileInputButtonComponent implements ControlValueAccessor {
   @Input() showToast = true;
   @Input() acceptedFileTypes: string[] = ['.jpeg', '.png', '.gif', '.txt', '.jpg'];
   @Input() multiple = true;
+  @Input() showImgThmbl = false;
+  @Input() showResetBtn = true;
+  @Input() showUploadBtn = true;
+
+  @Input()
+  toastTrigger(files): void {
+    if (this.showToast) {
+      const fileNames = files.map(file => {
+        // @ts-ignore
+        return file.metadata.name;
+      }).join(', ');
+      this.toast.success(`${fileNames} uploaded`);
+    }
+  }
+
+  @Output()
+  uploadStart: EventEmitter<any> = new EventEmitter<any>();
   @Output()
   uploadSuccess: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('fileInput') input;
 
   constructor(
-    private fileStorage: FileStorageService,
-    private toast: ToastrService,
-  ) { }
+    private toast: ToastrService
+  ) {
+  }
+
+  onChange: any = () => {
+  }
+  onTouch: any = () => {
+  }
+
+  writeValue(value: any): void {
+    if (!value || Array.isArray(value) && !value.length) {
+      this.reset();
+      return;
+    }
+    this.showImage();
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
+  }
 
   selectedFiles: File[] = [];
+  imgThmblSrc: string | ArrayBuffer = '';
+  files: any;
 
   setSelectedFiles(): void {
+
     this.selectedFiles = Array.from(this.input.nativeElement.files);
+    if (this.showImgThmbl) {
+      this.showImage();
+    }
+    this.onTouch(this.selectedFiles);
+    this.onChange(this.selectedFiles);
   }
-  reset():void{
+
+  reset(): void {
     this.selectedFiles = [];
-    this.input.nativeElement.value = '';
+    // this.input.nativeElement.value = '';
+    this.imgThmblSrc = '';
   }
-  upload():void  {
+
+  showImage(): void {
+    const fr = new FileReader();
+    fr.readAsDataURL(this.selectedFiles[0]);
+    fr.onload = () => this.imgThmblSrc = fr.result;
+  }
+
+
+  upload(event): void {
+    event.preventDefault();
     const files = this.input.nativeElement.files;
-    this.fileStorage.uploadFiles$([...files])
-      .subscribe((res) => {
-        if (this.showToast) {
-          const fileNames = res.map(file => file.name).join(', ');
-          this.toast.success(`${fileNames} uploaded`);
-        }
-        this.uploadSuccess.emit();
-      });
-    this.reset();
+    this.uploadStart.emit(files);
   }
 }

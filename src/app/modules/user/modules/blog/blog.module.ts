@@ -11,6 +11,8 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {FormsModule} from "@angular/forms";
 import { ViewArticleComponent } from './components/view-article/view-article.component';
 import { BlogInitComponent } from './components/blog-init/blog-init.component';
+import {FileModule} from "../file/file.module";
+import { CommentComponent } from './components/comment/comment.component';
 
 
 @NgModule({
@@ -20,16 +22,18 @@ import { BlogInitComponent } from './components/blog-init/blog-init.component';
     CreateArticleComponent,
     ViewArticleComponent,
     BlogInitComponent,
+    CommentComponent,
   ],
-  imports: [
-    CKEditorModule,
-    CommonModule,
-    AppCommonModule,
-    BlogRoutingModule,
-    UserModule,
-    MaterialModule,
-    FormsModule
-  ],
+    imports: [
+        CKEditorModule,
+        CommonModule,
+        AppCommonModule,
+        BlogRoutingModule,
+        UserModule,
+        MaterialModule,
+        FormsModule,
+        FileModule
+    ],
 })
 export class BlogModule {
 }

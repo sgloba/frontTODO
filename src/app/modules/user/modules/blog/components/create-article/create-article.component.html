@@ -1,7 +1,7 @@
 <div class="nav">
   <button mat-flat-button routerLink="/main/blog/list" routerLinkActive="active">Show articles</button>
 </div>
-<div class="wrap" >
+<div class="wrap">
   <h3>Title:</h3>
   <input type="text" [(ngModel)]="title">
   <h3>Body:</h3>
@@ -39,6 +39,9 @@
     </mat-select>
   </mat-form-field>
 
+  <app-img-input
+    [(ngModel)]="fileImg"
+  ></app-img-input>
 </div>
 
 <button (click)="submit()" mat-flat-button>Submit</button>

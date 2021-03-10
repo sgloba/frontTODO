@@ -48,8 +48,8 @@ export class FileStorageService {
         .ref()
         .child(`${this.authService.currentUserId()}/${file.name}`)
         .put(file)
-        .then((a) => {
-          return a;
+        .then((snapshot) => {
+          return snapshot;
         })
     );
   }

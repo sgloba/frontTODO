@@ -28,3 +28,11 @@ body {
   background: $bg-main-clr;
   font-size: 18px;
 }
+button {
+  outline: none;
+  cursor: pointer;
+  border: none;
+  &:active {
+    transform: scale(0.97);
+  }
+}

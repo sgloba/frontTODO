@@ -1,0 +1,45 @@
+@import 'src/app/scss/colors';
+
+.comment-wrap {
+  max-width: 400px;
+  background-color: $primary-clr;
+  border-radius: 10px;
+  padding: 1rem;
+}
+.user-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  img{
+    border-radius: 50%;
+    border: 1px solid $border-clr;
+    width: 30px;
+    height: 30px;
+  }
+  span{
+    margin: 0 1rem;
+    font-size: 1.2rem;
+  }
+}
+.comment-body {
+  margin: 1rem auto;
+}
+.actions-wrap{
+  display: flex;
+  align-items: center;
+  .replies-btn{
+    margin-left: auto;
+  }
+}
+.like-dislike-btn {
+  vertical-align: center;
+}
+.like-dislike-count {
+  padding-right: .5rem;
+}
+.highlight-like-button {
+  color: $secondary-clr;
+}
+.highlight-dislike-button {
+  color: darkred;
+}

@@ -1,12 +1,14 @@
 <mat-card class="article-card">
   <mat-card-header>
     <mat-card-title>{{ translate(article, 'title', selectedLanguage) }}</mat-card-title>
-    <mat-card-subtitle>Author: {{article.author}}</mat-card-subtitle>
+    <mat-card-subtitle>Author: {{article.author.displayName}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image [src]='article.img' [alt]="article.title">
+  <div class="img-wrap">
+    <img mat-card-image [src]='article.img' [alt]="article.title">
+  </div>
   <mat-card-content class="preview">
     <p>
-      {{ translate(article, 'preview', selectedLanguage) }}
+      {{ article.preview[0]?.content ? translate(article, 'preview', selectedLanguage) : '' }}
     </p>
   </mat-card-content>
   <mat-card-actions>

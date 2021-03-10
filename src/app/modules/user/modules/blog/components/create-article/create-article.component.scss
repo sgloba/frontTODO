@@ -22,7 +22,7 @@ input[type="text"], textarea {
   background-color : $gray-clr;
 }
 button{
-  margin-top: 1rem;
+  margin: 1rem 0;
 }
 :host ::ng-deep .ck-editor__editable_inline {
   min-height: 400px;

@@ -1,0 +1,65 @@
+import {Injectable} from '@angular/core';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {EMPTY, of} from 'rxjs';
+import {map, catchError, switchMap, tap, withLatestFrom} from 'rxjs/operators';
+import {select, Store} from '@ngrx/store';
+import {
+  setMark,
+  setMarkStart,
+  setMarkSuccess
+} from "../actions/articles.actions";
+import {HttpBlogService} from "../../modules/blog/services/http-blog.service";
+import {articleById} from "../selectors/articles.selectors";
+import {fetchCommentsStart, fetchCommentsSuccess} from "../actions/comments.actions";
+import {HttpCommentService} from "../../modules/blog/services/http-comment.service";
+
+
+@Injectable()
+export class CommentsEffect {
+
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private httpBlog: HttpBlogService,
+    private httpComment: HttpCommentService,
+  ) {
+  }
+
+  fetchComments$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchCommentsStart),
+    switchMap(({articleId}) => this.httpComment.fetchComments$(articleId)
+      .pipe(
+        map((comments) => {
+          console.log('comments', comments)
+          return fetchCommentsSuccess({comments});
+        }),
+        catchError(() => EMPTY)
+      )
+    )
+  ));
+  setMark$ = createEffect(() => this.actions$.pipe(
+    ofType(setMarkStart),
+    switchMap(({id, mark}) => {
+      return of(EMPTY)
+        .pipe(
+          withLatestFrom(this.store.pipe(select(articleById(id)))),
+          map(([, article]) => [{id, mark}, article]),
+        );
+    }),
+    // @ts-ignore
+    switchMap(([{id, mark}, prevArticle]) => {
+        this.store.dispatch(setMark({id, mark}));
+        return this.httpBlog.setArticleMarks$(id, mark)
+          .pipe(
+            map((article) => {
+              return setMarkSuccess({article});
+            }),
+            catchError(() => {
+              this.store.dispatch(setMarkSuccess({article: prevArticle}));
+              return EMPTY;
+            })
+          );
+      }
+    )
+  ));
+}

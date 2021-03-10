@@ -35,4 +35,11 @@ export class FileUploadComponent implements OnInit{
   getIcon(file): string {
     return this.fileService.getIcon(file);
   }
+
+  upload(files): void {
+    this.fileStorage.uploadFiles$([...files])
+      .subscribe((res) => {
+        this.updateFilesList();
+      });
+  }
 }

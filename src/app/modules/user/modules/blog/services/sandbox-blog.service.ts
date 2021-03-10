@@ -25,19 +25,19 @@ export class SandboxBlogService {
     return this.store.select(articleById(id));
   }
 
-  totalLikes$(articleId): Observable<any> {
+  totalLikes$(articleId): Observable<number> {
     return this.store.select(totalMarks(articleId, 1));
   }
 
-  totalDislikes$(articleId): Observable<any> {
+  totalDislikes$(articleId): Observable<number> {
     return this.store.select(totalMarks(articleId, -1));
   }
 
-  isLikedByUser(articleId: string, userId: string): Observable<any> {
+  isLikedByUser(articleId: string, userId: string): Observable<boolean> {
     return this.store.select(isMarkedByUser(articleId, userId, 1));
   }
 
-  isDislikedByUser(articleId: string, userId: string): Observable<any> {
+  isDislikedByUser(articleId: string, userId: string): Observable<boolean> {
     return this.store.select(isMarkedByUser(articleId, userId, -1));
   }
 

@@ -8,11 +8,15 @@ export interface ArticleTranslatableFieldI {
 export interface ArticleI {
   _id?: string;
   title: ArticleTranslatableFieldI[];
-  author: string;
+  author: {
+    uid: string;
+    email: string;
+    displayName: string;
+    photoURL: string;
+  };
   body: ArticleTranslatableFieldI[];
   preview: ArticleTranslatableFieldI[];
   img: string;
   marks: {user: string, rate: number}[];
-  comments: {author: string, body: string, timestamp?: Date}[];
   tags: string[];
 }

@@ -1,26 +1,29 @@
 <div class="input-wrap">
-  <form (submit)="upload()">
-    <label for="file">
-      <span mat-ripple class="input-fake">Choose file</span>
-      <input #fileInput id="file" type="file" class="inputfile" [accept]="acceptedFileTypes" [multiple]="multiple" (change)="setSelectedFiles()"/>
+  <form (submit)="upload($event)">
+      <label for="file" mat-ripple class="input-fake">Choose file</label>
+<!--    FILE INPUT-->
+    <input
+        #fileInput
+        name="file"
+        id="file"
+        type="file"
+        class="inputfile"
+        [accept]="acceptedFileTypes"
+        [multiple]="multiple"
+        (change)="setSelectedFiles()"/>
 
-      <div #resetBtn>
-        <ng-content select="#resetBtn"></ng-content>
+      <div *ngIf="showResetBtn">
+        <button mat-button mat-stroked-button type="button" (click)="reset()" [disabled]="!selectedFiles.length">Reset
+        </button>
       </div>
-      <ng-container *ngIf="!resetBtn.hasChildNodes()">
-        <button mat-button mat-stroked-button type="button" (click)="reset()" [disabled]="!selectedFiles.length">Reset</button>
-      </ng-container>
 
-      <div #uploadBtn>
-        <ng-content select="#uploadBtn"></ng-content>
-      </div>
-      <ng-container *ngIf="!uploadBtn.hasChildNodes()">
+      <div *ngIf="showUploadBtn">
         <button mat-button mat-stroked-button type="submit" [disabled]="!selectedFiles.length">Upload</button>
-      </ng-container>
+      </div>
 
-    </label>
   </form>
-  <div class="staged">
+
+  <div class="staged" *ngIf="!showImgThmbl">
     <p>Files staged for upload:</p>
     <ul>
       <li *ngFor="let file of selectedFiles ; index as i">
@@ -30,5 +33,13 @@
   </div>
 </div>
 
+<div class="img-thmbl" *ngIf="showImgThmbl">
+  <img
+    *ngIf="imgThmblSrc"
+    [src]="imgThmblSrc"
+    alt="image preview"
+    class="img-thmbl"
+ />
+</div>
 
 

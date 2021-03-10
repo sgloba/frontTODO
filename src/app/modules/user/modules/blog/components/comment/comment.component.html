@@ -1,0 +1,28 @@
+<div class="comment-wrap" *ngIf="comment">
+  <div class="user-wrap">
+    <img [src]="comment.author.photoURL" alt="avatar">
+    <span>{{comment.author.displayName}}</span>
+  </div>
+  <div>{{comment.timestamp}}</div>
+  <div class="comment-body">{{comment.body}}</div>
+
+  <div class="actions-wrap">
+    <button mat-button class="like-dislike-btn" (click)="setMark(1)">
+      <span class="like-dislike-count">{{likes }}</span>
+      <span class="material-icons"
+            [class.highlight-like-button]="isLikedByUser | async"
+      >thumb_up</span>
+    </button>
+    <button mat-button class="like-dislike-btn" (click)="setMark(-1)">
+      <span class="like-dislike-count">{{dislikes }}</span>
+      <span class="material-icons"
+            [class.highlight-dislike-button]="isDislikedByUser | async"
+      >thumb_down</span>
+    </button>
+
+    <button mat-button class="replies-btn">
+      <span class="like-dislike-count">42</span>
+      <span>replies...</span>
+    </button>
+  </div>
+</div>

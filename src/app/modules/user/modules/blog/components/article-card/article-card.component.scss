@@ -18,17 +18,24 @@
 .highlight-dislike-button {
   color: darkred;
 }
+.img-wrap{
+  width: 335px;
+  height: 336px;
+}
 img{
   max-height: 336px;
 }
 .preview{
   overflow: hidden;
-  max-height: 130px;
+  height: 130px;
 }
 mat-card {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  flex-direction: column;
 }
 mat-card-actions {
   align-self: flex-end;
+  justify-self: flex-start;
+  min-width: 335px;
 }
