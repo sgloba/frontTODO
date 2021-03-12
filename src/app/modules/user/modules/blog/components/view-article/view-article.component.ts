@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {filter, switchMap, tap} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs";
@@ -10,9 +10,11 @@ import {SandboxCommentService} from "../../services/sandbox-comment.service";
 @Component({
   selector: 'app-view-article',
   templateUrl: './view-article.component.html',
-  styleUrls: ['./view-article.component.scss']
+  styleUrls: ['./view-article.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
-export class ViewArticleComponent implements OnInit {
+export class ViewArticleComponent implements OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,20 +24,17 @@ export class ViewArticleComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-    this.commentSandbox.fetchCommentsByArticleId(this.articleId);
-  }
-
   selectedLanguage = 'en';
-  articleId = '604740bb7b80fe2c4c388812';
 
   comments$ = this.commentSandbox.comments$;
 
   article$: Observable<ArticleI> = this.activatedRoute.queryParams
     .pipe(
       filter((params) => params.id !== undefined),
-      switchMap((params) => this.blogSandbox.articleById$(params.id)),
-      // tap((article) => this.articleId = article._id)
+      switchMap((params) => {
+        this.commentSandbox.fetchCommentsByArticleId(params.id);
+        return  this.blogSandbox.articleById$(params.id);
+      })
     );
 
   translate(article: ArticleI, prop: ArticleTranslatableProp, lang: string): string {
@@ -50,7 +49,13 @@ export class ViewArticleComponent implements OnInit {
       value,
       article_id: articleId
     };
-    this.httpCommentService.createComment$(data).subscribe();
+    this.httpCommentService.createComment$(data).subscribe(() => {
+      this.commentSandbox.fetchCommentsByArticleId(articleId);
+    });
     event.target.reset();
+  }
+
+  ngOnDestroy(): void {
+    this.commentSandbox.clearComments();
   }
 }

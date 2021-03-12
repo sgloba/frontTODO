@@ -4,10 +4,12 @@ import {Store} from "@ngrx/store";
 import {
   allArticles,
   totalMarks,
-  isMarkedByUser, articleById
+  articleById
 } from "../../../store/selectors/articles.selectors";
 import {Observable} from "rxjs";
 import {ArticleI, ArticleTranslatableFieldI, ArticleTranslatableProp} from "../models/app.article.model";
+import {isCommentMarkedByUser, totalCommentMarks} from "../../../store/selectors/comment.selectors";
+import {setCommentsMarkStart} from "../../../store/actions/comments.actions";
 
 @Injectable({
   providedIn: 'root'
@@ -25,28 +27,35 @@ export class SandboxBlogService {
     return this.store.select(articleById(id));
   }
 
-  totalLikes$(articleId): Observable<number> {
-    return this.store.select(totalMarks(articleId, 1));
+  totalLikes$(id: string, type: string): Observable<number> {
+    if(type === 'comment') {
+      return this.store.select(totalCommentMarks(id, 1));
+    }
+    if(type === 'article') {
+      return this.store.select(totalMarks(id, 1));
+    }
   }
 
-  totalDislikes$(articleId): Observable<number> {
-    return this.store.select(totalMarks(articleId, -1));
-  }
-
-  isLikedByUser(articleId: string, userId: string): Observable<boolean> {
-    return this.store.select(isMarkedByUser(articleId, userId, 1));
-  }
-
-  isDislikedByUser(articleId: string, userId: string): Observable<boolean> {
-    return this.store.select(isMarkedByUser(articleId, userId, -1));
+  totalDislikes$(id: string, type: string): Observable<number> {
+    if(type === 'comment') {
+      return this.store.select(totalCommentMarks(id, -1));
+    }
+    if(type === 'article') {
+      return this.store.select(totalMarks(id, -1));
+    }
   }
 
   fetchAllArticles(): void {
     this.store.dispatch(fetchArticlesStart());
   }
 
-  setArticleMarks(id, mark): void {
-    this.store.dispatch(setMarkStart({id, mark}));
+  setMarks(id, mark, type): void {
+    if (type === 'article') {
+      this.store.dispatch(setMarkStart({id, mark}));
+    }
+    if (type === 'comment') {
+      this.store.dispatch(setCommentsMarkStart({id, mark}));
+    }
   }
 
   translate(article: ArticleI, prop: ArticleTranslatableProp, lang: string): string {

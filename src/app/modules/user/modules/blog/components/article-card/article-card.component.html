@@ -17,14 +17,14 @@
     </button>
     <button mat-button class="like-dislike-btn" (click)="setMark(1)">
       <span class="like-dislike-count">{{likes | async}}</span>
-      <span class="material-icons"
-            [class.highlight-like-button]="isLikedByUser | async"
+      <span class="material-icons like-icon"
+            [class.marked]="article.userState.isLikedByUser"
       >thumb_up</span>
     </button>
     <button mat-button class="like-dislike-btn" (click)="setMark(-1)">
       <span class="like-dislike-count">{{dislikes | async}}</span>
-      <span class="material-icons"
-            [class.highlight-dislike-button]="isDislikedByUser | async"
+      <span class="material-icons dislike-icon"
+            [class.marked]="article.userState.isDislikedByUser"
       >thumb_down</span>
     </button>
 

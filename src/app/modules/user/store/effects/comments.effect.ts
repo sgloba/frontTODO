@@ -1,17 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY, of} from 'rxjs';
-import {map, catchError, switchMap, tap, withLatestFrom} from 'rxjs/operators';
+import {map, catchError, switchMap, withLatestFrom} from 'rxjs/operators';
 import {select, Store} from '@ngrx/store';
 import {
-  setMark,
-  setMarkStart,
-  setMarkSuccess
-} from "../actions/articles.actions";
-import {HttpBlogService} from "../../modules/blog/services/http-blog.service";
-import {articleById} from "../selectors/articles.selectors";
-import {fetchCommentsStart, fetchCommentsSuccess} from "../actions/comments.actions";
+  fetchCommentsStart,
+  fetchCommentsSuccess, setCommentsMark, setCommentsMarkStart, setCommentsMarkError,
+} from "../actions/comments.actions";
 import {HttpCommentService} from "../../modules/blog/services/http-comment.service";
+import {commentById} from "../selectors/comment.selectors";
 
 
 @Injectable()
@@ -20,7 +17,6 @@ export class CommentsEffect {
   constructor(
     private actions$: Actions,
     private store: Store,
-    private httpBlog: HttpBlogService,
     private httpComment: HttpCommentService,
   ) {
   }
@@ -30,7 +26,6 @@ export class CommentsEffect {
     switchMap(({articleId}) => this.httpComment.fetchComments$(articleId)
       .pipe(
         map((comments) => {
-          console.log('comments', comments)
           return fetchCommentsSuccess({comments});
         }),
         catchError(() => EMPTY)
@@ -38,28 +33,25 @@ export class CommentsEffect {
     )
   ));
   setMark$ = createEffect(() => this.actions$.pipe(
-    ofType(setMarkStart),
+    ofType(setCommentsMarkStart),
     switchMap(({id, mark}) => {
       return of(EMPTY)
         .pipe(
-          withLatestFrom(this.store.pipe(select(articleById(id)))),
-          map(([, article]) => [{id, mark}, article]),
+          withLatestFrom(this.store.pipe(select(commentById(id)))),
+          map(([, comment]) => [{id, mark}, comment]),
         );
     }),
     // @ts-ignore
-    switchMap(([{id, mark}, prevArticle]) => {
-        this.store.dispatch(setMark({id, mark}));
-        return this.httpBlog.setArticleMarks$(id, mark)
+    switchMap(([{id, mark}, prevComment]) => {
+        this.store.dispatch(setCommentsMark({id, mark}));
+        return this.httpComment.setCommentMarks$(id, mark)
           .pipe(
-            map((article) => {
-              return setMarkSuccess({article});
-            }),
             catchError(() => {
-              this.store.dispatch(setMarkSuccess({article: prevArticle}));
+              this.store.dispatch(setCommentsMarkError({comment: prevComment}));
               return EMPTY;
             })
           );
       }
     )
-  ));
+  ),{dispatch: false});
 }

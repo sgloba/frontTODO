@@ -1,6 +1,7 @@
 import {createReducer, on} from '@ngrx/store';
 import * as CommentAction from '../actions/comments.actions';
 import {CommentI} from "../../modules/blog/models/app.comment.model";
+import {setMarkHelper} from "../utils/store.utils";
 
 export interface CommentState {
   comments: CommentI[];
@@ -12,21 +13,11 @@ export const initialState: CommentState = {
 
 export const commentReducer = createReducer(
   initialState,
-  on(CommentAction.setMark, (state, {id, mark}) => {
-    const oneMark = mark.marks[0];
-    const article = state.comments.find((item) => item._id === id);
-
-    const newComment = {
-      ...article,
-      marks: [
-        ...article.marks.filter((item) => item.user !== oneMark.user),
-        oneMark,
-      ]
-    };
-
+  on(CommentAction.setCommentsMark, (state, {id, mark}) => {
+    const newComment = setMarkHelper(state, id, mark, 'comments');
     return {
       ...state,
-      articles: state.comments.map((item) => {
+      comments: state.comments.map((item) => {
         if (item._id !== id) {
           return item;
         }
@@ -39,10 +30,15 @@ export const commentReducer = createReducer(
       return ({...state, comments});
     }
   ),
-  on(CommentAction.setMarkSuccess,
+  on(CommentAction.setCommentsMarkError,
     ((state,{comment}) => {
-      const articles = state.comments.map((item) => item._id === comment._id ? comment : item);
-      return {...state, articles};
+      const comments = state.comments.map((item) => item._id === comment._id ? comment : item);
+      return {...state, comments};
     })
-  )
+  ),
+  on(CommentAction.clearComments,
+    (state) => {
+    return ({...state, comments: []});
+    }
+    )
 );

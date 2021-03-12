@@ -4,6 +4,7 @@
   flex-direction: column;
   flex-wrap: nowrap;
   max-width: 900px;
+  min-width: 600px;
   margin: 0 auto;
   background-color: $gray-clr;
   border-radius: 10px;
@@ -11,6 +12,7 @@
   overflow-wrap: break-word;
 }
 img{
+  align-self: flex-start;
   margin-bottom: 2rem;
   max-width: 900px;
   max-height: 500px;

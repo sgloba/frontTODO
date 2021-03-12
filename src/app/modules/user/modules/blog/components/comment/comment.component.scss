@@ -5,6 +5,7 @@
   background-color: $primary-clr;
   border-radius: 10px;
   padding: 1rem;
+  margin-bottom: 1rem;
 }
 .user-wrap{
   display: flex;
@@ -33,6 +34,14 @@
 }
 .like-dislike-btn {
   vertical-align: center;
+  .marked {
+    &.like-icon {
+      color: $secondary-clr;
+    }
+    &.dislike-icon {
+      color: darkred;
+    }
+  }
 }
 .like-dislike-count {
   padding-right: .5rem;

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {fetchCommentsStart} from "../../../store/actions/comments.actions";
+import {clearComments, fetchCommentsStart} from "../../../store/actions/comments.actions";
 import {allComments} from "../../../store/selectors/comment.selectors";
 
 @Injectable({
@@ -15,7 +15,10 @@ export class SandboxCommentService {
   comments$ = this.store.select(allComments);
 
   fetchCommentsByArticleId(articleId): void {
-    console.log('serv', articleId)
-    this.store.dispatch(fetchCommentsStart({articleId: '604740bb7b80fe2c4c388812'}));
+    this.store.dispatch(fetchCommentsStart({articleId}));
+  }
+
+  clearComments(): void {
+    this.store.dispatch(clearComments());
   }
 }

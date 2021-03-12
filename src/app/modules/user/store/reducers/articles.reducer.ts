@@ -1,6 +1,7 @@
 import {createReducer, on} from '@ngrx/store';
 import * as ArticlesAction from '../actions/articles.actions';
 import {ArticleI} from '../../modules/blog/models/app.article.model';
+import {setMarkHelper} from "../utils/store.utils";
 
 export interface ArticlesState {
   articles: ArticleI[];
@@ -13,17 +14,7 @@ export const initialState: ArticlesState = {
 export const articleReducer = createReducer(
   initialState,
   on(ArticlesAction.setMark, (state, {id, mark}) => {
-    const oneMark = mark.marks[0];
-    const article = state.articles.find((item) => item._id === id);
-
-    const newArticle = {
-      ...article,
-    marks: [
-      ...article.marks.filter((item) => item.user !== oneMark.user),
-      oneMark,
-      ]
-    };
-
+    const newArticle = setMarkHelper(state, id, mark, 'articles');
     return {
       ...state,
       articles: state.articles.map((item) => {
@@ -39,10 +30,10 @@ export const articleReducer = createReducer(
       return ({...state, articles});
     }
   ),
-  on(ArticlesAction.setMarkSuccess,
-    ((state,{article}) => {
+  on(ArticlesAction.setMarkError,
+    ((state, {article}) => {
       const articles = state.articles.map((item) => item._id === article._id ? article : item);
       return {...state, articles};
     })
-    )
+  )
 );

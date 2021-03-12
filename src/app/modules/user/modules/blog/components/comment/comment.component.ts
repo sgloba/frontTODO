@@ -1,45 +1,41 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {CommentI} from "../../models/app.comment.model";
+import {SandboxBlogService} from "../../services/sandbox-blog.service";
+import {UserHttpService} from "../../../../../appCommon/services/user-http.service";
 
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss']
+  styleUrls: ['./comment.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private blogSandbox: SandboxBlogService,
+    private userService: UserHttpService,
+  ) {
   }
+
 
   @Input() comment: CommentI;
 
-  comment$: Observable<CommentI> = of(
-    {
-      _id: '124sf',
-      parent_comment_id: 'www312',
-      article_id: 'mongo obj id',
-      body: 'commentcommentcommentcommentcommentcommentcommentcommentcommentcomment',
-      author: {
-        uid: 'sad',
-        email: 'qwr@qwe.sc',
-        displayName: 'test usr',
-        photoURL: 'https://source.unsplash.com/70x70',
-      },
-      timestamp: new Date().toLocaleString(),
-      marks: [{user: 'asd', rate: 1}]
-    }
-  );
+  userId = this.userService.getCurrentUser().user_id;
 
-  isLikedByUser: Observable<any>
-  isDislikedByUser: Observable<any>
-  likes = 2;
-  dislikes = 0;
+  setMark(mark): void {
+    this.blogSandbox
+      .setMarks(this.comment._id, {
+        marks: [{user: this.userId, rate: mark}]
+      }, 'comment');
+  }
 
-  setMark(x) {
+  get dislikes(): Observable<number> {
+    return this.blogSandbox.totalDislikes$(this.comment._id, 'comment');
+  }
 
+  get likes(): Observable<number> {
+    return this.blogSandbox.totalLikes$(this.comment._id, 'comment');
   }
 
 }

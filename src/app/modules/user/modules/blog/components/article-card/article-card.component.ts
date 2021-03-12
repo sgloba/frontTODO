@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {ArticleI, ArticleTranslatableProp} from '../../models/app.article.model';
 import {UserHttpService} from "../../../../../appCommon/services/user-http.service";
 import {SandboxBlogService} from "../../services/sandbox-blog.service";
@@ -10,15 +10,12 @@ import {Observable} from "rxjs";
   styleUrls: ['./article-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ArticleCardComponent implements OnInit {
+export class ArticleCardComponent {
 
   constructor(
     private blogSandbox: SandboxBlogService,
     private userService: UserHttpService,
   ) {
-  }
-
-  ngOnInit(): void {
   }
 
   @Input() article: ArticleI;
@@ -36,23 +33,17 @@ export class ArticleCardComponent implements OnInit {
 
   setMark(mark): void {
     this.blogSandbox
-      .setArticleMarks(this.article._id, {
+      .setMarks(this.article._id, {
         marks: [{user: this.userId, rate: mark}]
-      });
+      }, 'article');
   }
 
   get dislikes(): Observable<number> {
-    return this.blogSandbox.totalDislikes$(this.article._id);
+    return this.blogSandbox.totalDislikes$(this.article._id, 'article');
   }
 
   get likes(): Observable<number> {
-    return this.blogSandbox.totalLikes$(this.article._id);
+    return this.blogSandbox.totalLikes$(this.article._id, 'article');
   }
 
-  get isLikedByUser(): Observable<boolean> {
-    return this.blogSandbox.isLikedByUser(this.article._id, this.userId);
-  }
-  get isDislikedByUser(): Observable<boolean> {
-    return this.blogSandbox.isDislikedByUser(this.article._id, this.userId);
-  }
 }

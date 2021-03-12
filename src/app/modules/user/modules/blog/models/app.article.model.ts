@@ -18,5 +18,9 @@ export interface ArticleI {
   preview: ArticleTranslatableFieldI[];
   img: string;
   marks: {user: string, rate: number}[];
+  userState: {
+    isLikedByUser: boolean,
+    isDislikedByUser: boolean
+  };
   tags: string[];
 }

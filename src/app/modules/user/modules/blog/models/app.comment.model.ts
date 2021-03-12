@@ -11,4 +11,8 @@ export interface CommentI {
   };
   timestamp: string;
   marks: {user: string, rate: number}[];
+  userState: {
+    isLikedByUser: boolean,
+    isDislikedByUser: boolean
+  };
 }

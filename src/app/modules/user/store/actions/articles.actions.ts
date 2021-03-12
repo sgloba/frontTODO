@@ -17,8 +17,8 @@ export const setMarkStart = createAction(
   '[Articles] Set Mark Start',
   props<{ id, mark }>()
 );
-export const setMarkSuccess = createAction(
-  '[Articles] Set Mark Success',
+export const setMarkError = createAction(
+  '[Articles] Set Mark Error',
   props<{ article }>()
 );
 

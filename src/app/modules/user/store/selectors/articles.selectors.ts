@@ -22,12 +22,3 @@ export const totalMarks = (articleId: string, rate: 1 | -1) => createSelector(
   }
 );
 
-export const isMarkedByUser = (articleId: string, userId: string, rate: 1 | -1) => createSelector(
-  articleById(articleId),
-  (article) => {
-    return !!article.marks
-      .filter((mark) => mark.rate === rate)
-      .find((like) => like.user === userId);
-  }
-);
-

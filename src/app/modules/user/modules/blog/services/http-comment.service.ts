@@ -22,7 +22,9 @@ export class HttpCommentService {
   fetchComments$(articleId): Observable<CommentI[]> {
     return this.http.get<CommentI[]>(this.url + '/comments' + `?article_id=${articleId}`);
   }
-
+  setCommentMarks$(id, mark): Observable<any> {
+    return this.http.put(this.url + `/comments/${id}`, mark);
+  }
   createComment$({value, article_id}): Observable<any> {
     const comment = {
       article_id,

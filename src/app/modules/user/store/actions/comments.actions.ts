@@ -9,17 +9,20 @@ export const fetchCommentsSuccess = createAction(
   '[Comments] Fetch Comments Success',
   props<{ comments: CommentI[] }>()
 );
-export const setMark =createAction(
+export const setCommentsMark =createAction(
   '[Comments] Set Mark',
   props<{ id, mark }>()
 );
 
-export const setMarkStart = createAction(
+export const setCommentsMarkStart = createAction(
   '[Comments] Set Mark Start',
   props<{ id, mark }>()
 );
-export const setMarkSuccess = createAction(
-  '[Comments] Set Mark Success',
+export const setCommentsMarkError = createAction(
+  '[Comments] Set Mark Error',
   props<{ comment }>()
+);
+export const clearComments = createAction(
+  '[Comments] Clear Comments'
 );
 
