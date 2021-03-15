@@ -23,10 +23,11 @@ export class CommentsEffect {
 
   fetchComments$ = createEffect(() => this.actions$.pipe(
     ofType(fetchCommentsStart),
-    switchMap(({articleId}) => this.httpComment.fetchComments$(articleId)
+    switchMap(({articleId, currentPage}) => this.httpComment.fetchComments$(articleId, currentPage)
       .pipe(
-        map((comments) => {
-          return fetchCommentsSuccess({comments});
+        map(({comments, hasNextPage}) => {
+          console.log('MAP', comments, hasNextPage)
+          return fetchCommentsSuccess({comments, hasNextPage});
         }),
         catchError(() => EMPTY)
       )

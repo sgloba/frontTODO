@@ -8,7 +8,7 @@ import {
 } from "../../../store/selectors/articles.selectors";
 import {Observable} from "rxjs";
 import {ArticleI, ArticleTranslatableFieldI, ArticleTranslatableProp} from "../models/app.article.model";
-import {isCommentMarkedByUser, totalCommentMarks} from "../../../store/selectors/comment.selectors";
+import {totalCommentMarks} from "../../../store/selectors/comment.selectors";
 import {setCommentsMarkStart} from "../../../store/actions/comments.actions";
 
 @Injectable({

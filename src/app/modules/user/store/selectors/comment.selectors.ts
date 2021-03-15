@@ -5,9 +5,7 @@ const commentsState = createFeatureSelector<CommentState>('comments');
 
 export const allComments = createSelector(
   commentsState,
-  ({comments}) => {
-    return comments;
-  }
+  ({comments}) => comments
 );
 
 export const commentById = (id: string) => createSelector(
@@ -18,6 +16,17 @@ export const commentById = (id: string) => createSelector(
 export const totalCommentMarks = (commentId: string, rate: 1 | -1) => createSelector(
   commentById(commentId),
   (comment) => {
-    return comment.marks.filter((mark) => mark.rate === rate).length;
+    return comment?.marks.filter((mark) => mark.rate === rate).length;
   }
 );
+
+export const page = createSelector(
+  commentsState,
+  ({currentPage}) => currentPage
+);
+
+export const hasNextPageSelector = createSelector(
+  commentsState,
+  ({hasNextPage}) => hasNextPage
+);
+

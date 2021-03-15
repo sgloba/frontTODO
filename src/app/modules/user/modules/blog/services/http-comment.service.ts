@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {AppConfigInitService} from "../../../../appCommon/services/app-config-init.service";
 import {HttpClient} from "@angular/common/http";
 import {CommentI} from "../models/app.comment.model";
+import {FetchedCommentDataI} from "../models/app.fetchedCommentData";
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class HttpCommentService {
     return this.configService.config.nestJsURL;
   }
 
-  fetchComments$(articleId): Observable<CommentI[]> {
-    return this.http.get<CommentI[]>(this.url + '/comments' + `?article_id=${articleId}`);
+  fetchComments$(articleId, currentPage= 0): Observable<FetchedCommentDataI> {
+    return this.http.get<FetchedCommentDataI>(this.url + '/comments' + `?article_id=${articleId}` + `&page=${currentPage}`);
   }
   setCommentMarks$(id, mark): Observable<any> {
     return this.http.put(this.url + `/comments/${id}`, mark);

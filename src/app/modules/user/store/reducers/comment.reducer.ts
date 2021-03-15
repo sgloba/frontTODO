@@ -5,10 +5,14 @@ import {setMarkHelper} from "../utils/store.utils";
 
 export interface CommentState {
   comments: CommentI[];
+  currentPage: number;
+  hasNextPage: boolean;
 }
 
 export const initialState: CommentState = {
   comments: [],
+  currentPage: 0,
+  hasNextPage: false,
 };
 
 export const commentReducer = createReducer(
@@ -26,8 +30,12 @@ export const commentReducer = createReducer(
     };
   }),
   on(CommentAction.fetchCommentsSuccess,
-    (state, {comments}) => {
-      return ({...state, comments});
+    (state, {comments, hasNextPage}) => {
+      return ({...state,
+        comments: [...state.comments, ...comments],
+        currentPage: state.currentPage + 1,
+        hasNextPage
+      });
     }
   ),
   on(CommentAction.setCommentsMarkError,
@@ -37,8 +45,6 @@ export const commentReducer = createReducer(
     })
   ),
   on(CommentAction.clearComments,
-    (state) => {
-    return ({...state, comments: []});
-    }
+    (state) => ({...state, comments: [], hasNextPage: true, currentPage: 0})
     )
 );

@@ -3,11 +3,11 @@ import {CommentI} from "../../modules/blog/models/app.comment.model";
 
 export const fetchCommentsStart = createAction(
   '[Comments] Fetch Comments Start',
-  props<{ articleId }>()
+  props<{ articleId, currentPage }>()
 );
 export const fetchCommentsSuccess = createAction(
   '[Comments] Fetch Comments Success',
-  props<{ comments: CommentI[] }>()
+  props<{ comments: CommentI[], hasNextPage: boolean }>()
 );
 export const setCommentsMark =createAction(
   '[Comments] Set Mark',
@@ -25,4 +25,6 @@ export const setCommentsMarkError = createAction(
 export const clearComments = createAction(
   '[Comments] Clear Comments'
 );
+
+
 
