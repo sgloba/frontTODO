@@ -1,0 +1,9 @@
+<app-file-input-button
+  [acceptedFileTypes]="['.jpg','.gif', '.png', '.jpeg']"
+  [multiple]="false"
+  [showImgThmbl]="true"
+  [showResetBtn]="false"
+  [showUploadBtn]="false"
+  [(ngModel)]="image" name="image"
+  (change)="setImage()"
+></app-file-input-button>

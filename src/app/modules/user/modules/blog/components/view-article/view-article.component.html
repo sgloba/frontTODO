@@ -1,0 +1,24 @@
+<div *ngIf="(article$| async) as article" class="wrap">
+  <h1>{{ translate(article, 'title', selectedLanguage) }}</h1>
+  <p>Author: {{article.author.displayName}}</p>
+  <img [src]="article.img" alt="random.jpg">
+  <div [innerHTML]=" translate(article, 'body', selectedLanguage)" class="body"></div>
+  <form class="comment-form" (submit)="createComment(article._id, commentInput.value, $event)">
+    <input #commentInput matInput placeholder="Write comment here...">
+    <button type="submit">
+      <span class="material-icons">send</span>
+    </button>
+  </form>
+  <h2>Comments:</h2>
+  <ng-container *ngFor="let comment of (comments$ | async)">
+    <app-comment [comment]="comment"></app-comment>
+  </ng-container>
+  <button
+    mat-button
+    class="show-more-btn"
+    (click)="showMoreComments()"
+    [disabled]="!(hasNextPage$ | async)">
+    Show more...
+  </button>
+</div>
+

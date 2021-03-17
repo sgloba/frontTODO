@@ -17,7 +17,11 @@
 }
 label{
   display: flex;
-  justify-content: center;
+  align-items: center;
+  max-width: 70px;
+}
+form{
+  display: flex;
   align-items: center;
 }
 .input-fake:focus,
@@ -35,5 +39,9 @@ label{
 button {
   margin: .3rem;
 }
-
+.img-thmbl{
+  max-width: 150px;
+  max-height: 150px;
+  margin: 1rem 0;
+}
 

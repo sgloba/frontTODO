@@ -13,12 +13,16 @@ import {AppConfigInitService} from './modules/appCommon/services/app-config-init
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {environment} from '../environments/environment';
-import {Store, StoreModule} from '@ngrx/store';
+import {StoreModule} from '@ngrx/store';
 import {todoReducer} from './modules/user/store/reducers/todo.reducer';
 import {filesReducer} from './modules/user/store/reducers/files.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {TodoEffects} from './modules/user/store/effects/todo.effects';
 import {FilesEffects} from './modules/user/store/effects/files.effects';
+import {articleReducer} from "./modules/user/store/reducers/articles.reducer";
+import {ArticlesEffects} from "./modules/user/store/effects/articles.effects";
+import {commentReducer} from "./modules/user/store/reducers/comment.reducer";
+import {CommentsEffect} from "./modules/user/store/effects/comments.effect";
 
 
 
@@ -38,10 +42,11 @@ import {FilesEffects} from './modules/user/store/effects/files.effects';
       BrowserModule,
       StoreModule.forRoot({
         todos: todoReducer,
-        files: filesReducer
+        files: filesReducer,
+        articles: articleReducer,
+        comments: commentReducer
       }),
-      EffectsModule.forRoot([TodoEffects, FilesEffects]),
-
+      EffectsModule.forRoot([TodoEffects, FilesEffects, ArticlesEffects, CommentsEffect]),
     ],
   providers: [
     ApiInterceptorService,

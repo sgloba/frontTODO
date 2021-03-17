@@ -20,7 +20,8 @@ export class AppConfigInitService {
 
   // tslint:disable-next-line:variable-name
   private _config = {
-    backendUrl: 'backendUrl'
+    backendUrl: 'backendUrl',
+    nestJsURL: 'nestJsURL'
   };
 
   get config(): ConfigI {

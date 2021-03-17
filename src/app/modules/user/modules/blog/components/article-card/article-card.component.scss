@@ -1,0 +1,44 @@
+@import 'src/app/scss/colors';
+
+.article-card {
+  background-color: $primary-clr;
+  margin: 1rem;
+  width: 335px;
+  height: 600px;
+}
+.like-dislike-btn {
+  vertical-align: center;
+  .marked {
+    &.like-icon {
+      color: $secondary-clr;
+    }
+    &.dislike-icon {
+      color: darkred;
+    }
+  }
+}
+.like-dislike-count {
+  padding-right: .5rem;
+}
+
+.img-wrap{
+  width: 335px;
+  height: 336px;
+}
+img{
+  max-height: 336px;
+}
+.preview{
+  overflow: hidden;
+  height: 130px;
+}
+mat-card {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+mat-card-actions {
+  align-self: flex-end;
+  justify-self: flex-start;
+  min-width: 335px;
+}

@@ -1,0 +1,37 @@
+<mat-card class="article-card">
+  <mat-card-header>
+    <mat-card-title>{{ translate(article, 'title', selectedLanguage) }}</mat-card-title>
+    <mat-card-subtitle>Author: {{article.author.displayName}}</mat-card-subtitle>
+  </mat-card-header>
+  <div class="img-wrap">
+    <img mat-card-image [src]='article.img' [alt]="article.title">
+  </div>
+  <mat-card-content class="preview">
+    <p>
+      {{ article.preview[0]?.content ? translate(article, 'preview', selectedLanguage) : '' }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="toggleLanguage()">
+      <span class="material-icons">language</span>
+    </button>
+    <button mat-button class="like-dislike-btn" (click)="setMark(1)">
+      <span class="like-dislike-count">{{likes | async}}</span>
+      <span class="material-icons like-icon"
+            [class.marked]="article.userState.isLikedByUser"
+      >thumb_up</span>
+    </button>
+    <button mat-button class="like-dislike-btn" (click)="setMark(-1)">
+      <span class="like-dislike-count">{{dislikes | async}}</span>
+      <span class="material-icons dislike-icon"
+            [class.marked]="article.userState.isDislikedByUser"
+      >thumb_down</span>
+    </button>
+
+    <button mat-button routerLink="../view" routerLinkActive="active" [queryParams]="{id: article._id}">
+      <span class="material-icons">visibility</span>
+    </button>
+
+  </mat-card-actions>
+</mat-card>
+

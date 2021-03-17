@@ -9,7 +9,8 @@ app.use(express.static(__dirname + '/dist/frontTODO'));
 
 app.get('/config', (req, res) => {
   res.send({
-    backendUrl: process.env.API_DB_URL
+    backendUrl: process.env.API_DB_URL,
+    nestJsURL: process.env.API_DB_URL_NESTJS
   })
 })
 

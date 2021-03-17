@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {ArticleI} from "../../models/app.article.model";
+import {SandboxBlogService} from "../../services/sandbox-blog.service";
 
 @Component({
   selector: 'app-main-blog-page',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainBlogPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private blogSandbox: SandboxBlogService,
+  ) { }
 
   ngOnInit(): void {
   }
 
+  articles$: Observable<ArticleI[]> = this.blogSandbox.allArticles$;
 }

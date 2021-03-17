@@ -21,7 +21,7 @@ import {
   getFilteredTodos
 } from '../../../store/selectors/todos.selectors';
 import {Observable} from 'rxjs';
-import {TodoI} from '../../../models/app.todo.model';
+import {TodoI} from '../models/app.todo.model';
 import {FilesState} from '../../../store/reducers/files.reducer';
 import {distinctUntilChanged, tap} from 'rxjs/operators';
 import {isEqual} from 'lodash';

@@ -18,7 +18,6 @@ export class HeaderComponent {
 
   user: UserI = this.userHttpService.getCurrentUser();
 
-
   logout(): void {
     localStorage.removeItem('currentUser');
     this.route.navigate(['/']);

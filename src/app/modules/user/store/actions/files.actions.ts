@@ -1,5 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 import {Reference} from '@angular/fire/storage/interfaces';
+import {FilesI} from "../../modules/file/models/app.files.model";
 
 export const uploadFilesStart = createAction(
   '[Files] Upload Files Start',
@@ -14,5 +15,5 @@ export const fetchFilesStart = createAction(
 );
 export const fetchFilesSuccess = createAction(
   '[Files] Fetch Files Success',
-  props<{ files: any[] }>()
+  props<{ files: FilesI[] }>()
 );
