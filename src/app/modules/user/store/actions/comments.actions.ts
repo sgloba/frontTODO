@@ -10,21 +10,28 @@ export const fetchCommentsSuccess = createAction(
   props<{ comments: CommentI[], hasNextPage: boolean }>()
 );
 export const setCommentsMark =createAction(
-  '[Comments] Set Mark',
+  '[Comments] Set Comments Mark',
   props<{ id, mark }>()
 );
 
 export const setCommentsMarkStart = createAction(
-  '[Comments] Set Mark Start',
+  '[Comments] Set Comments Mark Start',
   props<{ id, mark }>()
 );
 export const setCommentsMarkError = createAction(
-  '[Comments] Set Mark Error',
+  '[Comments] Set Comments Mark  Error',
   props<{ comment }>()
 );
 export const clearComments = createAction(
   '[Comments] Clear Comments'
 );
+export const addCommentPage = createAction(
+  '[Comments] Add Comment Page'
+);
 
+export const onCommentCreated = createAction(
+  '[Comments] On Comment Created',
+  props<{ comment }>()
+);
 
 

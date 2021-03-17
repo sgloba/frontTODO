@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {clearComments, fetchCommentsStart} from "../../../store/actions/comments.actions";
+import {addCommentPage, clearComments, fetchCommentsStart, onCommentCreated} from "../../../store/actions/comments.actions";
 import {allComments, hasNextPageSelector, page} from "../../../store/selectors/comment.selectors";
 
 @Injectable({
@@ -23,5 +23,10 @@ export class SandboxCommentService {
   clearComments(): void {
     this.store.dispatch(clearComments());
   }
-
+  addPage(): void {
+    this.store.dispatch(addCommentPage());
+  }
+  onCommentCreated(comment): void {
+    this.store.dispatch(onCommentCreated({comment}));
+  }
 }

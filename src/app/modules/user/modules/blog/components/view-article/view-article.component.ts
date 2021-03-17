@@ -36,10 +36,8 @@ export class ViewArticleComponent implements OnDestroy {
       filter((params) => params.id !== undefined),
       withLatestFrom(this.page$),
       switchMap(([params, page]) => {
-        console.log('!@@', params.id, page)
         this.commentSandbox.fetchCommentsByArticleId(params.id, page);
-
-        return  this.blogSandbox.articleById$(params.id);
+        return this.blogSandbox.articleById$(params.id);
       })
     );
 
@@ -55,22 +53,30 @@ export class ViewArticleComponent implements OnDestroy {
       value,
       article_id: articleId
     };
-    this.httpCommentService.createComment$(data).subscribe(() => {
-      this.commentSandbox.fetchCommentsByArticleId(articleId, this.page$);
+    this.httpCommentService.createComment$(data).subscribe((comment) => {
+      this.commentSandbox.onCommentCreated(comment);
+      this.fetchComments();
     });
     event.target.reset();
   }
 
-  showMoreComments(): void {
+  async showMoreComments(): Promise<any> {
+    await this.commentSandbox.addPage();
+    this.fetchComments();
+  }
+
+  fetchComments(): void {
     this.article$.pipe(
       take(1),
       withLatestFrom(this.page$),
       switchMap(([article, page]) => {
+
         this.commentSandbox.fetchCommentsByArticleId(article._id, page);
-        return  this.blogSandbox.articleById$(article._id);
+        return this.blogSandbox.articleById$(article._id);
       })
     ).subscribe();
   }
+
   ngOnDestroy(): void {
     this.commentSandbox.clearComments();
   }

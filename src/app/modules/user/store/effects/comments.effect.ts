@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {EMPTY, of} from 'rxjs';
 import {map, catchError, switchMap, withLatestFrom} from 'rxjs/operators';
-import {select, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {
   fetchCommentsStart,
   fetchCommentsSuccess, setCommentsMark, setCommentsMarkStart, setCommentsMarkError,
 } from "../actions/comments.actions";
 import {HttpCommentService} from "../../modules/blog/services/http-comment.service";
-import {commentById} from "../selectors/comment.selectors";
+import { commentById} from "../selectors/comment.selectors";
 
 
 @Injectable()
@@ -26,7 +26,6 @@ export class CommentsEffect {
     switchMap(({articleId, currentPage}) => this.httpComment.fetchComments$(articleId, currentPage)
       .pipe(
         map(({comments, hasNextPage}) => {
-          console.log('MAP', comments, hasNextPage)
           return fetchCommentsSuccess({comments, hasNextPage});
         }),
         catchError(() => EMPTY)
@@ -38,7 +37,7 @@ export class CommentsEffect {
     switchMap(({id, mark}) => {
       return of(EMPTY)
         .pipe(
-          withLatestFrom(this.store.pipe(select(commentById(id)))),
+          withLatestFrom(this.store.select(commentById(id))),
           map(([, comment]) => [{id, mark}, comment]),
         );
     }),

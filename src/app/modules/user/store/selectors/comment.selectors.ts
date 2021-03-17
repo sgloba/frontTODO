@@ -30,3 +30,8 @@ export const hasNextPageSelector = createSelector(
   ({hasNextPage}) => hasNextPage
 );
 
+export const allCommentsIds = createSelector(
+  allComments,
+  (comments) => comments.map((comment) => comment._id)
+);
+
