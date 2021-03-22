@@ -13,6 +13,15 @@ export const commentById = (id: string) => createSelector(
   (comments) => comments.find((comment) => comment._id === id)
 );
 
+export const topLevelCommentsByArticleId = (id: string) => createSelector(
+  allComments,
+  (comments) => comments.filter((comment) => comment.article_id === id && comment.parent_comment_id === '')
+);
+export const commentsByParentCommentId = (id: string) => createSelector(
+  allComments,
+  (comments) => comments.filter((comment) => comment.parent_comment_id === id)
+);
+
 export const totalCommentMarks = (commentId: string, rate: 1 | -1) => createSelector(
   commentById(commentId),
   (comment) => {
@@ -30,8 +39,10 @@ export const hasNextPageSelector = createSelector(
   ({hasNextPage}) => hasNextPage
 );
 
-export const allCommentsIds = createSelector(
-  allComments,
-  (comments) => comments.map((comment) => comment._id)
+export const showReplySelector = createSelector(
+  commentsState,
+  ({showReplyCommentsIds}) => showReplyCommentsIds
 );
+
+
 

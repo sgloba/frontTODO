@@ -1,9 +1,13 @@
 import {createAction, props} from '@ngrx/store';
-import {CommentI} from "../../modules/blog/models/app.comment.model";
+import {CommentI} from '../../modules/blog/models/app.comment.model';
 
 export const fetchCommentsStart = createAction(
   '[Comments] Fetch Comments Start',
-  props<{ articleId, currentPage }>()
+  props<{ articleId, currentPage, parentCommentId }>()
+);
+export const fetchOneCommentByIdStart = createAction(
+  '[Comments] Fetch One Comment By Id Start',
+  props<{ commentId }>()
 );
 export const fetchCommentsSuccess = createAction(
   '[Comments] Fetch Comments Success',
@@ -34,4 +38,13 @@ export const onCommentCreated = createAction(
   props<{ comment }>()
 );
 
+export const toggleShowReply = createAction(
+  '[Comments] Toggle Show Reply',
+  props<{ commentId }>()
+);
+
+export const createComment = createAction(
+  '[Comments] Create Comment',
+  props<{ value, article_id, parentCommentId }>()
+);
 

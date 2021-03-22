@@ -15,4 +15,5 @@ export interface CommentI {
     isLikedByUser: boolean,
     isDislikedByUser: boolean
   };
+  replies: number;
 }
