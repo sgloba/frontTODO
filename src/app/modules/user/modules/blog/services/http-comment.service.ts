@@ -20,7 +20,6 @@ export class HttpCommentService {
   }
 
   fetchComments$(articleId, currentPage = 0,parentCommentId = ''): Observable<FetchedCommentDataI> {
-    console.log('fetchComments$', articleId, currentPage, parentCommentId)
     return this.http.get<FetchedCommentDataI>(
       this.url
       + '/comments'
@@ -30,7 +29,6 @@ export class HttpCommentService {
     );
   }
   fetchOneCommentById$(commentId: string): Observable<FetchedCommentDataI> {
-    console.log('!!!!!!!fetchOneCommentById$', commentId)
     return this.http.get<FetchedCommentDataI>(this.url + `/comments` + `?commentId=${commentId}`);
   }
 

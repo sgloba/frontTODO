@@ -17,7 +17,7 @@
     mat-button
     class="show-more-btn"
     (click)="showMoreComments(article._id)"
-    [disabled]="!(hasNextPage$ | async)">
+    [disabled]="!(hasNextPageArticle$ | async)">
     Show more...
   </button>
 </div>

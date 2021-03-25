@@ -23,7 +23,6 @@ export class MainGuard implements CanActivate{
     } else {
       this.router.navigate(['']);
       return false;
-
     }
   }
 }

@@ -30,7 +30,8 @@ export const clearComments = createAction(
   '[Comments] Clear Comments'
 );
 export const addCommentPage = createAction(
-  '[Comments] Add Comment Page'
+  '[Comments] Add Comment Page',
+  props<{ id }>() // adds to root state if id=''
 );
 
 export const onCommentCreated = createAction(

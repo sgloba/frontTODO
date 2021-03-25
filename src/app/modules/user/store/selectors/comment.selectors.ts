@@ -1,5 +1,5 @@
-import {createFeatureSelector, createSelector} from "@ngrx/store";
-import {CommentState} from "../reducers/comment.reducer";
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {CommentState} from '../reducers/comment.reducer';
 
 const commentsState = createFeatureSelector<CommentState>('comments');
 
@@ -33,9 +33,17 @@ export const page = createSelector(
   commentsState,
   ({currentPage}) => currentPage
 );
+export const pageInCommentById = (commentId: string) => createSelector(
+  commentById(commentId),
+  (comment) => comment.currentPage
+);
 
-export const hasNextPageSelector = createSelector(
+export const hasNextPageArticleSelector = createSelector(
   commentsState,
+  ({hasNextPage}) => hasNextPage
+);
+export const hasNextPageCommentSelector = (commentId: string) => createSelector(
+  commentById(commentId),
   ({hasNextPage}) => hasNextPage
 );
 

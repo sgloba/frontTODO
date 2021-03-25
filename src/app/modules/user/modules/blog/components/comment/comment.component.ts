@@ -5,7 +5,7 @@ import {SandboxBlogService} from '../../services/sandbox-blog.service';
 import {UserHttpService} from '../../../../../appCommon/services/user-http.service';
 import {HttpCommentService} from '../../services/http-comment.service';
 import {SandboxCommentService} from '../../services/sandbox-comment.service';
-import {map, take} from 'rxjs/operators';
+import {map, take, withLatestFrom} from 'rxjs/operators';
 
 @Component({
   selector: 'app-comment',
@@ -23,27 +23,24 @@ export class CommentComponent implements OnChanges {
   ) {
   }
 
-
+  childComments$: Observable<CommentI[]>;
+  isShowReply$: Observable<boolean>;
+  hasNextPageComment$: Observable<boolean>;
   @Input() comment: CommentI;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.comment) {
       this.childComments$ = this.commentSandbox.commentsByParentCommentId$(this.comment._id);
       this.isShowReply$ = this.commentSandbox.showReplies$(this.comment._id);
+      this.hasNextPageComment$ = this.commentSandbox.hasNextPageComment$(this.comment._id);
+      this.page$ = this.commentSandbox.pageInCommentById$(this.comment._id);
     }
   }
 
-  childComments$: Observable<CommentI[]>;
-  isShowReply$: Observable<boolean>;
-  hasNextPage$ = this.commentSandbox.hasNextPage$;
 
   showReplyInput = false;
-  page = 0;
   userId = this.userService.getCurrentUser().user_id;
-  page$ = this.commentSandbox.page$.pipe(map((page) => {
-    console.log('PAGE', page);
-    this.page = page;
-  }));
+  page$: Observable<number>;
 
   setMark(mark): void {
     this.blogSandbox
@@ -67,7 +64,7 @@ export class CommentComponent implements OnChanges {
     const data = {
       value,
       article_id: articleId,
-      parentCommentId: this.comment._id
+      parentCommentId: this.comment._id,
     };
     this.commentSandbox.createComment(data);
     event.target.reset();
@@ -75,15 +72,24 @@ export class CommentComponent implements OnChanges {
 
   showReply(): void {
     this.isShowReply$
-      .pipe(take(1))
-      .subscribe((showReply) => {
+      .pipe(
+        take(1),
+        withLatestFrom(this.page$)
+      )
+      .subscribe(([showReply, page]) => {
         this.commentSandbox.toggleShowReply(this.comment._id);
         if (!showReply) {
-          this.commentSandbox.fetchComments(this.comment.article_id, this.page, this.comment._id);
+          this.commentSandbox.fetchComments(this.comment.article_id, page, this.comment._id);
         }
       });
   }
-  showMoreComments(id) {
+  showMoreComments(): void {
+    this.commentSandbox.addPage(this.comment._id);
 
+    this.page$
+      .pipe(take(1))
+      .subscribe((page) => {
+        this.commentSandbox.fetchComments(this.comment.article_id, page, this.comment._id);
+      });
   }
 }

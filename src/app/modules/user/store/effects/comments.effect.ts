@@ -46,7 +46,6 @@ export class CommentsEffect {
     switchMap(({commentId}) => this.httpComment.fetchOneCommentById$(commentId)
         .pipe(
           map(({comments, hasNextPage}) => {
-            console.log('!!!!!!!!!!!!!!!!!!!!!!', {comments, hasNextPage})
             return fetchCommentsSuccess({comments, hasNextPage});
           }),
           catchError(() => EMPTY)

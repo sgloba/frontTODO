@@ -16,4 +16,6 @@ export interface CommentI {
     isDislikedByUser: boolean
   };
   replies: number;
+  hasNextPage: boolean;
+  currentPage: number;
 }
