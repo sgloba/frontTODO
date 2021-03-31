@@ -19,12 +19,13 @@ export class HttpCommentService {
     return this.configService.config.nestJsURL;
   }
 
-  fetchComments$(articleId, currentPage = 0,parentCommentId = ''): Observable<FetchedCommentDataI> {
+  fetchComments$(articleId, commentPage = 0,parentCommentId = '', articlePage: number = 0): Observable<FetchedCommentDataI> {
     return this.http.get<FetchedCommentDataI>(
       this.url
       + '/comments'
       + `?article_id=${articleId}`
-      + `&page=${currentPage}`
+      + `&commentPage=${commentPage}`
+      + `&articlePage=${articlePage}`
       + `&parent_comment_id=${parentCommentId}`
     );
   }

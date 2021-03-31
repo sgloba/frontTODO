@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {EMPTY, of} from 'rxjs';
-import {map, catchError, switchMap, withLatestFrom, concatMap, tap} from 'rxjs/operators';
+import {combineLatest, EMPTY, of} from 'rxjs';
+import {map, catchError, switchMap, withLatestFrom, concatMap, tap, mergeMap, take} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {
   fetchCommentsStart,
@@ -13,7 +13,7 @@ import {
   onCommentCreated, fetchOneCommentByIdStart,
 } from '../actions/comments.actions';
 import {HttpCommentService} from '../../modules/blog/services/http-comment.service';
-import {commentById} from '../selectors/comment.selectors';
+import {commentById, page, pageInCommentById} from '../selectors/comment.selectors';
 
 
 @Injectable()
@@ -32,24 +32,30 @@ export class CommentsEffect {
                  articleId,
                  currentPage,
                  parentCommentId
-               }) => this.httpComment.fetchComments$(articleId, currentPage, parentCommentId)
+               }) => {
+      const commentPage$ = this.store.select(pageInCommentById(parentCommentId));
+      return combineLatest([of(articleId), of(parentCommentId), commentPage$, this.store.select(page)]);
+    }),
+    switchMap(([articleId, parentCommentId, commentPage, articlePage]) => {
+        return this.httpComment.fetchComments$(articleId, commentPage, parentCommentId, articlePage)
+          .pipe(
+            map(({comments, hasNextPage}) => {
+              return fetchCommentsSuccess({comments, hasNextPage});
+            }),
+            catchError(() => EMPTY)
+          );
+      }
+    )
+  ));
+  fetchOneCommentById$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchOneCommentByIdStart),
+    switchMap(({commentId}) => this.httpComment.fetchOneCommentById$(commentId)
       .pipe(
         map(({comments, hasNextPage}) => {
           return fetchCommentsSuccess({comments, hasNextPage});
         }),
         catchError(() => EMPTY)
       )
-    )
-  ));
-  fetchOneCommentById$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchOneCommentByIdStart),
-    switchMap(({commentId}) => this.httpComment.fetchOneCommentById$(commentId)
-        .pipe(
-          map(({comments, hasNextPage}) => {
-            return fetchCommentsSuccess({comments, hasNextPage});
-          }),
-          catchError(() => EMPTY)
-        )
     )
   ));
   createComment$ = createEffect(() => this.actions$.pipe(

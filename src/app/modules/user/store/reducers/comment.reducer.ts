@@ -40,7 +40,6 @@ export const commentReducer = createReducer(
         const newComment = comments.find((item) => item._id === comment._id);
         return newComment || comment;
       });
-
       return ({
         ...state,
         comments: [
@@ -75,26 +74,26 @@ export const commentReducer = createReducer(
   ),
   on(CommentAction.addCommentPage,
     (state, {id}) => {
-    if(id === '') {
-      return ({...state, currentPage: state.currentPage + 1});
-    }
+      if (id === '') {
+        return ({...state, currentPage: state.currentPage + 1});
+      }
 
-    return ({...state,
-      comments: state.comments.map((comment) => {
-        if (comment._id !== id) {
-          return comment;
-        }
-        return {
-          ...comment,
-          currentPage: (comment.currentPage || 0) + 1
-        };
-      })
-    });
+      return ({
+        ...state,
+        comments: state.comments.map((comment) => {
+          if (comment._id !== id) {
+            return comment;
+          }
+          return {
+            ...comment,
+            currentPage: (comment.currentPage || 0) + 1
+          };
+        })
+      });
     }
   ),
   on(CommentAction.toggleShowReply,
     (state, {commentId}) => {
-
       return {
         ...state,
         showReplyCommentsIds:

@@ -24,9 +24,7 @@ export const commentsByParentCommentId = (id: string) => createSelector(
 
 export const totalCommentMarks = (commentId: string, rate: 1 | -1) => createSelector(
   commentById(commentId),
-  (comment) => {
-    return comment?.marks.filter((mark) => mark.rate === rate).length;
-  }
+  (comment) => comment?.marks.filter((mark) => mark.rate === rate).length
 );
 
 export const page = createSelector(
@@ -35,7 +33,7 @@ export const page = createSelector(
 );
 export const pageInCommentById = (commentId: string) => createSelector(
   commentById(commentId),
-  (comment) => comment.currentPage
+  (comment) => comment?.currentPage
 );
 
 export const hasNextPageArticleSelector = createSelector(
@@ -44,7 +42,8 @@ export const hasNextPageArticleSelector = createSelector(
 );
 export const hasNextPageCommentSelector = (commentId: string) => createSelector(
   commentById(commentId),
-  ({hasNextPage}) => hasNextPage
+  allComments,
+  ({_id, replies}, comments) => comments.filter((comment) => comment.parent_comment_id === _id).length < replies
 );
 
 export const showReplySelector = createSelector(
