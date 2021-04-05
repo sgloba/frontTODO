@@ -4,7 +4,7 @@
     <span>{{comment.author.displayName}}</span>
   </div>
   <div>{{comment.timestamp}}</div>
-  <div class="comment-body">{{comment.body}}</div>
+  <div class="comment-body" appUserTooltip>{{comment.body}}</div>
 
   <div class="actions-wrap">
     <button mat-button class="like-dislike-btn" (click)="setMark(1)">

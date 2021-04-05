@@ -1,0 +1,17 @@
+@import "src/app/scss/colors";
+.faded-out{
+  opacity: 0;
+}
+.wrap {
+  opacity: 1;
+  color: $text-clr;
+  background: $bg-main-clr-light;
+  padding: 1rem;
+  height: 5rem;
+  width: 15rem;
+  position: absolute;
+  top: -8rem;
+  left: 0;
+  border-radius: 5px;
+  transition: opacity 3s ease-in;
+}
