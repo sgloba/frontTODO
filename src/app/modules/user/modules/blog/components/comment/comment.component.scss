@@ -13,7 +13,6 @@
   justify-content: flex-start;
   img{
     border-radius: 50%;
-    border: 1px solid $border-clr;
     width: 30px;
     height: 30px;
   }
@@ -51,4 +50,20 @@
 }
 .highlight-dislike-button {
   color: darkred;
+}
+.comment-form{
+  height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: 1rem;
+  border-bottom: none;
+  transition: height .3s ease-out;
+  button {
+    background-color: transparent;
+  }
+}
+.show-reply-input{
+  border-bottom: 1px solid $text-clr;
+  height: 30px;
 }

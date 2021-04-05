@@ -4,7 +4,7 @@
     <span>{{comment.author.displayName}}</span>
   </div>
   <div>{{comment.timestamp}}</div>
-  <div class="comment-body">{{comment.body}}</div>
+  <div class="comment-body" appUserTooltip>{{comment.body}}</div>
 
   <div class="actions-wrap">
     <button mat-button class="like-dislike-btn" (click)="setMark(1)">
@@ -20,9 +20,33 @@
       >thumb_down</span>
     </button>
 
-    <button mat-button class="replies-btn">
-      <span class="like-dislike-count">42</span>
+    <button mat-button class="replies-btn" (click)="showReplyInput = !showReplyInput">
+      <span>reply</span>
+    </button>
+
+    <button mat-button class="replies-btn" (click)="showReply()" *ngIf="comment.replies">
+      <span class="like-dislike-count">{{comment.replies}}</span>
       <span>replies...</span>
     </button>
   </div>
+    <form
+      class="comment-form"
+      (submit)="createComment(comment.article_id, commentInput.value, $event)"
+      [class.show-reply-input]="showReplyInput"
+    >
+      <input #commentInput matInput placeholder="Write reply here...">
+      <button type="submit" class="submit-btn">
+        <span class="material-icons">send</span>
+      </button>
+    </form>
+  <div class="replies-wrap" *ngIf="isShowReply$ | async">
+    <app-comment *ngFor="let comment of (childComments$ | async)"  [comment]="comment"></app-comment>
+  </div>
+  <button
+    mat-button
+    class="show-more-btn"
+    (click)="showMoreComments()"
+    [disabled]="!((hasNextPageComment$ | async) && (isShowReply$ | async))">
+    Show more...
+  </button>
 </div>

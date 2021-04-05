@@ -7,6 +7,8 @@ import {MaterialModule} from '../material/material.module';
 import {MainGuard} from './guards/main.guard';
 import {UserHttpService} from './services/user-http.service';
 import {CommonModule} from '@angular/common';
+import { UserTooltipDirective } from './directives/user-tooltip.directive';
+import { UserTooltipComponent } from './components/user-tooltip/user-tooltip.component';
 
 
 
@@ -15,16 +17,19 @@ import {CommonModule} from '@angular/common';
   declarations: [
     ToggleBtnComponent,
     StopClickPropagationDirective,
+    UserTooltipDirective,
+    UserTooltipComponent,
   ],
   imports: [
     AppCommonRoutingModule,
     MaterialModule,
     CommonModule
   ],
-  exports: [
-    ToggleBtnComponent,
-    StopClickPropagationDirective,
-  ],
+    exports: [
+        ToggleBtnComponent,
+        StopClickPropagationDirective,
+        UserTooltipDirective,
+    ],
   providers: [MainGuard, UserHttpService]
 })
 export class AppCommonModule { }
